@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/log-in.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+
+<body>
+    <section id="container-main-left">
+
+    </section>
+    <section id="container-main-right">
+        <section id="container-sign-in">
+            <section id="container-welcome-back">
+                <span id="welcome-back">Welcome back</span>
+                <span class="some-details">Please enter your details to sign in.</span>
+            </section>
+            <section id="container-authentication">
+                <section id="container-credentials">
+                    <section class="container-cred-input">
+                        <span class="credential-text">Email Address</span>
+                        <div class="input-field">
+                            <svg id="email-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="16"
+                                viewBox="0 0 20 16" fill="none">
+                                <path
+                                    d="M2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H2ZM10 9L2 4V14H18V4L10 9ZM10 7L18 2H2L10 7ZM2 4V2V4V14V4Z"
+                                    fill="#727687" />
+                            </svg>
+                            <input class="input" id="email-input" type="text" placeholder="name@university.edu">
+                        </div>
+                    </section>
+                    <section class="container-cred-input">
+                        <span class="credential-text">Password</span>
+                        <div class="input-field">
+                            <svg id="password-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="21"
+                                viewBox="0 0 16 21" fill="none">
+                                <path
+                                    d="M2 21C1.45 21 0.979167 20.8042 0.5875 20.4125C0.195833 20.0208 0 19.55 0 19V9C0 8.45 0.195833 7.97917 0.5875 7.5875C0.979167 7.19583 1.45 7 2 7H3V5C3 3.61667 3.4875 2.4375 4.4625 1.4625C5.4375 0.4875 6.61667 0 8 0C9.38333 0 10.5625 0.4875 11.5375 1.4625C12.5125 2.4375 13 3.61667 13 5V7H14C14.55 7 15.0208 7.19583 15.4125 7.5875C15.8042 7.97917 16 8.45 16 9V19C16 19.55 15.8042 20.0208 15.4125 20.4125C15.0208 20.8042 14.55 21 14 21H2ZM2 19H14V9H2V19ZM8 16C8.55 16 9.02083 15.8042 9.4125 15.4125C9.80417 15.0208 10 14.55 10 14C10 13.45 9.80417 12.9792 9.4125 12.5875C9.02083 12.1958 8.55 12 8 12C7.45 12 6.97917 12.1958 6.5875 12.5875C6.19583 12.9792 6 13.45 6 14C6 14.55 6.19583 15.0208 6.5875 15.4125C6.97917 15.8042 7.45 16 8 16ZM5 7H11V5C11 4.16667 10.7083 3.45833 10.125 2.875C9.54167 2.29167 8.83333 2 8 2C7.16667 2 6.45833 2.29167 5.875 2.875C5.29167 3.45833 5 4.16667 5 5V7ZM2 19V9V19Z"
+                                    fill="#727687" />
+                            </svg>
+                            <input class="input" id="password-input" type="password" placeholder="•••••">
+                            <svg id="reveal-password" xmlns="http://www.w3.org/2000/svg" width="19" height="13"
+                                viewBox="0 0 19 13" fill="none" onclick="showPassword()">
+                                <path
+                                    d="M9.16667 10C10.2083 10 11.0938 9.63542 11.8229 8.90625C12.5521 8.17708 12.9167 7.29167 12.9167 6.25C12.9167 5.20833 12.5521 4.32292 11.8229 3.59375C11.0938 2.86458 10.2083 2.5 9.16667 2.5C8.125 2.5 7.23958 2.86458 6.51042 3.59375C5.78125 4.32292 5.41667 5.20833 5.41667 6.25C5.41667 7.29167 5.78125 8.17708 6.51042 8.90625C7.23958 9.63542 8.125 10 9.16667 10ZM9.16667 8.5C8.54167 8.5 8.01042 8.28125 7.57292 7.84375C7.13542 7.40625 6.91667 6.875 6.91667 6.25C6.91667 5.625 7.13542 5.09375 7.57292 4.65625C8.01042 4.21875 8.54167 4 9.16667 4C9.79167 4 10.3229 4.21875 10.7604 4.65625C11.1979 5.09375 11.4167 5.625 11.4167 6.25C11.4167 6.875 11.1979 7.40625 10.7604 7.84375C10.3229 8.28125 9.79167 8.5 9.16667 8.5ZM9.16667 12.5C7.13889 12.5 5.29167 11.934 3.625 10.8021C1.95833 9.67014 0.75 8.15278 0 6.25C0.75 4.34722 1.95833 2.82986 3.625 1.69792C5.29167 0.565972 7.13889 0 9.16667 0C11.1944 0 13.0417 0.565972 14.7083 1.69792C16.375 2.82986 17.5833 4.34722 18.3333 6.25C17.5833 8.15278 16.375 9.67014 14.7083 10.8021C13.0417 11.934 11.1944 12.5 9.16667 12.5ZM9.16667 10.8333C10.7361 10.8333 12.1771 10.4201 13.4896 9.59375C14.8021 8.76736 15.8056 7.65278 16.5 6.25C15.8056 4.84722 14.8021 3.73264 13.4896 2.90625C12.1771 2.07986 10.7361 1.66667 9.16667 1.66667C7.59722 1.66667 6.15625 2.07986 4.84375 2.90625C3.53125 3.73264 2.52778 4.84722 1.83333 6.25C2.52778 7.65278 3.53125 8.76736 4.84375 9.59375C6.15625 10.4201 7.59722 10.8333 9.16667 10.8333Z"
+                                    fill="#C2C6D8" />
+                            </svg>
+                        </div>
+                    </section>
+                </section>
+
+
+                <section id="container-remember-me">
+                    <input type="checkbox">
+                    <span class="some-details">Remember me for 30 days</span>
+                </section>
+
+
+                <section id="sign-in-button">
+                    <span id="sign-in-text">Sign In</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z" fill="#633700" />
+                    </svg>
+                </section>
+            </section>
+
+            <section id="container-create-account">
+                New to PadPal? <span class="blue">Create an Account</span>
+            </section>
+
+            <section id="container-additional-links">
+                <a class="nostyle">Privacy Policy</a>
+                <a class="nostyle">Terms of Service</a>
+                <a class="nostyle">Support</a>
+                <a class="nostyle">Admin?</a>
+            </section>
+        </section>
+    </section>
+
+
+    <script src="scripts/log-in.js">
+    </script>
+</body>
+
+</html>

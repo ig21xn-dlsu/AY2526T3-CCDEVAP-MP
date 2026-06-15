@@ -6,6 +6,10 @@
 	font-family: "Montserrat", sans-serif;
 }
 
+body{
+	background: linear-gradient(0deg, #F9F9FC 0%, #F9F9FC 100%), #FFF;
+}
+
 .header {
 	margin-top: -5px;
 	display: flex;
@@ -13,6 +17,7 @@
 	align-items: center;
 	width: 100%;
 	box-shadow: 0px 6px 6px -4px rgba(0,0,0,0.15);
+	background: linear-gradient(0deg, #F9F9FC 0%, #F9F9FC 100%), #FFF;
 }
 
 .header-left{
@@ -68,18 +73,77 @@
 }
 
 .stat-container{
+	padding-right: 10px;
 	display: flex;
-	column-gap: 50px;
+	gap: 24px;
+
 }
 
 .stat{
-	border-radius: 15px;
-	height: 150px;
-	width: 500px;
+	display: flex;
+	padding: 24px 250px 24px 24px;
+	flex-direction: column;
+	align-items: flex-start;
+	grid-row: 1 / span 1;
+	grid-column: 1 / span 1;
+	justify-self: stretch;
+
+	border-radius: 12px;
+	border: 1px solid rgba(194, 198, 216, 0.30);
+	background: #FFF;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
+
+.quantity{
+	align-self: stretch;
+	font-size: 36px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 44px;
+	margin: -8px 50px -10px -5px;
+}
+
+.quantityContainer{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start ;
+	align-self: stretch;
+}
+
+
+
+.quantityMsg{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 16px;
+	letter-spacing: 0.6px;
+	margin-bottom: -5px;
+
+}
+
+.activeInquiry{
+	color: #8C5000;
+}
+
+.avgMatchScore{
+	color: #006460;
+}
+
+.stat-title{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 10px;
+	padding-top: 0px;
+	margin-top: -20px;
+	font-weight: 500;
+}
+
 
 .mainBody{
 	margin: 0px 15px ;
+	background: linear-gradient(0deg, #F9F9FC 0%, #F9F9FC 100%), #FFF;
 }
 
 

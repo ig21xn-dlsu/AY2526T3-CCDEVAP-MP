@@ -1,5 +1,5 @@
-// Hard Coded Data
-// place an image in the imgUrl to show a photo; omit to fall back to colored initials.
+// Hardcoded Data
+
 const groups = [
   {
     id: 1,
@@ -14,7 +14,27 @@ const groups = [
       { initials: "CL", color: "#EF4444", imgUrl: "https://i.pravatar.cc/80?img=5"  },
       { initials: "DT", color: "#10B981" },
     ],
-    tab: "coliving"
+    tab: "coliving",
+    // data passed to group profile page
+    badge: "Looking for 1 more",
+    location: "Taft Ave., Manila",
+    heroImg: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=900&q=80",
+    vibe: "Computer Science majors who live and breathe code. We host weekly hackathons, keep the space tidy, and respect quiet hours after 10 PM. Looking for a housemate who loves problem-solving as much as we do.",
+    vibeTags: ["Hackathon Crew", "Clean Space", "Night Coders"],
+    listing: {
+      name: "The Loop Residences Studio",
+      img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&q=80",
+      meta: "2 beds, 1 bath • Taft Ave., Manila",
+      desc: "Modern studio with fast fiber internet, a dedicated desk area, and air-conditioning throughout.",
+    },
+    preferences: [
+      { icon: "clean",  label: "Cleanliness", value: "High – daily tidying" },
+      { icon: "noise",  label: "Noise Level",  value: "Quiet after 10 PM" },
+      { icon: "social", label: "Social",        value: "Chill – occasional group nights" },
+    ],
+    budget: "P18k",
+    moveIn: "Aug 1",
+    lease: "12 mo",
   },
   {
     id: 2,
@@ -28,7 +48,26 @@ const groups = [
       { initials: "FR", color: "#EC4899", imgUrl: "https://i.pravatar.cc/80?img=20" },
       { initials: "GS", color: "#14B8A6" }
     ],
-    tab: "coliving"
+    tab: "coliving",
+    badge: "Looking for 1 more",
+    location: "Malate, Manila",
+    heroImg: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=900&q=80",
+    vibe: "We're a mix of designers, developers, and writers who love collaborating and sharing ideas. We value a space that feels like a retreat but also sparks creativity. Expect spontaneous living room brainstorming sessions, weekend farmers' market runs, and a generally laid-back, supportive atmosphere.",
+    vibeTags: ["Art & Design", "Coffee Enthusiasts", "Plant Parents"],
+    listing: {
+      name: "R Square Residences Loft",
+      img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&q=80",
+      meta: "2 Bunk beds, 1 bath • P. Ocampo St., Malate, Manila",
+      desc: "A stunning industrial loft with massive windows and a great open kitchen area. Perfect for our collective setup.",
+    },
+    preferences: [
+      { icon: "clean",  label: "Cleanliness", value: "Moderate – weekly chores" },
+      { icon: "noise",  label: "Noise Level",  value: "Quiet after 11 PM" },
+      { icon: "social", label: "Social",        value: "Friendly, occasional guests" },
+    ],
+    budget: "P30k",
+    moveIn: "Sep 1",
+    lease: "12 mo",
   },
   {
     id: 3,
@@ -41,16 +80,40 @@ const groups = [
       { initials: "JP", color: "#64748B", imgUrl: "https://i.pravatar.cc/80?img=12" },
       { initials: "KQ", color: "#0EA5E9" },
     ],
-    tab: "coliving"
+    tab: "coliving",
+    badge: "2 spots open",
+    location: "Ermita, Manila",
+    heroImg: "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=900&q=80",
+    vibe: "Focused med students who value silence and cleanliness above all. Weekdays are strictly study mode; weekends we loosen up. Looking for housemates who respect boundaries and are self-sufficient.",
+    vibeTags: ["Study First", "No Smoking", "Early to Bed"],
+    listing: {
+      name: "Manila Doctors Suites",
+      img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=200&q=80",
+      meta: "3 beds, 2 baths • Ermita, Manila",
+      desc: "Walking distance to UP-PGH. Quiet building with 24-hour security and backup generator.",
+    },
+    preferences: [
+      { icon: "clean",  label: "Cleanliness", value: "Very high – always clean" },
+      { icon: "noise",  label: "Noise Level",  value: "Strictly quiet all week" },
+      { icon: "social", label: "Social",        value: "Independent – we coexist" },
+    ],
+    budget: "P15k",
+    moveIn: "Jul 15",
+    lease: "6 mo",
   }
 ];
 
+const allData = [...groups];
+
 const MAX_VISIBLE_AVATARS = 2;
 
-// Render Avatar Stack 
+// Avatar Stack
+
 function renderAvatarStack(members) {
   const stack = document.createElement('div');
   stack.className = 'avatar-stack';
+
+  if (!members || !members.length) return stack;
 
   const visible  = members.slice(0, MAX_VISIBLE_AVATARS);
   const overflow = members.length - MAX_VISIBLE_AVATARS;
@@ -58,14 +121,11 @@ function renderAvatarStack(members) {
   visible.forEach(m => {
     const av = document.createElement('div');
     av.className = 'av';
-
     if (m.imgUrl) {
       const img = document.createElement('img');
       img.src     = m.imgUrl;
       img.alt     = m.initials;
       img.loading = 'lazy';
-      
-      // if image fails to load, fall back to colored initials
       img.onerror = () => {
         av.removeChild(img);
         av.style.background = m.color;
@@ -78,7 +138,6 @@ function renderAvatarStack(members) {
       av.textContent      = m.initials;
       av.style.color      = '#fff';
     }
-
     stack.appendChild(av);
   });
 
@@ -92,7 +151,8 @@ function renderAvatarStack(members) {
   return stack;
 }
 
-// Render Cards
+// Rendering Cards
+
 function renderCards(data) {
   const grid  = document.getElementById('cardsGrid');
   const empty = document.getElementById('emptyState');
@@ -138,8 +198,17 @@ function renderCards(data) {
 
     header.append(titleBlock, badge);
 
-    // Avatar stack
-    const avatars = renderAvatarStack(g.members);
+    // Shared space price OR avatar stack
+    if (g.tab === 'shared' && g.price) {
+      const priceRow = document.createElement('div');
+      priceRow.innerHTML = `<div class="space-price">${g.price}</div><div class="space-addr">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        ${g.address}</div>`;
+      card.append(header, priceRow);
+    } else {
+      const avatars = renderAvatarStack(g.members);
+      card.append(header, avatars);
+    }
 
     // Description
     const desc = document.createElement('p');
@@ -156,36 +225,49 @@ function renderCards(data) {
       tags.appendChild(pill);
     });
 
-    // Viewing Profile Button
+    // only co-living groups link to group profile
     const btn = document.createElement('a');
-    btn.className = 'btn-view';
-    btn.href = 'padpal-group.html';
-    btn.textContent = 'View Group Profile';
+    btn.className   = 'btn-view';
+    btn.textContent = g.tab === 'coliving' ? 'View Group Profile' : 'View Listing';
 
-    card.append(header, avatars, desc, tags, btn);
+    if (g.tab === 'coliving') {
+      // pass group id via query string so group page can load the right data
+      btn.href = `padpal-group.html?id=${g.id}`;
+    } else {
+      btn.href = '#';
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        alert(`Listing details for "${g.name}" coming soon.`);
+      });
+    }
+
+    card.append(desc, tags, btn);
     grid.appendChild(card);
   });
 }
 
-// Filter Logic
+// Filtering
+
 let activeTab   = 'coliving';
 let searchQuery = '';
 
 function getFiltered() {
-  return groups.filter(g => {
+  return allData.filter(g => {
     const matchesTab    = g.tab === activeTab;
     const q             = searchQuery.toLowerCase();
     const matchesSearch = !q
       || g.name.toLowerCase().includes(q)
       || g.school.toLowerCase().includes(q)
-      || g.tags.some(t => t.toLowerCase().includes(q));
+      || g.tags.some(t => t.toLowerCase().includes(q))
+      || (g.desc && g.desc.toLowerCase().includes(q));
     return matchesTab && matchesSearch;
   });
 }
 
 function refresh() { renderCards(getFiltered()); }
 
-// Tab Switching (Co-Living and Shared Spaces)
+// Tabs
+
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(b => {
@@ -200,10 +282,12 @@ document.querySelectorAll('.tab').forEach(btn => {
 });
 
 // Searching
+
 document.getElementById('searchInput').addEventListener('input', e => {
   searchQuery = e.target.value;
   refresh();
 });
 
-// Initialize
+// initialize
+
 refresh();

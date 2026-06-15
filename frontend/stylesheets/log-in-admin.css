@@ -21,7 +21,7 @@ input[type="text"], input[type="password"], textarea {
 }
 
 #container-main-left, #container-main-right {
-    flex: 1; 
+    flex: 1 1 50%; 
 }
 
 #container-main-left {
@@ -202,4 +202,84 @@ input[type="text"], input[type="password"], textarea {
     gap: 8px;
     justify-content: flex-start;
     width: 100%;
+}
+
+#remember-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+
+    color: #424656;
+    font-family: 'Montserrat';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
+
+#sign-in-section {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: 0.5rem;
+    padding: 16px 0;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+
+    border-radius: 12px;
+    background: linear-gradient(139deg, #0050CB 0%, #001849 100%);
+    background-color: #001849;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+    color: #FFF;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px; /* 140% */
+}
+
+#container-back-to-login {
+    width: 100%;
+    border-top: 1px solid #C2C6D8;
+    padding-top: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#back-to-user-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    max-width: fit-content;
+    color: #424656;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 0.14px;
+}
+
+#back-to-user-button:hover {
+    cursor: pointer;
+}
+
+a.nostyle:link {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
 }

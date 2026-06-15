@@ -53,30 +53,11 @@
 }
 
 .title{
-	font-size: 25px;
-	font-weight: 600;
+	font-size: 30px;
+	font-style: bold;
 	margin-bottom: -10px;
 }
 
-.titleIntro{
-	margin-bottom: 50px;
-}
-
-.subtitle{
-	margin-top: 10px;
-	font-size: 10px;
-}
-
-.stat-container{
-	display: flex;
-	column-gap: 50px;
-}
-
-.stat{
-	border-radius: 15px;
-	height: 150px;
-	width: 500px;
-}
 
 .mainBody{
 	margin: 0px 15px ;

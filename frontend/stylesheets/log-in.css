@@ -5,13 +5,11 @@ html, body {
 a.nostyle:link {
     text-decoration: inherit;
     color: inherit;
-    cursor: auto;
 }
 
 a.nostyle:visited {
     text-decoration: inherit;
     color: inherit;
-    cursor: auto;
 }
 
 body {
@@ -31,6 +29,7 @@ input[type="text"], input[type="password"], textarea {
     width: 50%;
     height: 100%;
     background: linear-gradient(0deg, rgba(0, 80, 203, 0.80) 0%, rgba(0, 80, 203, 0.00) 100%);
+    overflow: hidden;
 }
 
 #container-main-right {
@@ -180,6 +179,17 @@ input::placeholder {
     width: 100%;
 }
 
+#sign-in-button-section {
+    width: 100%;
+    height: auto;
+    text-decoration: inherit;
+    color: inherit;
+}
+
+#sign-in-button-section:hover {
+    cursor: pointer;
+}
+
 #sign-in-button {
     display: flex;
     padding: 16px 0;
@@ -238,4 +248,20 @@ input::placeholder {
     font-weight: 700;
     line-height: 16px; 
     letter-spacing: 0.6px;
+}
+
+#admin-login-button:hover {
+    cursor: pointer;
+}
+
+#container-image {
+    width: 100%;
+    height: 100%;
+}
+
+#login_image {
+    width: 100%;
+    height: 100%;
+    object-position: center center;
+    object-fit: cover;
 }

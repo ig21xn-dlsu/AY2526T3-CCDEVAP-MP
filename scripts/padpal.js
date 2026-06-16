@@ -5,6 +5,7 @@ const groups = [
     id: 1,
     name: "The Tech House",
     school: "DLSU",
+    budget: "18000",
     match: 94,
     desc: "Computer Science majors looking for a 4th housemate. We keep common areas clean and love late-night hackathons.",
     tags: ["Co-ed", "No Pets", "Quiet after 10pm"],
@@ -32,7 +33,6 @@ const groups = [
       { icon: "noise",  label: "Noise Level",  value: "Quiet after 10 PM" },
       { icon: "social", label: "Social",        value: "Chill – occasional group nights" },
     ],
-    budget: "P18k",
     moveIn: "Aug 1",
     lease: "12 mo",
   },
@@ -40,6 +40,7 @@ const groups = [
     id: 2,
     name: "Creative Collective",
     school: "DLSU-CSB",
+    budget: "30000",
     match: 88,
     desc: "Design and architecture students seeking a creative space. We love hosting small gallery nights and movie screenings.",
     tags: ["All Girls", "LGBTQ+ Friendly", "Pet Friendly"],
@@ -65,7 +66,6 @@ const groups = [
       { icon: "noise",  label: "Noise Level",  value: "Quiet after 11 PM" },
       { icon: "social", label: "Social",        value: "Friendly, occasional guests" },
     ],
-    budget: "P30k",
     moveIn: "Sep 1",
     lease: "12 mo",
   },
@@ -73,6 +73,7 @@ const groups = [
     id: 3,
     name: "Downtown Medics",
     school: "UP Manila",
+    budget: "15000",
     match: 76,
     desc: "Med students needing a quiet, clean place near the hospital. Very focused during the week, relaxed on weekends.",
     tags: ["Co-ed", "Strictly Quiet", "No Smoking"],
@@ -97,7 +98,6 @@ const groups = [
       { icon: "noise",  label: "Noise Level",  value: "Strictly quiet all week" },
       { icon: "social", label: "Social",        value: "Independent – we coexist" },
     ],
-    budget: "P15k",
     moveIn: "Jul 15",
     lease: "6 mo",
   }
@@ -250,18 +250,43 @@ function renderCards(data) {
 
 let activeTab   = 'coliving';
 let searchQuery = '';
+let campusFilter = '';
+let genderFilter = '';
+let budgetFilter = '';
 
 function getFiltered() {
-  return allData.filter(g => {
-    const matchesTab    = g.tab === activeTab;
-    const q             = searchQuery.toLowerCase();
-    const matchesSearch = !q
-      || g.name.toLowerCase().includes(q)
-      || g.school.toLowerCase().includes(q)
-      || g.tags.some(t => t.toLowerCase().includes(q))
-      || (g.desc && g.desc.toLowerCase().includes(q));
-    return matchesTab && matchesSearch;
-  });
+    return groups.filter(g => {
+
+        const matchesTab = g.tab === activeTab;
+
+        const q = searchQuery.toLowerCase();
+
+        const matchesSearch =
+            !q ||
+            g.name.toLowerCase().includes(q) ||
+            g.school.toLowerCase().includes(q) ||
+            g.tags.some(t => t.toLowerCase().includes(q));
+
+        const matchesCampus =
+            !campusFilter ||
+            g.school === campusFilter;
+
+        const matchesGender =
+            !genderFilter ||
+            g.tags.includes(genderFilter);
+
+        const matchesBudget =
+            !budgetFilter ||
+            g.budget <= budgetFilter;
+
+        return (
+            matchesTab &&
+            matchesSearch &&
+            matchesCampus &&
+            matchesGender &&
+            matchesBudget
+        );
+    });
 }
 
 function refresh() { renderCards(getFiltered()); }
@@ -286,6 +311,24 @@ document.querySelectorAll('.tab').forEach(btn => {
 document.getElementById('searchInput').addEventListener('input', e => {
   searchQuery = e.target.value;
   refresh();
+});
+
+document.getElementById('campusFilter')
+.addEventListener('change', e => {
+    campusFilter = e.target.value;
+    refresh();
+});
+
+document.getElementById('genderFilter')
+.addEventListener('change', e => {
+    genderFilter = e.target.value;
+    refresh();
+});
+
+document.getElementById('budgetFilter')
+.addEventListener('change', e => {
+    budgetFilter = Number(e.target.value);
+    refresh();
 });
 
 // initialize

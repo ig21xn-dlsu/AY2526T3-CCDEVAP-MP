@@ -54,6 +54,13 @@ body {
     object-position: center center;
     height: 100%;
     width: 100%;
+
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-out {
+    opacity: 0 !important;
 }
 
 #background-overlay {

@@ -2,6 +2,10 @@ html, body {
     margin: 0;
 }
 
+a, u {
+  text-decoration: none;
+}
+
 #login_image.hidden {
     opacity: 0;
 }
@@ -57,7 +61,7 @@ input[type="text"], input[type="password"], textarea {
 
 #container-sign-in {
     display: flex;
-    width: 20rem;
+    width: 28rem;
     max-width: 30rem;
     flex-direction: column;
     align-items: flex-start;

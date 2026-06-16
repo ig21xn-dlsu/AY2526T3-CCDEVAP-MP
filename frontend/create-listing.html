@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="stylesheets/create-listing.css">
+	<title>PadPal Manager | Create listing</title>
+</head>
+<body>
+	<div class="header">
+		<div class="left-header">
+			<button class="img-btn">
+				<img src="assets/back.svg" alt="">
+			</button>
+		</div>
+		
+		<div class="center-header">
+			<h1>Setup a Space</h1>
+		</div>
+
+		<div class="rightHeader">
+			<h1>PadPal Manager</h1>
+		</div>
+	</div>
+<div class="mainBody">
+	<div class="top-callout">
+		<h1>List a Room</h1>
+		<p>Fill in the details below to publish your room to seekers</p>
+	</div>
+
+	<form action="" id="listing-form"></form>
+
+	<div class="formBox" form="listing-form">
+		<div class="room-detailsTitle">
+			<img src="assets/room-details.svg" alt="">
+			<h1>Room Details</h1>
+
+		</div>
+		<div class="room-title">
+			<label for="room-name">Room Title</label>
+			<input type="text" id="room-name" placeholder="e.g 4 PAX Building near University A">
+		</div>
+		<div class="room-bottom">
+			<label for="room-price">Price Per Month (P)</label>
+			<input id="room-price" type="text"
+			       inputmode="decimal"
+			       pattern="[0-9]*[.,]?[0-9]{0,2}"
+			       placeholder="0.00"
+			       autocomplete="off"
+			>
+			<label for="room-date">Earliest Move-in Date</label>
+			<input type="date" placeholder="mm/dd/yyyy">
+		</div>
+	</div>
+
+	<div class="formBox" form="listing-form">
+		<div class="about-spaceTitle">
+			<img src="" alt="">
+			<h1>About the Space</h1>
+		</div>
+
+		<div class="descriptionContainer">
+		<p>Vibe & description</p>
+		<textarea name="description" id="room-description">Tell seekers what makes this room and the house vibe special...</textarea>
+		</div>
+
+		<p>Lifestyle Tags</p>
+		<div class="tags-container">
+			<button class="tag">private-beds</button>
+			<button class="tag">social-house</button>
+			<button class="custom">+ Custom</button>
+		</div>
+		<fieldset class="amenities-group">
+		  <legend>Amenities</legend>
+
+		  <div class="checkbox-grid">
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="wifi">
+		      <span>Free Wi-Fi</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="parking">
+		      <span>Free Parking</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="laundry">
+		      <span>In-unit Laundry</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="ac">
+		      <span>A/C</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="security">
+		      <span>24/7 Security</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="gym">
+		      <span>Gym Access</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="furnished">
+		      <span>Fully Furnished</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="lounge">
+		      <span>Study Lounge</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="utilities">
+		      <span>Utilities Included</span>
+		    </label>
+
+		    <label class="checkbox-item">
+		      <input type="checkbox" name="amenities[]" value="pet_friendly">
+		      <span>Pet Friendly</span>
+		    </label>
+		  </div>
+		</fieldset>
+
+	</div>
+
+	<div class="formBox" form="listing-form">
+		<div class="property-detailsTitle">
+			<img src="" alt="">
+			<h1>Property Details</h1>
+		</div>
+		<div class="mainBodyPropertyDetails">
+			<div class="campusarea-container">
+			</div>
+			<div class="genderSelector-container">
+			</div>
+		</div>
+
+	
+
+	</div>
+	<div class="formBox" form="listing-form"></div>
+	<div class="formBox" form="listing-form"></div>
+</div>
+
+
+
+
+	
+</body>
+</html>

@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+	padding: 0;
+	margin: 0;
+	font-family: "Montserrat", sans-serif;
+	box-sizing: border-box;
+}
+
+h1{
+	padding: 0;
+	margin: 0;
+}
+
+label{
+	color: #1A1C1E;
+	font-family: Inter;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 20px; /* 142.857% */
+	letter-spacing: 0.14px;
+}
+
+body{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: linear-gradient(0deg, #F9F9FC 0%, #F9F9FC 100%), #FFF;
+}
+
+
+.header{
+	display: flex;
+	align-items: center;
+	padding: 12px 40px;
+	
+	justify-content: space-between;
+	border-bottom: 1px solid #C2C6D8;
+	background: #F9F9FC;
+}
+.left-header{
+	margin: 0 15px;
+
+}
+
+.rightHeader h1{
+	color: #0050CB;
+	font-family: Montserrat;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 32px; /* 133.333% */
+}
+
+
+.center-header h1{
+	color: #1A1C1E;
+	text-align: center;
+	font-family: Montserrat;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 32px; /* 133.333% */
+}
+
+.img-btn{
+	background: none;
+
+	border: none;
+	outline: none;
+
+	padding: 0;
+	margin: 0;
+
+	cursor: pointer;
+	
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.img-btn img{
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.mainBody{
+	display: flex;
+	width: 100%;
+
+	justify-content: center;
+	padding: 32px 40px 48px 40px;
+flex-direction: column;
+	align-items: center;
+	gap: 32px;
+}
+
+.top-callout{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.formBox{
+	display: flex;
+	width: 100%;
+	max-width: 800px;
+	padding: 32px 40px 48px 40px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 32px;
+
+	border-radius: 12px;
+	border: 1px solid #C2C6D8;
+	background: #FFF;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.room-detailsTitle{
+	display: flex;
+	padding-bottom: 8px;
+	align-items: center;
+	gap: 8px;
+	align-self: stretch;
+
+	border-bottom: 1px solid #C2C6D8;
+
+}
+
+.room-detailsTitle h1{ 
+	color: #1A1C1E;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 28px; 
+}
+
+.room-title{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+}
+
+.room-title label{
+	font: 14px;
+	padding-bottom: 5px;
+}
+.room-title input{
+	width: 100%;
+	padding: 16px 20px;
+	font-size: 16px;
+	color: #1A1C1E; 
+	background-color: #FFF;
+	border: 1px solid #C2C6D8; 
+	border-radius: 12px; 
+	outline: none; 
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+

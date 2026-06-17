@@ -86,9 +86,9 @@
 				<button class="customTag">+ Custom</button>
 			</div>
 		</div>
-	
+		<div class="amenetiesContainer">
+		<legend><label for="">Amenities</label></legend>
 		<fieldset class="amenities-group">
-		  <legend>Amenities</legend>
 
 		  <div class="checkbox-grid">
 		    <label class="checkbox-item">
@@ -143,25 +143,115 @@
 		  </div>
 		</fieldset>
 
+		</div>
+
 	</div>
 
 	<div class="formBox" form="listing-form">
-		<div class="property-detailsTitle">
-			<img src="" alt="">
+		<div class="formBoxTitle">
+			<img src="assets/propertyDetailsIcon.svg" alt="">
 			<h1>Property Details</h1>
 		</div>
 		<div class="mainBodyPropertyDetails">
-			<div class="campusarea-container">
+			<div class="campusArea-container">
+				<label for="campus">Campus/Area</label>
+				<div class="dropdownInputContainer">
+					<img src="assets/location.svg" alt="">
+					<select name="campus" id="campus-select">
+						<option value="">Select nearest campus or area</option>
+						<option value="UPD">University of the Philippines Diliman</option>
+						<option value="UPM">University of the Philippines Manila</option>
+						<option value="DLSU">De La Salle University Manila</option>
+						<option value="ADMU">Ateneo de Manila University</option>
+						<option value="UST">University of Santo Thomas</option>
+					</select>
+				</div>
 			</div>
 			<div class="genderSelector-container">
+				<label for="genderPreference">Gender Preference (House Rules)</label>
+				<div class="radioButtonContainer">
+					<div>
+						<input type="radio" name="genderPreference" value="All girls">
+						<label for="">All girls</label>
+					</div>
+					<div>
+						<input type="radio" name="genderPreference" value="All boys">
+						<label for="">All boys</label>
+					</div>
+					<div>
+						<input type="radio" name="genderPreference" value="Co-ed">
+						<label for="">Co-ed</label>
+					</div>
+					
+				</div>
+
 			</div>
 		</div>
 
 	
 
 	</div>
-	<div class="formBox" form="listing-form"></div>
-	<div class="formBox" form="listing-form"></div>
+	<div class="formBox" form="listing-form">
+		<div class="formBoxTitle">
+			<img src="assets/contactPref.svg" alt="">
+			<h1>Contact Preferences</h1>
+		</div>
+
+		<div class="mainContactBody">
+			<label for="checkbox-grid">Select how you would like potential Roomies to contact you</label>
+			<div class="checkbox-grid">
+
+				<label for="checkbox-item">
+					<input type="checkbox" name="contactPref" value="sms">
+					<span>Via SMS</span>
+				</label>
+
+				<label for="checkbox-item">
+					<input type="checkbox" name="contactPref" value="email">
+					<span>Via Email</span>
+				</label>
+
+				<label for="checkbox-item">
+					<input type="checkbox" name="contactPref" value="social">
+					<span>Via Social Media</span>
+				</label>
+			</div>
+
+		</div>
+	
+
+	</div>
+	<div class="formBox" form="listing-form">
+		<div class="formBoxTitle">
+			<img src="asssets/mediaIcon.svg" alt="">
+			<h1>Media</h1>
+		</div>
+
+		<div class="mainUploadBody">
+			<label for="">Upload photos of the room and shared spaces. First photo will be the cover</label>
+
+			<div class="dropzone" id="dropzone">
+			    <div class="dropzone-content">
+			      <div class="upload-icon-circle">
+				      <img src="assets/uploadIcon.svg" alt="">
+			      </div>
+			      <h3>Drag & drop photos here</h3>
+			      <p>or <label for="file-input" class="browse-link">browse files</label></p>
+			      <span class="file-specs">JPG, PNG up to 10MB each</span>
+			    </div>
+			    
+			    <input type="file" id="file-input" multiple accept="image/jpeg, image/png" style="display: none;">
+			</div>
+		</div>
+
+	</div>
+
+	<div class="lastRow-container">
+		<button class="SubmitBtn">
+			Publish Listing
+		</button>
+	</div>
+
 </div>
 
 

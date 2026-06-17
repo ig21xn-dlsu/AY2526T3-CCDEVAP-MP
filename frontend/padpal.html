@@ -24,12 +24,63 @@
         </svg>
       </button>
       <button class="btn-your-group">Your Group</button>
-      <div class="avatar-nav" aria-label="Profile">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-        </svg>
+      <div class="avatar-menu">
+        <button id="avatar-btn" class="avatar-nav" aria-label="Profile Menu" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+        </button>
+
+        <!-- DROPDOWN MENU -->
+        <div class="dropdown" id="dropdown" role="menu" aria-hidden="true">
+
+          <div class="dropdown-profile">
+            <img src="https://i.pravatar.cc/48?img=12" alt="Alex Rivera" class="dropdown-avatar" />
+
+            <div class="dropdown-info">
+              <span class="dropdown-name">Alex Rivera</span>
+              <span class="dropdown-email">
+                alex.rivera@dlsu.edu.ph
+              </span>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <a class="dropdown-item" href="profile.html" role="menuitem">
+            <span class="item-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </span>
+            <span>Profile</span>
+          </a>
+
+          <a class="dropdown-item" href="profile-modal.html" role="menuitem">
+            <span class="item-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </span>
+            <span>Settings</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <a class="dropdown-item logout" href="../index.html" role="menuitem">
+            <span class="item-icon">
+              <svg xmlns="http://www.w3.org/2000/svg"width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </span>
+            <span>Logout</span>
+          </a>
+        </div>
       </div>
-    </div>
   </nav>
 
   <!-- Main -->
@@ -53,8 +104,7 @@
         </svg>
         <input id="searchInput" class="search-input" type="text" placeholder="Search universities, majors, or keywords…" />
       </div>
-      
-      <!-- Filters are based on hardcoded values for now -->
+
       <select class="filter-select" id="campusFilter">
           <option value="">Any Campus</option>
           <option value="De La Salle University">De La Salle University</option>
@@ -70,9 +120,9 @@
 
       <select class="filter-select" id="budgetFilter">
           <option value="">Budget: Any</option>
-          <option value="15000">Below P15,000</option>
-          <option value="20000">Below P20,000</option>
-          <option value="30000">Below P30,000</option>
+          <option value="10000">Below ₱10,000</option>
+          <option value="15000">Below ₱15,000</option>
+          <option value="20000">Below ₱20,000</option>
       </select>
     </div>
 

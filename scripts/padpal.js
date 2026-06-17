@@ -1,10 +1,10 @@
-// Hardcoded Data
+// ── DATA ─────────────────────────────────────────────────────────────────────
 
 const groups = [
   {
     id: 1,
     name: "The Tech House",
-    school: "DLSU",
+    school: "De La Salle University",
     budget: "18000",
     match: 94,
     desc: "Computer Science majors looking for a 4th housemate. We keep common areas clean and love late-night hackathons.",
@@ -107,7 +107,7 @@ const allData = [...groups];
 
 const MAX_VISIBLE_AVATARS = 2;
 
-// Avatar Stack
+// ── AVATAR STACK ─────────────────────────────────────────────────────────────
 
 function renderAvatarStack(members) {
   const stack = document.createElement('div');
@@ -151,7 +151,7 @@ function renderAvatarStack(members) {
   return stack;
 }
 
-// Rendering Cards
+// ── RENDER CARDS ─────────────────────────────────────────────────────────────
 
 function renderCards(data) {
   const grid  = document.getElementById('cardsGrid');
@@ -225,13 +225,13 @@ function renderCards(data) {
       tags.appendChild(pill);
     });
 
-    // only co-living groups link to group profile
+    // Button — only co-living groups link to group profile
     const btn = document.createElement('a');
     btn.className   = 'btn-view';
     btn.textContent = g.tab === 'coliving' ? 'View Group Profile' : 'View Listing';
 
     if (g.tab === 'coliving') {
-      // pass group id via query string so group page can load the right data
+      // Pass group id via query string so group page can load the right data
       btn.href = `padpal-group.html?id=${g.id}`;
     } else {
       btn.href = '#';
@@ -246,9 +246,9 @@ function renderCards(data) {
   });
 }
 
-// Filtering
+// ── FILTER STATE ─────────────────────────────────────────────────────────────
 
-let activeTab   = 'coliving';
+let activeTab = 'coliving';
 let searchQuery = '';
 let campusFilter = '';
 let genderFilter = '';
@@ -279,6 +279,12 @@ function getFiltered() {
             !budgetFilter ||
             g.budget <= budgetFilter;
 
+            console.log(
+    g.name,
+    g.budget,
+    budgetFilter
+);
+
         return (
             matchesTab &&
             matchesSearch &&
@@ -291,7 +297,7 @@ function getFiltered() {
 
 function refresh() { renderCards(getFiltered()); }
 
-// Tabs
+// ── TABS ─────────────────────────────────────────────────────────────────────
 
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -306,7 +312,7 @@ document.querySelectorAll('.tab').forEach(btn => {
   });
 });
 
-// Searching
+// ── SEARCH ───────────────────────────────────────────────────────────────────
 
 document.getElementById('searchInput').addEventListener('input', e => {
   searchQuery = e.target.value;
@@ -331,6 +337,53 @@ document.getElementById('budgetFilter')
     refresh();
 });
 
-// initialize
+// ── NAV: YOUR GROUP button goes to group page (first coliving group as placeholder) ─
+
+document.querySelector('.btn-your-group').addEventListener('click', () => {
+  window.location.href = 'padpal-group.html?id=2';
+});
+
+// Avatar Dropdown
+
+const avatarBtn = document.getElementById('avatar-btn');
+const dropdown = document.getElementById('dropdown');
+
+if (avatarBtn && dropdown) {
+
+  function openDropdown() {
+    dropdown.classList.add('open');
+    dropdown.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeDropdown() {
+    dropdown.classList.remove('open');
+    dropdown.setAttribute('aria-hidden', 'true');
+  }
+
+  avatarBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    dropdown.classList.contains('open')
+      ? closeDropdown()
+      : openDropdown();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (
+      !dropdown.contains(e.target) &&
+      !avatarBtn.contains(e.target)
+    ) {
+      closeDropdown();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDropdown();
+    }
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
 
 refresh();

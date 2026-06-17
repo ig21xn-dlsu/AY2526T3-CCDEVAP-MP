@@ -1,4 +1,3 @@
-/* --- Global Resets & Typography (From Reference) --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,7 +12,6 @@ body {
     margin: 0;
 }
 
-/* --- Layout Architecture (From Reference) --- */
 .dashboard-container {
     display: flex;
     width: 100%;
@@ -26,7 +24,6 @@ body {
     height: 100vh;
 }
 
-/* --- Header Component (From Reference) --- */
 .header {
     margin-bottom: 32px;
 }
@@ -43,14 +40,12 @@ body {
     font-size: 15px;
 }
 
-/* --- Main Grid Body (Single Column Flow with Bottom Card) --- */
 .main-body {
     display: grid;
     grid-template-columns: 1fr; 
     gap: 24px;
 }
 
-/* --- Search & Filtering Container (Structured using Reference Style) --- */
 .search-container {
     grid-column: 1 / -1; 
     display: flex;
@@ -98,7 +93,6 @@ body {
     height: 16px;
 }
 
-/* --- Reports Table Components (From Reference) --- */
 .table-container {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
@@ -130,7 +124,6 @@ tbody td {
     color: #334155;
 }
 
-/* Subject Info Block formatting */
 .subject-cell {
     display: flex;
     align-items: center;
@@ -147,8 +140,6 @@ tbody td {
     font-size: 13px;
     color: #64748b;
 }
-
-/* --- Reason Badges (Using Reference Font/Padding, Matching Colors) --- */
 .bad {
     display: inline-flex;
     padding: 4px 10px;
@@ -159,7 +150,6 @@ tbody td {
     background-color: #fff1f2;
     color: #f43f5e;
 }
-/* View Details link styling */
 .details {
     color: #2563eb;
     text-decoration: none;
@@ -171,7 +161,7 @@ tbody td {
     text-decoration: underline;
 }
 
-/* --- Table Footer & Pagination (From Reference) --- */
+
 tfoot td {
     padding: 16px 24px;
     background-color: #f9f9fc;
@@ -210,7 +200,6 @@ tfoot td {
     font-size: 14px;
 }
 
-/* Clear transparent backgrounds with no border boxes */
 .pagination li a {
     background: transparent;
     border: none;
@@ -226,7 +215,6 @@ tfoot td {
     color: #0f172a;
 }
 
-/* --- Pending Moderation Container (Merged From Target Image Reference) --- */
 .pending-container {
     background-color: #f3f3f6;
     border: 1px solid #c2c6d8;
@@ -291,7 +279,6 @@ tfoot td {
     margin-top: 4px;
 }
 
-/* --- Window Popup View Details Modal --- */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -362,7 +349,6 @@ tfoot td {
     overflow-y: auto;
 }
 
-/* Internal Review Listings Items */
 .listing-preview-card {
     display: flex;
     gap: 16px;
@@ -412,7 +398,6 @@ tfoot td {
     color: #475569;
 }
 
-/* Split Metadata Content Grid Panels */
 .modal-grid {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -462,7 +447,6 @@ tfoot td {
     border-left: 3px solid #cbd5e1;
 }
 
-/* Textarea input configuration */
 .notes-container {
     display: flex;
     flex-direction: column;
@@ -487,7 +471,6 @@ tfoot td {
     outline: none;
 }
 
-/* Control Execution Actions Buttons */
 .modal-footer {
     display: flex;
     justify-content: flex-end;
@@ -517,13 +500,11 @@ tfoot td {
     color: #ffffff;
 }
 
-/* --- Mobile Compatibility Device Settings --- */
 @media (max-width: 600px) {
     .main-content {
         padding: 16px;
     }
 
-    /* Convert row components into single block stacked vertical cards */
     table, thead, tbody, th, td, tr, tfoot {
         display: block;
     }
@@ -549,7 +530,6 @@ tfoot td {
         font-size: 14px;
     }
 
-    /* Programmatic mobile labels alignment matching referenced properties spacing */
     td:nth-of-type(1)::before { content: "SUBJECT"; font-weight: 600; color: #64748b; font-size: 11px; }
     td:nth-of-type(2)::before { content: "REPORTER"; font-weight: 600; color: #64748b; font-size: 11px; }
     td:nth-of-type(3)::before { content: "REASON"; font-weight: 600; color: #64748b; font-size: 11px; }

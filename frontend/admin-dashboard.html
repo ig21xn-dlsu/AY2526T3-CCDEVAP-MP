@@ -195,6 +195,15 @@
     </section>
 
     <script src="/frontend/components/admin-navbar.js" defer></script>
+    <script>
+        document.addEventListener('open-settings', () => {
+            // Check if modal already exists to prevent duplicates
+            if (!document.querySelector('profile-settings-modal')) {
+                const modal = document.createElement('profile-settings-modal');
+                document.body.appendChild(modal);
+            }
+        });
+    </script>
 </body>
 
 </html>

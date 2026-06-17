@@ -7,11 +7,16 @@ class profileSettingsModal extends HTMLElement {
   connectedCallback() {
     this.shadowRoot.innerHTML = `
       <style>
-        /* 1. YOUR CSS GOES HERE */
         :host {
-          display: block; 
-          width: 100%;
-        }
+  
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  pointer-events: auto; 
+}
 body, main {
     margin: 0;
     position: relative;
@@ -443,6 +448,10 @@ input[type="text"], input[type="password"], textarea {
         </section>
     </section>
     `;
+      
+      this.shadowRoot.querySelector('#cancel-button').addEventListener('click', () => this.remove());
+      this.shadowRoot.querySelector('#save-changes-button').addEventListener('click', () => this.remove());
+      this.shadowRoot.querySelector('#modal-header svg').addEventListener('click', () => this.remove());
   }
 }
 

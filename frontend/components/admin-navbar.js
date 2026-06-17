@@ -227,7 +227,17 @@ class AdminNavbar extends HTMLElement {
         </section>
       </section>
     `;
+
+const settingsButton = this.shadowRoot.querySelector('#navbar-settings .navbar-option-button'); // Adjust selector if needed
+settingsButton.addEventListener('click', () => {
+    
+    this.dispatchEvent(new CustomEvent('open-settings', {
+        bubbles: true,
+        composed: true
+    }));
+});
   }
 }
 
 customElements.define('admin-navbar', AdminNavbar);
+

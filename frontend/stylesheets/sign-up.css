@@ -357,3 +357,131 @@ body {
 .blue {
     color: #0050CB;
 }
+
+/* =========================================
+   MOBILE RESPONSIVE LAYOUT (Max-width: 768px)
+   ========================================= */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        background: #F8F9FC; 
+    }
+
+    #container-main-left {
+        width: 100%;
+        height: auto;
+        min-height: 180px; 
+    }
+
+    #photo-container {
+        display: none; 
+    }
+    
+    #background-overlay {
+        background: linear-gradient(180deg, #F8F9FC 0%, #FFFFFF 100%);
+    }
+
+    #page-content {
+        padding: 40px 24px 20px;
+        align-items: center; 
+        text-align: center;
+    }
+
+    #find-your-place {
+        color: #0050CB; 
+        font-size: 28px;
+        line-height: normal;
+        letter-spacing: normal;
+    }
+
+    #join-thousands {
+        color: #424656;
+        font-size: 14px;
+        line-height: 20px;
+        margin-top: 8px;
+    }
+
+    #container-main-right {
+        width: 100%;
+        height: auto;
+        padding: 0 24px 40px;
+        align-items: flex-start;
+    }
+
+    #sign-up-form {
+        width: 100%;
+        max-width: none; 
+        background: #FFFFFF; 
+    }
+
+    #create-account-text-container {
+        display: none; 
+    }
+
+    #actual-form {
+        gap: 20px;
+    }
+
+    #role-text {
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    #student-role-button {
+        border: 2px solid #0050CB; 
+        background: #F8F9FC;
+        padding: 24px 12px;
+    }
+    
+    #manager-role-button {
+        border: 1px solid #C2C6D8;
+        background: #FFFFFF;
+        padding: 24px 12px;
+    }
+
+    .role-text {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #name-input-field {
+        flex-direction: row; 
+        gap: 12px;
+    }
+
+    #input-last-name, #input-first-name {
+        width: 50%;
+    }
+
+    .input-field-text {
+        display: none; 
+    }
+
+    .input-field {
+        padding: 14px 16px;
+    }
+
+    #sign-up-button {
+        background: #945B00; 
+        color: #FFFFFF; 
+        padding: 16px;
+        margin-bottom: 24px;
+    }
+
+    #back-to-login {
+        width: 100vw;
+        margin-left: -24px; 
+        padding: 24px;
+        background: #F3F3F6;
+        border-top: 1px solid #E5E7EB;
+        font-size: 14px;
+        font-weight: 400;
+    }
+    
+    #back-to-login a.blue {
+        font-weight: 700;
+    }
+}

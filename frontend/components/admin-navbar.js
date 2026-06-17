@@ -190,6 +190,24 @@ class AdminNavbar extends HTMLElement {
         drawer.classList.toggle('open');
         this.shadowRoot.querySelector('#arrow').style.transform = drawer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
     });
+      
+      // Profile Settings
+      const settingsButton = this.shadowRoot.querySelector('#settings-button');
+
+      settingsButton.addEventListener('click', () => {
+          this.dispatchEvent(new CustomEvent('open-settings', {
+          bubbles: true,
+          composed: true
+        }));
+      });
+    
+      settingsButton.addEventListener('click', () => {
+        console.log('Settings clicked');
+        this.dispatchEvent(new CustomEvent('open-settings', {
+        bubbles: true,
+        composed: true
+        }));
+      });
   }
 }
 customElements.define('admin-navbar', AdminNavbar);

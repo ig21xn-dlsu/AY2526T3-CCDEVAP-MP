@@ -338,15 +338,20 @@ body {
 .fill-red { background: #BA1A1A; }
 
 @media (max-width: 768px) {
+    
     body {
-        flex-direction: column; 
-        overflow-y: auto;
+        display: block !important; 
+        height: auto !important; 
+        overflow-y: auto !important;
+        padding-bottom: 120px; 
     }
 
     #admin-dashboard {
         width: 100%;
+        height: auto; 
         padding: 24px;
         gap: 16px;
+        overflow-y: visible; 
     }
 
     #system-analytics {

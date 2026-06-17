@@ -354,3 +354,104 @@ nav {
 }
 .success-title { font-size: 1.1rem; font-weight: 700; }
 .success-sub   { font-size: 0.875rem; color: var(--text-secondary); }
+
+/* ── MOBILE RESPONSIVENESS ── */
+@media (max-width: 640px) {
+  nav {
+    padding: 0 16px;
+    height: 54px;
+  }
+
+  .hero {
+    height: 220px;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-content {
+    bottom: 18px;
+    left: 18px;
+  }
+
+  .below-hero {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .btn-apply {
+    width: 100%;
+    text-align: center;
+    padding: 13px 20px;
+    font-size: 1rem;
+  }
+
+  .page-grid {
+    padding: 0 16px 48px;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .listing {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .listing-img {
+    width: 100%;
+    height: 140px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal {
+    max-width: 100%;
+    margin: 0 12px;
+    padding: 22px 18px 20px;
+    border-radius: 16px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 16px; /* prevents IOS zoom on focus */
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 860px) {
+  .page-grid {
+    grid-template-columns: 1fr;
+    padding: 0 20px 52px;
+  }
+
+  .below-hero {
+    padding: 14px 20px;
+  }
+
+  .hero {
+    height: 250px;
+  }
+}

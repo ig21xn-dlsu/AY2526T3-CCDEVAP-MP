@@ -31,7 +31,7 @@
 	<form action="" id="listing-form"></form>
 
 	<div class="formBox" form="listing-form">
-		<div class="room-detailsTitle">
+		<div class="formBoxTitle">
 			<img src="assets/room-details.svg" alt="">
 			<h1>Room Details</h1>
 
@@ -41,35 +41,52 @@
 			<input type="text" id="room-name" placeholder="e.g 4 PAX Building near University A">
 		</div>
 		<div class="room-bottom">
-			<label for="room-price">Price Per Month (P)</label>
-			<input id="room-price" type="text"
-			       inputmode="decimal"
-			       pattern="[0-9]*[.,]?[0-9]{0,2}"
-			       placeholder="0.00"
-			       autocomplete="off"
-			>
-			<label for="room-date">Earliest Move-in Date</label>
-			<input type="date" placeholder="mm/dd/yyyy">
+			<div class="priceContainer">
+				<label for="room-price">Price Per Month (P)</label>
+				<div class="priceInputContainer">
+					<img src="assets/moneyIcon.svg" alt="">
+					<input id="room-price" type="text"
+					inputmode="decimal"
+					pattern="[0-9]*[.,]?[0-9]{0,2}"
+					placeholder="0.00"
+					autocomplete="off"
+					>
+				</div>
+			</div>
+
+			<div class="dateContainer">
+				<label for="room-date">Earliest Move-in Date</label>
+				<div class="dateInputContainer">
+					<img src="assets/dateIcon.svg" alt="">
+					<input type="date" placeholder="mm/dd/yyyy">
+				</div>
+			</div>
+		
 		</div>
 	</div>
 
 	<div class="formBox" form="listing-form">
-		<div class="about-spaceTitle">
-			<img src="" alt="">
+		<div class="formBoxTitle">
+			<img src="assets/aboutSpaceIcon.svg" alt="">
 			<h1>About the Space</h1>
 		</div>
 
 		<div class="descriptionContainer">
-		<p>Vibe & description</p>
+		<label>Description of Space</label>	
 		<textarea name="description" id="room-description">Tell seekers what makes this room and the house vibe special...</textarea>
 		</div>
+		
 
-		<p>Lifestyle Tags</p>
-		<div class="tags-container">
-			<button class="tag">private-beds</button>
-			<button class="tag">social-house</button>
-			<button class="custom">+ Custom</button>
+
+		<div class="lifestyleContainer">
+			<label for="">Lifestyle Tags: <em> help Roomies Discover your place better!</em></label>
+			<div class="tags-container">
+				<button class="tag ">private-beds</button>
+				<button class="tag selected">social-house</button>
+				<button class="customTag">+ Custom</button>
+			</div>
 		</div>
+	
 		<fieldset class="amenities-group">
 		  <legend>Amenities</legend>
 

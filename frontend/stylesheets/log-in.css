@@ -345,3 +345,98 @@ input::placeholder {
     font-weight: 700;
     line-height: 28px; /* 155.556% */
 }
+
+
+/* =========================================
+   MOBILE RESPONSIVE LAYOUT (Max-width: 768px)
+   ========================================= */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        background: #0050CB; 
+    }
+
+    #container-main-left {
+        width: 100%;
+        height: auto;
+        min-height: 35vh;
+        position: relative;
+    }
+
+    #contents {
+        padding: 40px 24px;
+        gap: 12px;
+        justify-content: flex-start;
+    }
+
+    #website-brand {
+        padding-bottom: 12px; 
+        font-size: 24px;
+    }
+
+    #website-motto {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    #website-claim {
+        display: none; 
+    }
+
+    #container-main-right {
+        width: 100%;
+        height: auto;
+        flex-grow: 1;
+        align-items: flex-start;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        
+        border-radius: 24px 24px 0 0;
+        margin-top: -40px; 
+        position: relative;
+        z-index: 10;
+    }
+
+    #container-sign-in {
+        width: 85%;
+        max-width: none;
+        margin: 0 auto; 
+        gap: 24px;
+    }
+
+    #container-welcome-back {
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+    }
+
+    #welcome-back {
+        font-size: 24px;
+    }
+
+    .some-details {
+        font-size: 14px;
+    }
+
+    .credential-text {
+        font-size: 12px;
+    }
+
+    .input-field {
+        padding: 12px 14px;
+    }
+
+    #sign-in-button {
+        padding: 14px 0;
+    }
+
+    #container-create-account {
+        font-size: 14px;
+    }
+
+    #container-additional-links {
+        padding-top: 16px;
+    }
+}

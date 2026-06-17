@@ -28,10 +28,14 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
 
     gap: 1.5rem;
     overflow-y: auto;
+}
+
+.analytics-box, .dashboard-card {
+    max-width: 600px; 
 }
 
 #page-heading {
@@ -152,12 +156,12 @@ body {
     background: #FFF;
 }
 
-/* This makes the left cards bigger than the right cards! */
+
 .card-large {
-    flex: 2; /* Takes up 2 parts of the space */
+    flex: 2; 
 }
 .card-small {
-    flex: 1; /* Takes up 1 part of the space */
+    flex: 1; 
 }
 
 .card-title {
@@ -332,3 +336,30 @@ body {
 .fill-blue { background: #0050CB; }
 .fill-orange { background: #E67A00; }
 .fill-red { background: #BA1A1A; }
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; 
+        overflow-y: auto;
+    }
+
+    #admin-dashboard {
+        width: 100%;
+        padding: 24px;
+        gap: 16px;
+    }
+
+    #system-analytics {
+        flex-direction: column; 
+        gap: 12px;
+    }
+
+    .dashboard-row {
+        flex-direction: column; 
+        gap: 12px;
+    }
+
+    .chart-placeholder {
+        height: 250px; 
+    }
+}

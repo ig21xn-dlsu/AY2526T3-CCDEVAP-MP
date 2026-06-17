@@ -16,6 +16,20 @@ class AdminNavbar extends HTMLElement {
           display: block;
         }
 
+        @media (max-width: 768px) {
+    :host {
+      width: 100%; height: auto; order: 2; /* Moves nav to bottom */
+      position: fixed; bottom: 0; z-index: 100;
+    }
+    #admin-navbar {
+      flex-direction: row; /* Horizontal icons for mobile footer */
+      padding: 12px; border-right: none; border-top: 1px solid #C2C6D8;
+    }
+    #admin-text, #navbar-settings { display: none; } /* Hide desktop branding/settings */
+    #navbar-options { flex-direction: row; justify-content: space-around; }
+    .navbar-option-button { flex-direction: column; width: auto; padding: 4px; }
+  }
+
         * {
           box-sizing: border-box;
         }

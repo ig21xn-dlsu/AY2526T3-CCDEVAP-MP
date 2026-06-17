@@ -122,3 +122,210 @@ body {
     line-height: 16px; /* 133.333% */
     letter-spacing: 0.6px;
 }
+
+.dashboard-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.dashboard-row.trends {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    height: 30rem;
+}
+
+.dashboard-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 0.063rem solid #C2C6D8;
+    background: #FFF;
+}
+
+/* This makes the left cards bigger than the right cards! */
+.card-large {
+    flex: 2; /* Takes up 2 parts of the space */
+}
+.card-small {
+    flex: 1; /* Takes up 1 part of the space */
+}
+
+.card-title {
+    color: #1A1C1E;
+    font-family: 'Montserrat';
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* ---- GROWTH TRENDS ---- */
+.chart-placeholder {
+    flex-grow: 1;
+    border-radius: 8px;
+    border: 1px solid #C2C6D8;
+    background: #F8F9FB; /* Very light gray */
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-label {
+    background: #FFF;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: 'Montserrat';
+    font-size: 12px;
+    color: #727687;
+    z-index: 2;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.chart-wave {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    background: #7A9EE6;
+    border-radius: 100% 100% 0 0 / 50% 50% 0 0; /* Fake CSS wave */
+}
+
+/* ---- RECENT ACTIVITY ---- */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.activity-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+    border-bottom: 1px solid #F1F3F8;
+    padding-bottom: 1rem;
+}
+
+.activity-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.icon-blue { background: #E6F0FF; }
+.icon-orange { background: #FFF2E5; }
+.icon-red { background: #FFEBEE; }
+
+.activity-text {
+    font-family: 'Montserrat';
+    font-size: 14px;
+    color: #1A1C1E;
+    line-height: 1.4;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #727687;
+    margin-top: 4px;
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.view-all {
+    color: #0050CB;
+    font-family: 'Montserrat';
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.table-header, .table-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 0;
+    font-family: 'Montserrat';
+}
+
+.table-header {
+    border-bottom: 1px solid #C2C6D8;
+    font-size: 12px;
+    font-weight: 600;
+    color: #727687;
+}
+
+.table-row {
+    border-bottom: 1px solid #F1F3F8;
+    font-size: 14px;
+}
+
+.col-type { flex: 1; }
+.col-subject { flex: 2; font-weight: 600; color: #1A1C1E; }
+.col-date { flex: 1.5; color: #424656; }
+.col-action { flex: 0.5; text-align: right; }
+
+.badge {
+    background: #F1F3F8;
+    color: #424656;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.badge-red {
+    background: #FFEBEE;
+    color: #BA1A1A;
+}
+
+.action-link { color: #0050CB; font-weight: 600; text-decoration: none; }
+.link-red { color: #BA1A1A; }
+
+.health-item {
+    margin-bottom: 1.25rem;
+    font-family: 'Montserrat';
+}
+
+.health-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #424656;
+    margin-bottom: 6px;
+}
+
+.health-text strong {
+    color: #1A1C1E;
+}
+
+.progress-bg {
+    width: 100%;
+    height: 6px;
+    background: #E1E3EA;
+    border-radius: 4px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.fill-green { background: #00897B; }
+.fill-blue { background: #0050CB; }
+.fill-orange { background: #E67A00; }
+.fill-red { background: #BA1A1A; }

@@ -88,6 +88,110 @@
                 </div>
             </div>
         </section>
+
+        <section class="dashboard-row">
+            <div class="dashboard-card card-large">
+                <div class="card-title">Growth Trends</div>
+                <div class="chart-placeholder">
+                    <div class="chart-label">Chart Visualization Area</div>
+                    <div class="chart-wave"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-card card-small">
+                <div class="card-title">Recent Activity</div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon icon-blue">👤</div>
+                        <div class="activity-text">
+                            <div><strong>Sarah J.</strong> created a new account.</div>
+                            <div class="activity-time">2 mins ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon icon-orange">🏠</div>
+                        <div class="activity-text">
+                            <div>New listing published in Austin, TX.</div>
+                            <div class="activity-time">15 mins ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon icon-red">❗</div>
+                        <div class="activity-text">
+                            <div>User @mike99 was flagged for spam.</div>
+                            <div class="activity-time">1 hr ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-row trends">
+            <div class="dashboard-card card-large">
+                <div class="card-header-row">
+                    <div class="card-title">Pending Reviews</div>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+
+                <div class="table-header">
+                    <div class="col-type">TYPE</div>
+                    <div class="col-subject">SUBJECT</div>
+                    <div class="col-date">SUBMITTED</div>
+                    <div class="col-action">ACTION</div>
+                </div>
+
+                <div class="table-row">
+                    <div class="col-type"><span class="badge">🏠 Listing</span></div>
+                    <div class="col-subject">2BR Sublet in Downtown</div>
+                    <div class="col-date">Today, 10:42 AM</div>
+                    <div class="col-action"><a href="#" class="action-link">Review</a></div>
+                </div>
+                <div class="table-row">
+                    <div class="col-type"><span class="badge">👤 Profile</span></div>
+                    <div class="col-subject">Alex Rivera Identity Verify</div>
+                    <div class="col-date">Yesterday, 4:15 PM</div>
+                    <div class="col-action"><a href="#" class="action-link">Review</a></div>
+                </div>
+                <div class="table-row">
+                    <div class="col-type"><span class="badge badge-red">❗ Report</span></div>
+                    <div class="col-subject">Inappropriate Behavior</div>
+                    <div class="col-date">Yesterday, 2:30 PM</div>
+                    <div class="col-action"><a href="#" class="action-link link-red">Investigate</a></div>
+                </div>
+            </div>
+
+            <div class="dashboard-card card-small">
+                <div class="card-title">System Health</div>
+
+                <div class="health-item">
+                    <div class="health-text"><span>API Latency</span><strong>124ms</strong></div>
+                    <div class="progress-bg">
+                        <div class="progress-fill fill-green" style="width: 20%;"></div>
+                    </div>
+                </div>
+
+                <div class="health-item">
+                    <div class="health-text"><span>CPU Usage</span><strong>32%</strong></div>
+                    <div class="progress-bg">
+                        <div class="progress-fill fill-blue" style="width: 32%;"></div>
+                    </div>
+                </div>
+
+                <div class="health-item">
+                    <div class="health-text"><span>Memory</span><strong>4.2GB / 8GB</strong></div>
+                    <div class="progress-bg">
+                        <div class="progress-fill fill-orange" style="width: 52%;"></div>
+                    </div>
+                </div>
+
+                <div class="health-item">
+                    <div class="health-text"><span>Storage</span><strong>78%</strong></div>
+                    <div class="progress-bg">
+                        <div class="progress-fill fill-red" style="width: 78%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </section>
 
     <script src="/frontend/components/admin-navbar.js" defer></script>

@@ -249,6 +249,10 @@ main {
 }
 .tab:hover { color: var(--blue); }
 
+#tabControls {
+  margin-top: 28px;
+}
+
 /* ── SEARCH BAR ── */
 .search-row {
   display: flex;
@@ -313,6 +317,123 @@ main {
   transition: border-color 0.15s;
 }
 .filter-icon-btn:hover { border-color: var(--blue); }
+
+.tab-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.shared-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shared-filters-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 12px;
+}
+
+.shared-labeled-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shared-labeled-field label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.shared-search-wrap {
+  grid-column: 1 / -1;
+}
+
+.shared-field {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.shared-field:focus {
+  border-color: var(--blue);
+}
+
+.shared-price-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.shared-range-field,
+.shared-option-group {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shared-range-field label,
+.shared-group-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.shared-range-field input[type="range"] {
+  width: 100%;
+}
+
+.shared-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.shared-option input {
+  width: 13px;
+  height: 13px;
+}
+
+.shared-filter-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.shared-apply-btn,
+.shared-reset-btn {
+  border-radius: var(--radius-pill);
+  padding: 10px 18px;
+}
+
+.shared-reset-btn {
+  background: none;
+  border: 1.5px solid var(--border);
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.shared-reset-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
 
 /* ── CARDS GRID ── */
 .cards-grid {
@@ -525,10 +646,31 @@ main {
     margin-top: 20px;
   }
 
+  #tabControls {
+    margin-top: 20px;
+  }
+
   .search-wrap {
     min-width: 0;
     width: 100%;
     flex: 1 1 100%;
+  }
+
+  .shared-filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shared-price-row {
+    grid-template-columns: 1fr;
+  }
+
+  .shared-filter-actions {
+    justify-content: stretch;
+  }
+
+  .shared-filter-actions .btn-your-group,
+  .shared-filter-actions .shared-reset-btn {
+    width: 100%;
   }
 
   .filter-select {

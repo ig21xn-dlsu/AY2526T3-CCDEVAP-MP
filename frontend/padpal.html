@@ -92,38 +92,13 @@
     <div class="tabs" role="tablist">
       <button class="tab active" role="tab" aria-selected="true"  data-tab="coliving">Co-Living Groups</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="shared">Shared Spaces</button>
-        <a href="padpal-create-group.html" class="btn-create-group"> + Create New Group </a>
     </div>
 
-    <!-- Search / Filters -->
-    <div class="search-row">
-      <div class="search-wrap">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input id="searchInput" class="search-input" type="text" placeholder="Search universities, majors, or keywords…" />
-      </div>
+    <!-- Tab-Specific Controls -->
+    <div id="tabControls"></div>
 
-      <select class="filter-select" id="campusFilter">
-          <option value="">Any Campus</option>
-          <option value="De La Salle University">De La Salle University</option>
-          <option value="DLSU-CSB">DLSU-CSB</option>
-          <option value="UP Manila">UP Manila</option>
-      </select>
-
-      <select class="filter-select" id="genderFilter">
-          <option value="">Gender: Any</option>
-          <option value="Co-ed">Co-ed</option>
-          <option value="All Girls">All Girls</option>
-      </select>
-
-      <select class="filter-select" id="budgetFilter">
-          <option value="">Budget: Any</option>
-          <option value="10000">Below ₱10,000</option>
-          <option value="15000">Below ₱15,000</option>
-          <option value="20000">Below ₱20,000</option>
-      </select>
+    <div class="tab-actions">
+      <a href="padpal-create-group.html" class="btn-create-group">+ Create New Group</a>
     </div>
 
     <!-- Group Cards -->

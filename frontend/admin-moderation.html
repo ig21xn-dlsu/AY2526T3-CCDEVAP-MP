@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/admin-moderation.css">
+    <title>Padpal | Admin Moderation Management</title>
+</head>
+<body>
+    <div class="dashboard-container">
+    <admin-navbar></admin-navbar>
+<!-- Header -->
+    <div class="main-content">
+    <div class="header">
+        <div class="moderation-header">
+            <h2>Moderation Queue</h2>
+        </div>
+        <div class="under-header">
+            Review and manage flagged property listings and user reports.
+        </div>
+    </div>
+
+<!-- Main Body -->
+    <div class="main-body">
+    <!--Search Container-->
+        <div class="search-container">
+            <input type="text" placeholder="Search by listing name or reporter...">
+            <div class="filter">
+                <img src="" alt="filtericon">
+                <button class="button button1">Filter</button>
+            </div>
+        </div>
+
+    <!-- Reports Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SUBJECT</th>
+                        <th>REPORTER</th>
+                        <th>REASON</th>
+                        <th>DATE</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                    <div class="subject-cell">
+                        <div>
+                            <div class="subject-title">Urban Shared Suite A1</div>
+                            <div class="subject-ref">Ref: PROP-001</div>
+                        </div>
+                    </div>
+                    </td>
+                        <td>Alex Rivera</td>
+                        <td><span class="bad">Misleading Photos</span></td>
+                        <td>Oct 24, 2023</td>
+                        <td><a href="#" class="details">VIEW DETAILS</a></td>
+                </tr>   
+                
+                <tr>
+                    <td>
+                    <div class="subject-cell">
+                        <div>
+                            <div class="subject-title"></div>
+                            <div class="subject-ref">Ref: PROP-001</div>
+                        </div>
+                    </div>
+                    </td>
+                        <td>Jordan Smith</td>
+                        <td><span class="bad">Misleading Photos</span></td>
+                        <td>Oct 23, 2023</td>
+                        <td><a href="#" class="details">VIEW DETAILS</a></td>
+                </tr>
+
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <div class="footer-status">4 of 124 properties</div>
+                            <ul class="pagination">
+                                <li><a href="#">&#8592;</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li>...</li>
+                                <li><a href="#">&#8594;</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tfoot>
+        </table>
+
+        </div>
+<!-- Pending Container-->
+        <div class="pending-container">
+            <h2 class="title">PENDING MODERATION</h2>
+            <div class="stats">
+                <span class="stats-num">15</span>
+                Open Cases
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+                <div class="action">Urgent Action Needed</div> <!-- status to action-->
+        </div>
+    </div>
+    </div>
+    <script src="components/profile-settings-modal.js" defer></script>
+    <script src="components/admin-navbar.js" defer></script>
+    <script>
+        document.addEventListener('open-settings', () => {
+            // Check if modal already exists to prevent duplicates
+            if (!document.querySelector('profile-settings-modal')) {
+                const modal = document.createElement('profile-settings-modal');
+                document.body.appendChild(modal);
+            }
+        });
+
+        document.addEventListener('open-settings', () => {
+            console.log('Open settings event received');
+
+            if (!document.querySelector('profile-settings-modal')) {
+                const modal = document.createElement('profile-settings-modal');
+                document.body.appendChild(modal);
+            }
+        });
+    </script>
+    </div>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylesheets/admin-listings.css">
-    <title>Padpal - Admin Listing Management</title>
+    <title>Padpal | Admin Listing Management</title>
 </head>
 <body>
     <div class="dashboard-container">
@@ -151,7 +151,26 @@
         </div>
     </div>
     </div>
+    <script src="components/profile-settings-modal.js" defer></script>
     <script src="components/admin-navbar.js" defer></script>
+    <script>
+        document.addEventListener('open-settings', () => {
+            // Check if modal already exists to prevent duplicates
+            if (!document.querySelector('profile-settings-modal')) {
+                const modal = document.createElement('profile-settings-modal');
+                document.body.appendChild(modal);
+            }
+        });
+
+        document.addEventListener('open-settings', () => {
+            console.log('Open settings event received');
+
+            if (!document.querySelector('profile-settings-modal')) {
+                const modal = document.createElement('profile-settings-modal');
+                document.body.appendChild(modal);
+            }
+        });
+    </script>
     </div>
 </body>
 

@@ -290,3 +290,105 @@ a.nostyle:visited {
     text-decoration: inherit;
     color: inherit;
 }
+
+/* =========================================
+   MOBILE RESPONSIVE LAYOUT (Max-width: 768px)
+   ========================================= */
+@media (max-width: 768px) {
+    #container-main {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        background: #F8F9FC; 
+        justify-content: flex-start;
+    }
+
+    #container-main-left {
+        width: 100%;
+        height: auto;
+        background: transparent; 
+        padding: 48px 24px 24px;
+        align-items: center; 
+    }
+
+    #container-page-details {
+        align-items: center;
+        gap: 8px;
+    }
+
+    #logo-area {
+        justify-content: center;
+    }
+
+    #container-logo {
+        background: transparent; 
+        padding: 0;
+    }
+
+    #website-name {
+        color: #0050CB; 
+        font-size: 32px;
+    }
+
+    #portal-name {
+        color: #424656; 
+        font-size: 20px;
+        text-align: center;
+        line-height: normal;
+        letter-spacing: normal;
+    }
+
+    #security-details {
+        background: transparent;
+        border: none;
+        backdrop-filter: none;
+        padding: 8px 0 0 0;
+        justify-content: center;
+    }
+
+    #security-details svg {
+        display: none; 
+    }
+
+    #secure-text {
+        color: #424656;
+        font-size: 14px;
+    }
+
+    #container-main-right {
+        width: 100%;
+        height: auto;
+        padding: 0 24px 48px;
+        align-items: flex-start;
+    }
+
+    #container-log-in {
+        width: 100%;
+        max-width: 24rem; 
+        margin: 0 auto; 
+        gap: 24px;
+    }
+
+    #container-welcome-back {
+        display: none; 
+    }
+
+    #container-credentials {
+        background: #FFF;
+        padding: 32px 24px;
+        border-radius: 8px;
+        border-top: 4px solid #0050CB; 
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+        gap: 20px;
+    }
+
+    #sign-in-section {
+        background: #945B00; 
+        padding: 14px 0;
+    }
+
+    #container-back-to-login {
+        border-top: none; 
+        padding-top: 0;
+    }
+}

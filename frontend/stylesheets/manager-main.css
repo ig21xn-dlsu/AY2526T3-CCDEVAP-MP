@@ -304,6 +304,11 @@ body{
 
 }
 
+.low{
+	color: red;
+	background: rgba(255, 218, 214, 0.50);
+}
+
 .footer-right{
 	display: flex;
 	align-items: center;
@@ -461,6 +466,8 @@ body{
 		gap: 16px;
 		padding-top: 16px;
 	}
+
+
 	
 	.footer-right {
 		width: 100%;

@@ -354,3 +354,98 @@ main {
   color: #fff;
 }
 
+/* ── MOBILE RESPONSIVNESS ── */
+@media (max-width: 640px) {
+  nav {
+    padding: 0 16px;
+    height: 54px;
+  }
+
+  .btn-your-group {
+    display: none;
+  }
+
+  main {
+    padding: 24px 16px 48px;
+  }
+
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .page-sub {
+    font-size: 0.875rem;
+  }
+
+  .tabs {
+    gap: 18px;
+    margin-top: 18px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    font-size: 0.875rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-create-group {
+    font-size: 0.8rem;
+    padding: 5px 12px;
+    flex-shrink: 0;
+  }
+
+  .search-row {
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .search-wrap {
+    min-width: 0;
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .filter-select {
+    font-size: 0.8rem;
+    padding: 9px 12px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .match-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  main {
+    padding: 28px 20px 52px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  nav {
+    padding: 0 20px;
+  }
+}

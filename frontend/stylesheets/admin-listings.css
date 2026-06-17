@@ -1,8 +1,9 @@
+/* --- Global Resets & Typography --- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family:"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
     margin: 0;
 }
 
-.dashboard-container{
+.dashboard-container {
     display: flex;
     width: 100%;
 }
@@ -23,6 +24,7 @@ body {
     overflow-y: auto;
     height: 100vh;
 }
+
 .header {
     margin-bottom: 32px;
 }
@@ -44,7 +46,6 @@ body {
     grid-template-columns: 1fr; 
     gap: 24px;
 }
-
 
 .admin-filter {
     grid-column: 1 / -1; 
@@ -144,6 +145,17 @@ tbody td {
     letter-spacing: 0.03em;
 }
 
+.active, .inactive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;       
+    border-radius: 9999px;     
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: capitalize;
+}
+
 .active {
     background-color: #007f7b40;
     color: #007F7A;
@@ -219,7 +231,6 @@ tfoot td {
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-
     max-width: 320px;
     width: 100%;
     justify-self: start;
@@ -266,10 +277,96 @@ tfoot td {
     border-radius: 9999px;
 }
 
-
 .capacity {
     text-align: right;
     font-size: 13px;
     color: #475569;
     font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 20px 16px;
+        height: auto;
+    }
+
+    .property-header h2 {
+        font-size: 22px;
+    }
+
+    .admin-filter {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 8px;
+    }
+
+    .admin-filter select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    table, thead, tbody, th, td, tr, tfoot {
+        display: block;
+    }
+
+    thead {
+        display: none; 
+    }
+
+    tbody tr {
+        margin-bottom: 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+
+    tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 14px;
+        text-align: right;
+    }
+
+    tbody td:last-child {
+        border-bottom: none;
+    }
+
+    tbody td::before {
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748b;
+        letter-spacing: 0.05em;
+        text-align: left;
+        flex-shrink: 0;
+    }
+
+    .property-cell {
+        justify-content: flex-end;
+        text-align: right;
+    }
+
+    .table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .pagination {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .total-listings {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
 }

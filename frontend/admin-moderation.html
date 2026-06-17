@@ -26,8 +26,10 @@
         <div class="search-container">
             <input type="text" placeholder="Search by listing name or reporter...">
             <div class="filter">
-                <img src="" alt="filtericon">
-                <button class="button button1">Filter</button>
+                <button class="button button1">
+                    <img src="assets/filterIcon.svg" alt="filtericon" class="btn-icon">
+                    Filter
+                    </button>
             </div>
         </div>
 
@@ -63,13 +65,13 @@
                     <td>
                     <div class="subject-cell">
                         <div>
-                            <div class="subject-title"></div>
+                            <div class="subject-title">Co-Living Space C</div>
                             <div class="subject-ref">Ref: PROP-001</div>
                         </div>
                     </div>
                     </td>
                         <td>Jordan Smith</td>
-                        <td><span class="bad">Misleading Photos</span></td>
+                        <td><span class="bad">Inaccurate Pricing</span></td>
                         <td>Oct 23, 2023</td>
                         <td><a href="#" class="details">VIEW DETAILS</a></td>
                 </tr>
@@ -78,7 +80,8 @@
 
                 <tfoot>
                     <tr>
-                        <td colspan="5">
+                        <td colspan="5">    
+                            <div class="table-footer">
                             <div class="footer-status">4 of 124 properties</div>
                             <ul class="pagination">
                                 <li><a href="#">&#8592;</a></li>
@@ -88,6 +91,7 @@
                                 <li>...</li>
                                 <li><a href="#">&#8594;</a></li>
                             </ul>
+                            </div>
                         </td>
                     </tr>
                 </tfoot>
@@ -99,7 +103,7 @@
             <h2 class="title">PENDING MODERATION</h2>
             <div class="stats">
                 <span class="stats-num">15</span>
-                Open Cases
+                <span class="stats-text">Open Cases</span>
             </div>
             <div class="progress-bar">
                 <div class="progress-fill"></div>
@@ -108,11 +112,61 @@
         </div>
     </div>
     </div>
+
+    <div id="reportModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <span class="alert-icon">⚠️</span>
+                    Review Report - Luxury Downtown Loft
+                </div>
+                <button class="close-modal-btn">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="listing-preview-card">
+                    <div class="listing-img-placeholder">
+                        <span class="price-tag">$2,400/mo</span>
+                    </div>
+                    <div class="listing-info">
+                        <h4>Luxury Downtown Loft</h4>
+                        <p class="listing-desc">Spacious 2-bedroom loft in the heart of downtown. Fully furnished with high-end amenities and stunning city...</p>
+                        <p class="listing-author">👤 Listed by <strong>Alex Morgan</strong> (Property Manager)</p>
+                    </div>
+                </div>
+
+                <div class="modal-grid">
+                    <div class="info-panel">
+                        <h5 class="panel-title">REPORT INFO</h5>
+                        <div class="info-row"><span class="info-label">Reason:</span> <span class="badge-danger">Scam / Fraudulent</span></div>
+                        <div class="info-row"><span class="info-label">Reporter:</span> <span>Jordan Lee</span></div>
+                        <div class="info-row"><span class="info-label">Date:</span> <span>Oct 24, 2023</span></div>
+                    </div>
+                    <div class="desc-panel">
+                        <h5 class="panel-title">USER DESCRIPTION</h5>
+                        <blockquote class="user-quote">
+                            "The lister asked for a deposit to be wired via Western Union before showing the property. The photos look like they were pulled from a hotel website. Very suspicious."
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="notes-container">
+                    <label for="adminNotes">Internal Admin Notes (Optional)</label>
+                    <textarea id="adminNotes" placeholder="Add notes justifying your decision before taking action..."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-dismiss">Ignore / Dismiss</button>
+                <button class="btn btn-danger">Delete Listing</button>
+            </div>
+        </div>
+    </div>
+
     <script src="components/profile-settings-modal.js" defer></script>
     <script src="components/admin-navbar.js" defer></script>
     <script>
         document.addEventListener('open-settings', () => {
-            // Check if modal already exists to prevent duplicates
             if (!document.querySelector('profile-settings-modal')) {
                 const modal = document.createElement('profile-settings-modal');
                 document.body.appendChild(modal);
@@ -127,8 +181,36 @@
                 document.body.appendChild(modal);
             }
         });
+        const reportModal = document.getElementById('reportModal');
+        const viewDetailsLinks = document.querySelectorAll('.details');
+        const closeModalButton = document.querySelector('.close-modal-btn');
+        const dismissButton = document.querySelector('.btn-dismiss');
+
+        viewDetailsLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                reportModal.classList.add('active');
+            });
+        });
+
+        const deactivateModal = () => {
+            reportModal.classList.remove('active');
+        };
+
+        closeModalButton.addEventListener('click', deactivateModal);
+        dismissButton.addEventListener('click', deactivateModal);
+
+        window.addEventListener('click', (event) => {
+            if (event.target === reportModal) {
+                deactivateModal();
+            }
+        });
     </script>
+    </div> </body>
+</html>
     </div>
 </body>
+
+
 
 </html>

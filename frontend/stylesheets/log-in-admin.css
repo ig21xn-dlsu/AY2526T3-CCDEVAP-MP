@@ -274,6 +274,13 @@ input[type="text"], input[type="password"], textarea {
     cursor: pointer;
 }
 
+#go-to-admin-button {
+    width: 100%;
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
 a.nostyle:link {
     text-decoration: inherit;
     color: inherit;

@@ -151,9 +151,9 @@ class AdminNavbar extends HTMLElement {
             <section id="navbar-buttons">
                 <section id="navbar-options">
                     <a href="admin-dashboard.html"><div class="navbar-option-button"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M10 6V0H18V6H10ZM0 10V0H8V10H0ZM10 18V8H18V18H10ZM0 18V12H8V18H0Z" fill="#0050CB" /></svg><div class="navbar-option-button-text">Dashboard</div></div></a>
-                    <a href="#"><div class="navbar-option-button"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16"><path d="M0 16V13.2... " fill="#424656" /></svg><div class="navbar-option-button-text">Users</div></div></a>
+                    <a href="admin-users.html"><div class="navbar-option-button"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16"><path d="M0 16V13.2... " fill="#424656" /></svg><div class="navbar-option-button-text">Users</div></div></a>
                     <a href="admin-listings.html"><div class="navbar-option-button"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19"><path d="M0 19V5H6V3L9 0L12 3V9H18V19H0... " fill="#424656" /></svg><div class="navbar-option-button-text">Listings</div></div></a>
-                    <a href="#"><div class="navbar-option-button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="17" viewBox="0 0 15 17"><path d="M0 17V0H9L9.4 2H15V12H8L7.6 10H2V17H0... " fill="#424656" /></svg><div class="navbar-option-button-text">Reports</div></div></a>
+                    <a href="admin-moderation.html"><div class="navbar-option-button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="17" viewBox="0 0 15 17"><path d="M0 17V0H9L9.4 2H15V12H8L7.6 10H2V17H0... " fill="#424656" /></svg><div class="navbar-option-button-text">Reports</div></div></a>
                 </section>
                 <section id="navbar-settings">
                 <section id="admin-settings">

@@ -357,14 +357,7 @@ class profileSettingsModal extends HTMLElement {
           letter-spacing: 0.14px;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           MOBILE  ≤ 600 px
-           – reduced padding throughout
-           – password pair stacks vertically
-           – profile picture row stacks vertically + centres
-           – slightly smaller headings
-        ═══════════════════════════════════════════════════════════════ */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
           #settings-modal {
             width: calc(100vw - 1rem);
             max-height: 95vh;

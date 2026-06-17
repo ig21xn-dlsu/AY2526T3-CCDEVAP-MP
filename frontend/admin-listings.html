@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/admin-listings.css">
+    <title>Padpal - Admin Listing Management</title>
+</head>
+<body>
+    <div class="dashboard-container">
+    <admin-navbar></admin-navbar>
+<!-- Header -->
+    <div class="main-content">
+    <div class="header">
+        <div class="property-header">
+            <h2>Property Listings</h2>
+        </div>
+        <div class="under-header">
+            Manage and monitor all shared space listings.
+        </div>
+    </div>
+
+<!-- Main Body -->
+    <div class="main-body">
+    <!-- Filter Container-->
+        <div class="admin-filter">
+            <label for="status">Location</label>
+            <select name="city" id="city">
+                <option value="selectcity">Select City</option>
+                <option value="manila">Manila</option>
+            </select>
+            <label for="status">Status</label>
+            <select name="status" id="status">
+                <option value="allstatus">All Status</option>
+            </select>
+            <label for="status">Price Range</label>
+            <select name="pricerange" id="pricerange">
+                <option value="anyprice">Any Price</option>
+            </select>
+        </div>
+
+    <!-- Properties Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>PROPERTY</th>
+                        <th>LOCATION</th>
+                        <th>STATUS</th>
+                        <th>PRICE</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>
+                    <div class="property-cell">
+                        <img src="" alt="property1">
+                        <div>
+                            <div class="property-title">Urban Shared Suite A1</div>
+                            <div class="property-ref">Ref: PROP-001</div>
+                        </div>
+                    </div>
+                    </td>
+                        <td>Makati City, Metro Manila</td>
+                        <td><span class="active">Active</span></td>
+                        <td>PHP 12,500/mo</td>
+                        <td><a href="#" class="edit">EDIT</a></td>
+                </tr>   
+                <tr>
+                    <td>
+                        <div class="property-cell">
+                            <img src="" alt="property1">
+                            <div>
+                                <div class="property-title">Urban Shared Suite B2</div>
+                                <div class="property-ref">Ref: PROP-002</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>BGC, Taguig</td>
+                    <div class="pill">
+                        <td><span class="active">Active</span></td>
+                    </div>
+                    <td>PHP 12,500/mo</td>
+                    <td><a href="#" class="edit">EDIT</a></td>
+                </tr>
+                    
+                <tr>
+                    <td>
+                        <div class="property-cell">
+                            <img src="" alt="property1">
+                            <div>
+                                <div class="property-title">Urban Shared Suite B2</div>
+                                <div class="property-ref">Ref: PROP-003</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>Quezon City</td>
+                    <td><span class="inactive">Inactive</span></td>
+                    <td>PHP 12,500/mo</td>
+                    <td><a href="#" class="edit">EDIT</a></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="property-cell">
+                            <img src="" alt="property1">
+                            <div>
+                                <div class="property-title">Co-Living Space C</div>
+                                <div class="property-ref">Ref: PROP-004</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>Manila</td>
+                    <td><span class="active">Active</span></td>
+                    <td>PHP 12,500/mo</td>
+                    <td><a href="#" class="edit">EDIT</a></td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <div class="footer-status">4 of 124 properties</div>
+                            <ul class="pagination">
+                                <li><a href="#">&#8592;</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li>...</li>
+                                <li><a href="#">&#8594;</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tfoot>
+        </table>
+
+        </div>
+<!-- Total Listings Space Container-->
+        <div class="total-listings">
+            <h2 class="title">TOTAL LISTINGS SPACE</h2>
+            <div class="stats">
+                <span class="stats-num">124</span>
+                Active Units
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+                <div class="capacity">75%</div>
+        </div>
+    </div>
+    </div>
+    <script src="components/admin-navbar.js" defer></script>
+    </div>
+</body>
+
+</html>

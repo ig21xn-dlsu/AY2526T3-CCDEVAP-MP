@@ -352,6 +352,7 @@ body {
         padding: 24px;
         gap: 16px;
         overflow-y: visible; 
+        padding-bottom: 120px !important;
     }
 
     #system-analytics {

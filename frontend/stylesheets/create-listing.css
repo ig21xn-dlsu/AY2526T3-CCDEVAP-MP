@@ -115,6 +115,7 @@ flex-direction: column;
 	border: 1px solid #C2C6D8;
 	background: #FFF;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	overflow: hidden;
 }
 
 .formBoxTitle{
@@ -185,7 +186,6 @@ flex-direction: column;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	background-color: #fff;
-	min-width: 350px;
 }
 
 .priceInputContainer img{
@@ -210,7 +210,7 @@ flex-direction: column;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	background-color: #fff;
-	min-width: 350px;
+	width: 100%;
 }
 
 .dateInputContainer img{
@@ -222,6 +222,7 @@ flex-direction: column;
 
 .dateContainer{
 	display: flex;
+	width: 100%;
 	flex-direction: column;
 	justify-content: left;
 	align-items: left;
@@ -263,13 +264,17 @@ flex-direction: column;
 }
 
 .lifestyleContainer{
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: left;
 	justify-content: center;
 }
 .lifestyleContainer label{
-	margin-bottom: 5px;
+	width: 100%;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #C2C6D8;
 }
 
 .tags-container{
@@ -306,43 +311,165 @@ flex-direction: column;
 }
 
 .amenities-group {
-  border: none;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 32px;
-  font-family: Arial, sans-serif;
+	width: 100%;
+	border: none;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 32px;
+	font-family: Arial, sans-serif;
 }
 
-.amenities-group legend {
-  font-size: 24px;
-  font-weight: bold;
-  color: #111;
-  margin-bottom: 20px;
-  padding: 0;
+.amenities-group legend label{
+	width: 100%;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #C2C6D8;
+
+
+}
+
+.lastRow-container{
+	width: 100%;
+	max-width: 800px;
+	display: flex;
+	justify-content: right;
+	align-items: center;
+}
+
+.SubmitBtn{
+	border: none;
+	padding: 12px 32px;
+	border-radius: 9999px;
+	background: #FE9400;
+	color: white;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 20px;
+	
+
 }
 
 .checkbox-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 16px;
+	display: grid;
+	grid-template-columns: 1fr;
+	row-gap: 16px;
 }
 
 .checkbox-item {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 16px;
-  color: #222;
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+	font-size: 16px;
+	color: #222;
 }
 
 .checkbox-item input[type="checkbox"] {
-  margin: 0 12px 0 0; 
-  width: 18px;  
-  height: 18px;
-  cursor: pointer;
+	margin: 0 12px 0 0; 
+	width: 18px;  
+	height: 18px;
+	cursor: pointer;
+}
+
+.campusArea-container{
+	display: flex;
+	flex-direction: column;
+	margin-right: 20px;
+
+}
+.campusArea-container label{
+	margin-bottom: 5px;
+
+}
+
+.dropdownInputContainer{
+	display: inline-flex;
+	align-items: center;
+	padding: 15px 20px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	max-width: 300px;
+	width: 100%;
+
+}
+
+.dropdownInputContainer img{
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+	pointer-events: none;
 }
 
 
+.dropdownInputContainer select{
+	border: none;
+	outline: none;
+	padding: 0;
+	font-size: 10px;
+	width: 100%;
+}
+
+.genderSelector-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: left;
+}
+
+.genderSelector-container label{
+	margin-bottom: 5px;
+}
+
+.mainBodyPropertyDetails{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20 px;
+}
+
+
+
+.radioButtonContainer{
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	gap: 20px;
+}
+
+.radioButtonContainer div{
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.mainContactBody{
+	display: flex;
+	flex-direction: column;
+	margin-top: -10px;
+}
+
+.mainContactBody label{
+	padding-bottom: 5px;
+}
+
+.mainUploadBody{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.mainUploadBody label{
+	display: flex;
+	align-items: left;
+	justify-content: left;
+}
+
+
+/*this is just logic for the checkbox to be flexible when moving sizes*/
 @media (min-width: 480px) {
   .checkbox-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -355,4 +482,67 @@ flex-direction: column;
     column-gap: 24px;
     row-gap: 20px;
   }
+}
+
+.dropzone {
+	  width: 100%;
+	  border: 2px dashed #cbd5e1;
+	  border-radius: 12px;
+	  padding: 40px 20px;
+	  text-align: center;
+	  background-color: #f8fafc;
+	  cursor: pointer;
+}
+
+.dropzone.dragover {
+	  border-color: #2563eb;
+	  background-color: #eff6ff;
+}
+
+.dropzone-content {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+}
+
+.upload-icon-circle {
+	  width: 48px;
+	  height: 48px;
+	  background-color: #2563eb;
+	  border-radius: 50%;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  margin-bottom: 16px;
+}
+
+.upload-icon-circle img {
+	  width: 24px;
+	  height: 24px;
+	  object-fit: contain;
+}
+
+.dropzone h3 {
+	  font-size: 18px;
+	  font-weight: bold;
+	  color: #1e293b;
+	  margin: 0 0 6px 0;
+}
+
+.dropzone p {
+	  font-size: 14px;
+	  color: #64748b;
+	  margin: 0 0 12px 0;
+}
+
+.browse-link {
+	  color: #2563eb;
+	  font-weight: 600;
+	  cursor: pointer;
+	  text-decoration: underline;
+}
+
+.file-specs {
+	  font-size: 12px;
+	  color: #94a3b8;
 }

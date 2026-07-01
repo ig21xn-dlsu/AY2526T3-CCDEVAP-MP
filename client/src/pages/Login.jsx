@@ -102,7 +102,7 @@ function Login() {
           </section>
 
           <section id="container-create-account">
-            New to PadPal? <Link className="blue" to="/signup">Create an Account</Link>
+            New to PadPal? <Link className="blue" to="/Signup">Create an Account</Link>
           </section>
 
           <section id="container-additional-links">

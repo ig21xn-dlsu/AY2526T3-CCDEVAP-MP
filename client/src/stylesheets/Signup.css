@@ -47,6 +47,9 @@ body, main {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+
+    flex: 1;
+    align-self: stretch;
 }
 
 #page-image {

@@ -101,14 +101,14 @@ function LogInAdmin() {
                 </section>
 
                 <div id="container-back-to-login">
-                    <a className="nostyle" id="back-to-user-button" href="../index.html">
+                    <Link className="nostyle" id="back-to-user-button" to="/">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path
                                 d="M2.86875 6.75L7.06875 10.95L6 12L0 6L6 0L7.06875 1.05L2.86875 5.25H12V6.75H2.86875Z"
                                 fill="#424656" />
                         </svg>
                         <div>Back to User Login</div>
-                    </a>
+                    </Link>
                 </div>
             </section>
         </section>

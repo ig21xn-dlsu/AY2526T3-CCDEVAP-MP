@@ -6,6 +6,7 @@ function SignUp() {
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [role, setRole] = useState('student');
 
     const images = [
   "/images/sign-up-1.jpg",
@@ -58,7 +59,8 @@ function SignUp() {
                 <div id="role-selection">
                     <div id="role-text">I AM A...</div>
                     <div id="role-select-container">
-                        <section id="student-role-button">
+                        <section id="student-role-button" className={role === 'student' ? 'role-button selected' : 'role-button'}
+    onClick={() => setRole('student')}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 30 24"
                                 fill="none">
                                 <path
@@ -67,7 +69,8 @@ function SignUp() {
                             </svg>
                             <div className="role-text">Student / Roomie</div>
                         </section>
-                        <section id="manager-role-button"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24"
+                        <section id="manager-role-button" className={role === 'manager' ? 'role-button selected' : 'role-button'}
+    onClick={() => setRole('manager')}><svg xmlns="http://www.w3.org/2000/svg" width="22" height="24"
                                 viewBox="0 0 22 24" fill="none">
                                 <path
                                     d="M2.66667 21.3333H6.66667V13.3333H14.6667V21.3333H18.6667V9.33333L10.6667 3.33333L2.66667 9.33333V21.3333ZM0 24V8L10.6667 0L21.3333 8V24H12V16H9.33333V24H0Z"

@@ -174,23 +174,19 @@ body, main {
     height: auto;
 }
 
-#student-role-button,
-#manager-role-button {
-    border: 1px solid #C2C6D8;
-    background: #FFFFFF;
-    padding: 24px 12px;
-}
-
-.role-button.selected {
+#student-role-button.selected,
+#manager-role-button.selected {
     background: #0050CB;
     border: 1px solid #0050CB;
 }
 
-.role-button.selected .role-text {
+#student-role-button.selected .role-text,
+#manager-role-button.selected .role-text {
     color: #FFFFFF;
 }
 
-.role-button.selected path {
+#student-role-button.selected path,
+#manager-role-button.selected path {
     fill: #FFFFFF;
 }
 
@@ -449,23 +445,19 @@ body, main {
         margin-bottom: 12px;
     }
 
-    #student-role-button,
-    #manager-role-button {
-        border: 1px solid #C2C6D8;
-        background: #FFFFFF;
-        padding: 24px 12px;
+     #student-role-button.selected,
+    #manager-role-button.selected {
+        background: #0050CB;
+        border: 1px solid #0050CB;
     }
 
-    .role-button.selected {
-    background: #0050CB;
-    border: 1px solid #0050CB;
-    }
-
-    .role-button.selected .role-text {
+    #student-role-button.selected .role-text,
+    #manager-role-button.selected .role-text {
         color: #FFFFFF;
     }
 
-    .role-button.selected path {
+    #student-role-button.selected path,
+    #manager-role-button.selected path {
         fill: #FFFFFF;
     }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Login.css';
+import '../stylesheets/Login.css';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +22,7 @@ function Login() {
   }, []);
 
   return (
-    <>
+    <div className="login-page-wrapper">
       <section id="container-main-left">
         <section id="container-image">
           <img id="login_image" className={isFading ? "hidden" : ""} src={images[imageIndex]} />
@@ -110,7 +110,7 @@ function Login() {
           </section>
         </section>
       </section>
-    </>
+    </div>
   );
 }
 

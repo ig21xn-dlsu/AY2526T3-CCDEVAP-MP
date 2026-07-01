@@ -102,11 +102,11 @@ function Login() {
           </section>
 
           <section id="container-create-account">
-            New to PadPal? <Link className="blue" to="/Signup">Create an Account</Link>
+            New to PadPal? <Link className="blue" to="/signup">Create an Account</Link>
           </section>
 
           <section id="container-additional-links">
-            <Link id="admin-login-button" className="nostyle" to="/admin-login" target="_blank">Admin?</Link>
+            <Link id="admin-login-button" className="nostyle" to="/login-admin" target="_blank">Admin?</Link>
           </section>
         </section>
       </section>

@@ -76,7 +76,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Incorrect Password' });
     } else {
       const token = createToken(existingUser._id);
-      return res.status(201).json({ message: 'Logged In!', token });
+      return res.status(200).json({ message: 'Logged In!', token });
     }
     
   } catch (err) {

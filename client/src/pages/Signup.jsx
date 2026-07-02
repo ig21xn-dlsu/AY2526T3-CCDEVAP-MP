@@ -11,7 +11,8 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSignUp = async () => {
-    try {
+
+       try {
         const response = await fetch('http://localhost:5000/api/auth/register', {
             method: 'POST',
             headers: {
@@ -22,6 +23,7 @@ function SignUp() {
                 lastName,
                 email,
                 password,
+                confirmPassword,
                 role, // from your role picker state
             }),
         });
@@ -37,7 +39,9 @@ function SignUp() {
 
     } catch (err) {
         console.error('Network error:', err.message);
-    }
+    } 
+    
+    
 };
 
 

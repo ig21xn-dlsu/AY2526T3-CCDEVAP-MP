@@ -3,6 +3,37 @@ import { Link } from 'react-router-dom';
 import '../stylesheets/Login.css';
 
 function Login() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogIn = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+      const data = await response.json();
+
+        if (!response.ok) {
+            console.error('LogIn Failed:', data.message);
+            return;
+        }
+
+        console.log('Login successful:', data);
+
+    } catch (err) {
+       console.error('Network error:', err.message);
+    }
+  };
+
   const [showPassword, setShowPassword] = useState(false);
 
   const images = ["/images/dorm_1.jpg", "/images/dorm_2.jpg", "/images/dorm_3.jpg"];
@@ -59,7 +90,14 @@ function Login() {
                   <svg id="email-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
                     <path d="M2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H2ZM10 9L2 4V14H18V4L10 9ZM10 7L18 2H2L10 7ZM2 4V2V4V14V4Z" fill="#727687" />
                   </svg>
-                  <input className="input" id="email-input" type="text" placeholder="name@university.edu" />
+                  <input
+                    className="input"
+                    id="email-input"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    placeholder="name@university.edu"
+                  />
                 </div>
               </section>
 
@@ -74,6 +112,8 @@ function Login() {
                     id="password-input"
                     type={showPassword ? "text" : "password"}
                     placeholder="•••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <svg
                     id="reveal-password"
@@ -91,14 +131,14 @@ function Login() {
               <span className="some-details">Remember me for 30 days</span>
             </section>
 
-            <Link to="/padpal" id="sign-in-button-section">
+            <div to="/padpal" id="sign-in-button-section" onClick={handleLogIn}>
               <section id="sign-in-button">
                 <span id="sign-in-text">Sign In</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z" fill="#633700" />
                 </svg>
               </section>
-            </Link>
+            </div>
           </section>
 
           <section id="container-create-account">

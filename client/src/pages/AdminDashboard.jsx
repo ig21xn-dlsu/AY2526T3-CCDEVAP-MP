@@ -8,13 +8,13 @@ function AdminDashboard() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     return (
-        <div id="body">
+        <div id="dashboard-wrapper">
         <AdminNavbar onOpenSettings={() => setIsSettingsOpen(true)} />
             {isSettingsOpen && <ProfileSettingsModal onClose={() => setIsSettingsOpen(false)} />}
         
         <section id="admin-dashboard">
         <section id="page-heading">System Overview</section>
-        <section id="system-analytics">
+        <section className="dashboard-row">
             
             <div className="analytics-box">
                 <div className="analytics-title">

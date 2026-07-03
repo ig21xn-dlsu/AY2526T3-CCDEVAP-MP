@@ -1,6 +1,6 @@
 * { box-sizing: border-box; }
         /* --- DESKTOP DEFAULT STYLES --- */
-        :host { 
+        #nav-drawer { 
             width: 20%; 
             height: 100vh; 
             display: block; 
@@ -83,7 +83,7 @@
 
         /* --- MOBILE RESPONSIVE OVERRIDES --- */
         @media (max-width: 768px) {
-            :host {
+            #nav-drawer {
                 width: 100%; 
                 height: auto; 
                 position: fixed; 

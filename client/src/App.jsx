@@ -7,6 +7,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminUsers from './pages/AdminUsers';
 import AdminListings from './pages/AdminListings';
+import AdminModerations from './pages/AdminModerations';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-users" element={<AdminUsers />} />
-        <Route path="/admin-listings" element={< AdminListings/>} />
+        <Route path="/admin-listings" element={< AdminListings />} />
+        <Route path="/admin-moderations" element={< AdminModerations/>} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,0 +1,423 @@
+:host {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 1000;
+          pointer-events: auto;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea {
+          border: none;
+          outline: none;
+          box-shadow: none;
+          background: none;
+          width: 100%;
+        }
+
+        #grey-overlay {
+          position: absolute;
+          width: 100vw;
+          height: 100vh;
+          top: 0;
+          left: 0;
+          background: rgba(26, 28, 30, 0.40);
+          backdrop-filter: blur(4px);
+          opacity: 0.5;
+          z-index: 5;
+        }
+
+        /* ── Modal shell ───────────────────────────────────────────────
+           width: min() keeps it ≤ 42rem but also ≤ (100vw − 2rem),
+           so it never clips at any browser-zoom level.
+           max-height + flex-column let the header/footer stay pinned
+           while #modal-main scrolls independently.
+        ─────────────────────────────────────────────────────────────── */
+        #settings-modal {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 10;
+
+          width: min(42rem, calc(100vw - 2rem));
+          max-height: 90vh;
+
+          border-radius: 12px;
+          border: 1px solid #C2C6D8;
+          background: #FFF;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        /* ── Header ─────────────────────────────────────────────────── */
+        #modal-header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1.5rem;
+          flex-shrink: 0;
+
+          border-bottom: 1px solid #C2C6D8;
+          background: #FFF;
+          width: 100%;
+
+          color: #1A1C1E;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 32px;
+        }
+
+        /* ── Scrollable body ─────────────────────────────────────────── */
+        #modal-main {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          width: 100%;
+          padding: 1.5rem;
+          gap: 3rem;
+
+          overflow-y: auto;
+          flex: 1 1 auto;
+          /* Smooth inertia scrolling on iOS */
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* ── Personal info section ──────────────────────────────────── */
+        #personal-info {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          width: 100%;
+          gap: 0.75rem;
+        }
+
+        #personal-info-header {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          width: 100%;
+          gap: 0.5rem;
+
+          color: #1A1C1E;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 28px;
+        }
+
+        #personal-info-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          gap: 1.5rem;
+          width: 100%;
+        }
+
+        #profile-picture-container {
+          display: flex;
+          padding: 1rem;
+          align-items: center;
+          gap: 1.5rem;
+          align-self: stretch;
+
+          border-radius: 12px;
+          border: 1px solid #C2C6D8;
+          background: #F3F3F6;
+        }
+
+        #image-container {
+          display: flex;
+          width: 96px;
+          height: 96px;
+          flex-shrink: 0;
+          justify-content: center;
+          align-items: center;
+          border-radius: 9999px;
+          background: rgba(0, 0, 0, 0.20);
+        }
+
+        #profile-photo-settings {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+          flex: 1 0 0;
+        }
+
+        #upload-new-button {
+          display: flex;
+          padding: 8px 16px;
+          justify-content: center;
+          align-items: center;
+
+          border-radius: 8px;
+          border: 1px solid #C2C6D8;
+          background: #E2E2E5;
+          cursor: pointer;
+
+          color: #1A1C1E;
+          text-align: center;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 20px;
+          letter-spacing: 0.14px;
+        }
+
+        .personal-info-input {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          width: 100%;
+
+          color: #424656;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          letter-spacing: 0.14px;
+        }
+
+        .info-container {
+          display: flex;
+          padding: 12px 16px;
+          justify-content: flex-start;
+          align-items: flex-start;
+          align-self: stretch;
+
+          border-radius: 8px;
+          border: 1px solid #727687;
+          background: #FFF;
+          color: #1A1C1E;
+
+          font-family: 'Montserrat', sans-serif;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+        }
+
+        #separator {
+          height: 1px;
+          align-self: stretch;
+          border-top: 1px solid #C2C6D8;
+        }
+
+        /* ── Security section ───────────────────────────────────────── */
+        #security {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          align-self: stretch;
+        }
+
+        #security-header {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          align-self: stretch;
+
+          color: #1A1C1E;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 28px;
+        }
+
+        #security-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          width: 100%;
+          gap: 1.5rem;
+        }
+
+        .password-contanier {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          color: #424656;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          letter-spacing: 0.14px;
+          width: 100%;
+        }
+
+        .password-container-legit {
+          display: flex;
+          padding: 14px 16px;
+          justify-content: flex-start;
+          align-items: flex-start;
+          align-self: stretch;
+
+          border-radius: 8px;
+          border: 1px solid #727687;
+          background: #FFF;
+
+          color: #6B7280;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: normal;
+        }
+
+        #old-new-password {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          gap: 1.5rem;
+          width: 100%;
+        }
+
+        /* ── Footer ─────────────────────────────────────────────────── */
+        #modal-footer {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          width: 100%;
+          flex-shrink: 0;
+
+          padding: 24px;
+          gap: 16px;
+
+          border-radius: 0 0 12px 12px;
+          border-top: 1px solid #C2C6D8;
+          background: #F3F3F6;
+        }
+
+        #cancel-button {
+          display: flex;
+          padding: 13.5px 32px 14.5px 32px;
+          justify-content: center;
+          align-items: center;
+
+          color: #727687;
+          text-align: center;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 20px;
+          letter-spacing: 0.14px;
+        }
+
+        .clickable {
+          cursor: pointer;
+        }
+
+        #save-changes-button {
+          display: flex;
+          padding: 12px 32px;
+          justify-content: center;
+          align-items: center;
+          gap: 7.99px;
+
+          border-radius: 8px;
+          background: #FE9400;
+
+          color: #633700;
+          text-align: center;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 20px;
+          letter-spacing: 0.14px;
+        }
+
+        @media (max-width: 768px) {
+          #settings-modal {
+            width: calc(100vw - 1rem);
+            max-height: 95vh;
+            border-radius: 10px;
+          }
+
+          #modal-header {
+            padding: 1rem;
+            font-size: 18px;
+            line-height: 26px;
+          }
+
+          #modal-main {
+            padding: 1rem;
+            gap: 1.75rem;
+          }
+
+          #personal-info-header,
+          #security-header {
+            font-size: 16px;
+            line-height: 24px;
+          }
+
+          /* Profile picture: stack avatar above text + button */
+          #profile-picture-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.75rem;
+            padding: 0.875rem;
+          }
+
+          #profile-photo-settings {
+            align-items: center;
+          }
+
+          /* Password pair: stack vertically */
+          #old-new-password {
+            flex-direction: column;
+            gap: 1.25rem;
+          }
+
+          #modal-footer {
+            padding: 1rem;
+            gap: 0.75rem;
+          }
+
+          #cancel-button {
+            padding: 10px 20px;
+            font-size: 13px;
+          }
+
+          #save-changes-button {
+            padding: 10px 20px;
+            font-size: 13px;
+          }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           VERY SMALL  ≤ 380 px  (e.g. iPhone SE)
+           – collapse footer buttons to fill available space evenly
+        ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 380px) {
+          #modal-footer {
+            justify-content: stretch;
+          }
+
+          #cancel-button,
+          #save-changes-button {
+            flex: 1;
+          }
+        }

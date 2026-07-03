@@ -87,7 +87,7 @@ function LogInAdmin() {
                         <div>Remember this workstation</div>
                     </div>
 
-                    <a className="nostyle" id="go-to-admin-button" href="admin-dashboard.html">
+                    <Link className="nostyle" id="go-to-admin-button" to="/admin-dashboard">
                         <div id="sign-in-section">
                             <div>Sign In</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
@@ -97,7 +97,7 @@ function LogInAdmin() {
                                     fill="white" />
                             </svg>
                         </div>
-                    </a>
+                    </Link>
                 </section>
 
                 <div id="container-back-to-login">

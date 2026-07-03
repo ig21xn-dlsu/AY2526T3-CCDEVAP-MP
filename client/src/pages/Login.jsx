@@ -20,7 +20,7 @@ function Login() {
             }),
         });
 
-      const data = await response.json();w
+      const data = await response.json();
 
         if (!response.ok) {
             console.error('LogIn Failed:', data.message);

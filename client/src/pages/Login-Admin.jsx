@@ -50,7 +50,7 @@ function LogInAdmin() {
 
                 <section id="container-credentials">
                     <div id="admin-container">
-                        <div id="admin-text">Admin ID or Email Address</div>
+                        <div class="admin-text-login">Admin ID or Email Address</div>
                         <section className="input-field">
                             <div id="icon-container"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
                                     viewBox="0 0 17 17" fill="none">
@@ -64,7 +64,7 @@ function LogInAdmin() {
                     </div>
 
                     <div id="password-container">
-                        <div id="admin-text">Password</div>
+                        <div class="admin-text-login">Password</div>
                         <section className="input-field">
                             <div id="icon-container"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="18"
                                     viewBox="0 0 14 18" fill="none">

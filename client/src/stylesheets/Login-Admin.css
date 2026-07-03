@@ -172,7 +172,7 @@ input[type="text"], input[type="password"], textarea {
     width: 100%;
 }
 
-#admin-text {
+.admin-text-login {
     color: #1A1C1E;
     font-family: 'Montserrat';
     font-size: 14px;

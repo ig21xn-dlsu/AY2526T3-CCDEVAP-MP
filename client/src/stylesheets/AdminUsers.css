@@ -5,15 +5,14 @@
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-body {
+#users-wrapper {
     background-color: #f8fafc;
     color: #1e293b;
     min-height: 100vh;
-}
 
-.dashboard-container {
     display: flex;
     width: 100%;
+    height: 100vh;
 }
 
 .main-content {

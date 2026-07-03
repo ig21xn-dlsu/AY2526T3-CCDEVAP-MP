@@ -5,6 +5,7 @@ import LogInAdmin from './pages/Login-Admin';
 import AdminDashboard from './pages/AdminDashboard';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AdminUsers from './pages/AdminUsers';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login-admin" element={<LogInAdmin />} />
         
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-users" element={<AdminUsers />} />
       </Routes>
     </BrowserRouter>
   )

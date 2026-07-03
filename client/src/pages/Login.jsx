@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../stylesheets/Login.css';
 
 function Login() {
@@ -20,7 +20,7 @@ function Login() {
             }),
         });
 
-      const data = await response.json();
+      const data = await response.json();w
 
         if (!response.ok) {
             console.error('LogIn Failed:', data.message);
@@ -131,7 +131,7 @@ function Login() {
               <span className="some-details">Remember me for 30 days</span>
             </section>
 
-            <div to="/padpal" id="sign-in-button-section" onClick={handleLogIn}>
+            <div id="sign-in-button-section" onClick={handleLogIn}>
               <section id="sign-in-button">
                 <span id="sign-in-text">Sign In</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

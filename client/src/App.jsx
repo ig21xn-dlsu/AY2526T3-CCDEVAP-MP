@@ -26,6 +26,7 @@ function App() {
         <Route path="/admin-users" element={<AdminUsers />} />
         <Route path="/admin-listings" element={< AdminListings />} />
         <Route path="/admin-moderations" element={< AdminModerations />} />
+
         <Route path="/manager-dashboard" element={<ManagerDashboard />} />
         <Route path="/manager-listings" element={<ManagerListing />} />
         <Route path="/manager-notifications" element={<ManagerNotif />} />

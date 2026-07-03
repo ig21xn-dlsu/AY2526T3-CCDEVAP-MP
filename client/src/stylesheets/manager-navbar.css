@@ -8,7 +8,7 @@
 
 .rightContainer {
   padding: none;
-  padding-right: 20px;
+  padding-right: 40px;
   align-items: center;
 }
 
@@ -34,6 +34,7 @@
 }
 
 .nav-entry {
+  font-size: 1.5em;
   transition: transform 0.2s ease-in-out;
 }
 
@@ -83,4 +84,13 @@
   background-color: #dc3545;
   border-radius: 50%;
 
+}
+
+.openProfileDiv {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.openProfileDiv:hover {
+  transform: scale(1.05);
 }

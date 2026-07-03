@@ -1,5 +1,6 @@
 import '../stylesheets/AdminDashboard.css';
 import AdminNavbar from '../components/AdminNavbar';
+import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import { useState } from 'react';
 
 function AdminDashboard() {
@@ -9,7 +10,7 @@ function AdminDashboard() {
     return (
         <>
         <AdminNavbar onOpenSettings={() => setIsSettingsOpen(true)} />
-            {isSettingsOpen && <div>SETTINGS MODAL PLACEHOLDER</div>}
+            {isSettingsOpen && <ProfileSettingsModal onClose={() => setIsSettingsOpen(false)} />}
         </>
     );
 }

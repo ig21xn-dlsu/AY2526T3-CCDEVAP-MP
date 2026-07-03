@@ -1,13 +1,13 @@
 import '../stylesheets/ProfileSettingsModal.css'
 
-function ProfileSettingsModal() {
+function ProfileSettingsModal({ onClose }) {
     return (
-        <>
+        <div id="modal-wrap">
         <div id="grey-overlay"></div>
       <section id="settings-modal">
         <section id="modal-header">
           Settings
-          <svg className="clickable" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <svg onClick={onClose} className="clickable" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#727687" />
           </svg>
         </section>
@@ -24,10 +24,10 @@ function ProfileSettingsModal() {
               <section id="profile-picture-container">
                 <div id="image-container"></div>
                 <div id="profile-photo-settings">
-                  <div style="color: #424656; font-family: 'Montserrat'; font-size: 14px; font-weight: 500; line-height: 20px; letter-spacing: 0.14px;">
+                  <div style={{color: '#424656', fontFamily: 'Montserrat', fontSize: '14px', fontWeight: '500', lineHeight: '20px', letterSpacing: '0.14px' }}>
                     Profile Photo
                   </div>
-                  <div style="color: #727687; font-family: 'Montserrat'; font-size: 16px; font-weight: 400; line-height: 24px;">
+                  <div style={{color: '#727687', fontFamily: 'Montserrat', fontSize: '16px', fontWeight: '400', lineHeight: '24px'}}>
                     Accepts PNG, JPG under 5MB
                   </div>
                   <div id="upload-new-button">Upload New</div>
@@ -78,8 +78,8 @@ function ProfileSettingsModal() {
         </section>
 
         <section id="modal-footer">
-          <section className="clickable" id="cancel-button">Cancel</section>
-          <section className="clickable" id="save-changes-button">
+          <section className="clickable" id="cancel-button" onClick={onClose}>Cancel</section>
+          <section className="clickable" id="save-changes-button" onClick={onClose}>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M18 4V16C18 16.55 17.8042 17.0208 17.4125 17.4125C17.0208 17.8042 16.55 18 16 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H14L18 4ZM9 15C9.83333 15 10.5417 14.7083 11.125 14.125C11.7083 13.5417 12 12.8333 12 12C12 11.1667 11.7083 10.4583 11.125 9.875C10.5417 9.29167 9.83333 9 9 9C8.16667 9 7.45833 9.29167 6.875 9.875C6.29167 10.4583 6 11.1667 6 12C6 12.8333 6.29167 13.5417 6.875 14.125C7.45833 14.7083 8.16667 15 9 15ZM3 7H12V3H3V7Z" fill="#633700" />
             </svg>
@@ -87,7 +87,7 @@ function ProfileSettingsModal() {
           </section>
         </section>
       </section>
-</>
+</div>
     );
 }
 

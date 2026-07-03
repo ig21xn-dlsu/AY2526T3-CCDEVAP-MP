@@ -40,17 +40,17 @@ function AdminNavbar({ onOpenSettings }) {
                             </svg>
                             <div className="navbar-option-button-text">Users</div></div></Link>
                     
-                        <a href="admin-listings.html"><div className="navbar-option-button">
+                        <Link to="/admin-listings"><div className="navbar-option-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="none">
                                 <path d="M16 6H18V4H16V6ZM16 10H18V8H16V10ZM16 14H18V12H16V14ZM16 18V16H20V2H11V3.4L9 1.95V0H22V18H16ZM0 18V8L7 3L14 8V18H8V13H6V18H0ZM2 16H4V11H10V16H12V9L7 5.45L2 9V16ZM10 16V11H4V16V11H7H10V16Z" fill="#424656"/>
                             </svg>
-                            <div className="navbar-option-button-text">Listings</div></div></a>
+                            <div className="navbar-option-button-text">Listings</div></div></Link>
                     
-                        <a href="admin-moderation.html"><div className="navbar-option-button">
+                        <Link href="admin-moderation.html"><div className="navbar-option-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="17" viewBox="0 0 15 17" fill="none">
                                 <path d="M0 17V0H9L9.4 2H15V12H8L7.6 10H2V17H0ZM9.65 10H13V4H7.75L7.35 2H2V8H9.25L9.65 10Z" fill="#424656"/>
                             </svg>
-                            <div className="navbar-option-button-text">Reports</div></div></a>
+                            <div className="navbar-option-button-text">Reports</div></div></Link>
                 </section>
                 
                 <section id="navbar-settings">

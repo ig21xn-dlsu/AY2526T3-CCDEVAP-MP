@@ -1,0 +1,86 @@
+.navbar-line {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  align-items: center;
+}
+
+.rightContainer {
+  padding: none;
+  padding-right: 20px;
+  align-items: center;
+}
+
+.leftContainer {
+  padding: none;
+  padding-left: 20px;
+}
+
+.logo-styling {
+  font-size: 1.5em;
+  font-family: "Monsterrat", sans-serif;
+  font-weight: 900;
+  color: #0050CB;
+}
+
+.subTitle {
+  padding-top: 10px;
+  font-size: 1em;
+  font-family: "Monsterrat", sans-serif;
+  font-weight: 600;
+  color: #FE9400;
+
+}
+
+.nav-entry {
+  transition: transform 0.2s ease-in-out;
+}
+
+.nav-entry:hover {
+  transform: scale(1.1);
+}
+
+.nav-active {
+  color: #FE9400;
+  font-weight: 300;
+}
+
+.nav-active:hover {
+  color: #e08300;
+}
+
+.profilePicture {
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+}
+
+.notificationContainer {
+  padding: -2px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notificationContainer img {
+  padding: 0;
+  height: 70px;
+  width: 70px;
+
+}
+
+.notificationBadge {
+  position: absolute;
+
+  top: 20px;
+  right: 23px;
+
+  width: 10px;
+  height: 10px;
+
+  background-color: #dc3545;
+  border-radius: 50%;
+
+}

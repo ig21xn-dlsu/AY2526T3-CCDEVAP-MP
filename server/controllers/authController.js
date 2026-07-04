@@ -65,25 +65,59 @@ const loginUser = async (req, res) => {
     }
 
     const existingUser = await User.findOne({ email });
-
     if (!existingUser) {
       return res.status(400).json({ message: 'User does not exists' });
     } 
-      
-    const match = await bcrypt.compare(password, existingUser.password);
-      
-    if (!match) {
-      return res.status(400).json({ message: 'Incorrect Password' });
-    } else {
-      const token = createToken(existingUser._id);
-      return res.status(200).json({ message: 'Logged In!', token });
+    
+    if (existingUser.role === 'admin') {
+      return res.status(400).json({ message: 'You stupid ah' });
     }
+
+    const token = await checkCredentials(existingUser, password);
+    return res.status(200).json({ message: 'Logged In!', token });
     
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ message: 'Server error' });
+    return res.status(400).json({ message: err.message });
   }
 }
 
+// This function first if the user is an admin that's trying to log-in
+const loginAdmin = async (req, res) => {
+  try {
 
-module.exports = { loginUser, registerUser };
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    const existingAdmin = await User.findOne({ email });
+    if (!existingAdmin) {
+      return res.status(400).json({ message: 'Admin account not found' });
+    }
+
+    if (!(existingAdmin.role === 'admin')) {
+      return res.status(400).json({ message: 'Admin account not found' });
+    } else {
+      
+      const token = await checkCredentials(existingAdmin, password);
+      return res.status(200).json({ message: 'Logged In!', token });
+
+    }
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+}
+
+const checkCredentials = async (user, password) => {
+
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match) {
+      throw Error('Invalid credentials.')
+  }
+
+  return createToken(user._id);
+} 
+
+module.exports = { loginUser, registerUser, loginAdmin };

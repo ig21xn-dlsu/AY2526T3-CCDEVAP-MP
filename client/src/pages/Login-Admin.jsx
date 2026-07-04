@@ -6,6 +6,36 @@ function LogInAdmin() {
 
     const [showPassword, setShowPassword] = useState(false);
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleAdminLogin = async () => {
+        try {
+      const response = await fetch('http://localhost:5000/api/auth/adminlogin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+      const data = await response.json();
+
+        if (!response.ok) {
+            console.error('LogIn Failed:', data.message);
+            return;
+        }
+
+        console.log('Login successful:', data);
+
+    } catch (err) {
+       console.error('Network error:', err.message);
+    }
+    }
+
     return (
         <div id="admin-log-in-wrapper">
         <section id="container-main">
@@ -50,7 +80,7 @@ function LogInAdmin() {
 
                 <section id="container-credentials">
                     <div id="admin-container">
-                        <div class="admin-text-login">Admin ID or Email Address</div>
+                        <div className="admin-text-login">Admin Email Address</div>
                         <section className="input-field">
                             <div id="icon-container"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
                                     viewBox="0 0 17 17" fill="none">
@@ -59,12 +89,12 @@ function LogInAdmin() {
                                         fill="#727687" />
                                 </svg>
                             </div>
-                            <input className="input-text-field" type="text"/>
+                            <input className="input-text-field" type="text" onChange={(e) => setEmail(e.target.value)}/>
                         </section>
                     </div>
 
                     <div id="password-container">
-                        <div class="admin-text-login">Password</div>
+                        <div className="admin-text-login">Password</div>
                         <section className="input-field">
                             <div id="icon-container"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="18"
                                     viewBox="0 0 14 18" fill="none">
@@ -73,7 +103,7 @@ function LogInAdmin() {
                                         fill="#727687" />
                                 </svg>
                             </div>
-                            <input id="password-input" className="input-text-field" type={showPassword ? "text" : "password"} placeholder="•••••"/>
+                            <input id="password-input" className="input-text-field" type={showPassword ? "text" : "password"} placeholder="•••••" onChange={(e) => setPassword(e.target.value)}/>
                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="13" viewBox="0 0 19 13"
                                 fill="none" onClick={() => setShowPassword(!showPassword)}>
                                 <path
@@ -87,7 +117,7 @@ function LogInAdmin() {
                         <div>Remember this workstation</div>
                     </div>
 
-                    <Link className="nostyle" id="go-to-admin-button" to="/admin-dashboard">
+                    <section className="nostyle" id="go-to-admin-button" onClick={handleAdminLogin}>
                         <div id="sign-in-section">
                             <div>Sign In</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
@@ -97,7 +127,7 @@ function LogInAdmin() {
                                     fill="white" />
                             </svg>
                         </div>
-                    </Link>
+                    </section>
                 </section>
 
                 <div id="container-back-to-login">

@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
     } 
     
     if (existingUser.role === 'admin') {
-      return res.status(400).json({ message: 'You stupid ah' });
+      return res.status(400).json({ message: 'You stupid ah, use the admin button down here dawg' });
     }
 
     const token = await checkCredentials(existingUser, password);

@@ -1,4 +1,4 @@
-import { useAuthContext } from './userAuthContext.js'
+import { useAuthContext } from './useAuthContext.js'
 
 export const useLogOut = () => {
 

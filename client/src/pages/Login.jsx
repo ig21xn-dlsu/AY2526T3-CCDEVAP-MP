@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLogIn } from '../hook/useLogIn';
 import '../stylesheets/Login.css';
 
 function Login() {
@@ -7,31 +8,10 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { login, error, isLoading } = useLogIn()
   const handleLogIn = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
-
-      const data = await response.json();
-
-        if (!response.ok) {
-            console.error('LogIn Failed:', data.message);
-            return;
-        }
-
-        console.log('Login successful:', data);
-
-    } catch (err) {
-       console.error('Network error:', err.message);
-    }
+    await login(email, password)
+      
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -139,6 +119,9 @@ function Login() {
                 </svg>
               </section>
             </div>
+
+            {error && <div className='error'>{error}</div>}
+
           </section>
 
           <section id="container-create-account">

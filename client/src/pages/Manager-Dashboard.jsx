@@ -1,7 +1,7 @@
 import ManagerNavbar from '../components/Manager-Navbar.jsx'
 import '../stylesheets/manager-dashboard.css'
 import SquareStatistics from '../components/ManagerDashComponents/square-statistics.jsx';
-
+import ChartUniversityDist from '../components/ChartJS/UniLeaderboards.jsx'
 
 //sizeIcons 
 import groupSizeIcon from '../assets/avgGrpSize.svg'
@@ -28,7 +28,7 @@ function ManagerDashboard() {
   return (
     <div className="dashboard-container container-fluid">
       <ManagerNavbar />
-      <div className="maincontent container-fluid d-flex flex-column p-5">
+      <div className="maincontent container-fluid d-flex flex-column p-5 gap-5">
         <div className="padpaltitle-div">
           <h3 className="pb-2 border-bottom">PadPal's Stats</h3>
           <p>We give you the data, make your best decision.</p>
@@ -38,9 +38,8 @@ function ManagerDashboard() {
           <SquareStatistics title="Largest User Base" data={top1.University} icon={topUniIcon} message="most of the users come from this university" />
           <SquareStatistics title="Average Budget" data={avg_budget} icon={budgetIcon} message="roomies to pay this per person per month" />
         </div>
-        <div className="leaderboard-container container-fluid">
-
-
+        <div className="leaderboard-container d-flex justify-content-center align-items-center">
+          <ChartUniversityDist />
         </div>
         <div className="userStats">
         </div>

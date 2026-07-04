@@ -16,7 +16,7 @@ function Login() {
     
     if (user) {
       if (user.role === 'manager') {
-        navigate('/manager-dashboard');
+        navigate('/manager-listings');
       } else if (user.role === 'student') {
         navigate();
       }

@@ -12,7 +12,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogIn = async () => {
-  const user = login(email, password)
+  const user = await login(email, password)
     
     if (user) {
       if (user.role === 'manager') {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../stylesheets/AdminNavbar.css';
+import { useLogOut } from '../hook/useLogOut';
 
 function AdminNavbar({ onOpenSettings }) {
 
@@ -10,6 +11,11 @@ function AdminNavbar({ onOpenSettings }) {
     const toggleNavBar = () => {
         setIsOpen(!isOpen);
         setArrowUp(!arrowUp);
+    }
+
+    const { logout } = useLogOut
+    const handleLogOutClick = () => {
+        logout()
     }
 
     return (
@@ -65,12 +71,11 @@ function AdminNavbar({ onOpenSettings }) {
                         <div className="navbar-option-button-text">Settings</div>
                     </div>
 
-                    <a href="../index.html">
-                    <div className="navbar-option-button">
+                    <div className="navbar-option-button" onClick={handleLogOutClick}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none"> <path d="M2 18C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H9V2H2V16H9V18H2ZM13 14L11.625 12.55L14.175 10H6V8H14.175L11.625 5.45L13 4L18 9L13 14Z" fill="#BA1A1A"/> </svg>
                         <div className="navbar-option-button-text red">Log Out</div>
                     </div>
-                    </a>
+                    
                 </section>
                 <section id="admin-profile">
                     <div id="admin-profile-button">

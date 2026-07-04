@@ -74,7 +74,12 @@ const loginUser = async (req, res) => {
     }
 
     const token = await checkCredentials(existingUser, password);
-    return res.status(200).json({ message: 'Logged In!', token });
+    return res.status(200).json({
+      message: 'Logged In!',
+      email: existingUser.email,
+      role: existingUser.role,
+      token
+    });
     
   } catch (err) {
     return res.status(400).json({ message: err.message });

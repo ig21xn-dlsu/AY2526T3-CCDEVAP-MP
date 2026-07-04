@@ -9,9 +9,18 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const { login, error, isLoading } = useLogIn()
+  const navigate = useNavigate();
+
   const handleLogIn = async () => {
-    await login(email, password)
-      
+  const user = login(email, password)
+    
+    if (user) {
+      if (user.role === 'manager') {
+        navigate('/manager-dashboard');
+      } else if (user.role === 'student') {
+        navigate();
+      }
+    }
   };
 
   const [showPassword, setShowPassword] = useState(false);

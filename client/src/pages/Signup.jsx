@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../stylesheets/Signup.css';
 import { useState, useEffect } from 'react';
+import { useSignup } from '../hook/useSignUp';
 
 function SignUp() {
 
@@ -9,40 +10,12 @@ function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    
+    const { signup, error, isLoading} = useSignup()
 
     const handleSignUp = async () => {
-
-       try {
-        const response = await fetch('http://localhost:5000/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                firstName,
-                lastName,
-                email,
-                password,
-                confirmPassword,
-                role, // from your role picker state
-            }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            console.error('Signup failed:', data.message);
-            return;
-        }
-
-        console.log('Signup successful:', data);
-
-    } catch (err) {
-        console.error('Network error:', err.message);
+        await signup(lastName, firstName, email, password, confirmPassword, role);
     } 
-    
-    
-};
 
 
     const [showPassword, setShowPassword] = useState(false);
@@ -204,7 +177,8 @@ function SignUp() {
                     </section>
                 </section>
 
-                <div id="sign-up-button" onClick={handleSignUp}>Sign Up</div>
+                <div id="sign-up-button" onClick={handleSignUp} disabled={isLoading}>Sign Up</div>
+                        {error && <div className='error'>{error}</div>}
             </section>
 
             <section id="back-to-login">Already have an account? <Link className='blue' to="/">Sign In</Link>

@@ -25,6 +25,10 @@ npm create vite@latest my-app -- --template react-ts
 ```
 
 - we can now start development under client directory
-```
-```
-```
+
+
+#### Admin-Dashboard Development
+- [July 04] developed `square statistics` a react component to formatize reusable statistic components
+  - Title - the header of the statistics
+  - Data - the data itself, > [!CAUTION] card does not process data
+  - Message - accepts string and serves as a subtitle to the statistics.

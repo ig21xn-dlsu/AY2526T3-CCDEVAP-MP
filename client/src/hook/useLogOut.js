@@ -12,5 +12,5 @@ export const useLogOut = () => {
         dispatch({ type: 'LOGOUT'})
     }
 
-    return {logout}
+    return { logout }
 }

@@ -13,7 +13,7 @@ function AdminNavbar({ onOpenSettings }) {
         setArrowUp(!arrowUp);
     }
 
-    const { logout } = useLogOut
+    const { logout } = useLogOut()
     const handleLogOutClick = () => {
         logout()
     }

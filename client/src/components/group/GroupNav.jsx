@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAsync } from '../../hooks/useAsync';
-import { fetchCurrentUser } from '../../api/padpalApi';
+import { useAsync } from '../../hook/useAsync';
+import { fetchCurrentUser } from '../../api/padpalApi'; // api placeholder
 import { BellIcon } from '../icons';
 
 export default function GroupNav({ backHref = '/' }) {

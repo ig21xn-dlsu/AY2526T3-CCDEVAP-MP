@@ -5,7 +5,7 @@ import SharedFilters, { DEFAULT_SHARED_FILTERS } from '../components/discover/Sh
 import GroupCard from '../components/discover/GroupCard';
 import EmptyState from '../components/discover/EmptyState';
 import { useAsync } from '../hook/useAsync';
-import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import { useDebouncedValue } from '../hook/useDebouncedValue';
 import { fetchCoLivingGroups, fetchSharedSpaces, fetchCampuses } from '../api/padpalApi';
 
 export default function DiscoverCommunities() {
@@ -56,7 +56,7 @@ export default function DiscoverCommunities() {
       </div>
 
       <div className="tab-actions">
-        <a href="/groups/create" className="btn-create-group">+ Create New Group</a>
+        <a href="/create" className="btn-create-group">+ Create New Group</a>
       </div>
 
       {loading && <p className="page-sub">Loading…</p>}

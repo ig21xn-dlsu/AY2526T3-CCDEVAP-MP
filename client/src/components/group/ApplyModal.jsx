@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { submitGroupApplication } from '../../api/padpalApi';
+import { submitGroupApplication } from '../../api/padpalApi'; // api placeholder
 
 const EMPTY_FORM = { name: '', age: '', gender: '', email: '', notes: '' };
 

@@ -18,7 +18,7 @@ function ManagerNavbar() {
         <h2 className="subTitle">for Space Managers</h2>
 
       </div>
-      <div className="manager-navbar rightContainer d-flex flex-row gap-4 align-items-center">
+      <div className="d-flex flex-row gap-4 align-items-center">
         <NavLink to="/manager-listings" className={({ isActive }) =>
           isActive ? "nav-entry nav-active" : "nav-entry"
         }>listings</NavLink>

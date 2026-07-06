@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import '../stylesheets/Login-Admin.css'
+import { Link, useNavigate } from "react-router-dom";
 import { useLogInAdmin } from "../hook/useLogInAdmin";
+import '../stylesheets/Login-Admin.css'
+
 
 function LogInAdmin() {
 
@@ -10,8 +11,14 @@ function LogInAdmin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { logInAdmin, error, isLoading } = useLogInAdmin()
+    const navigate = useNavigate();
+
     const handleAdminLogin = async () => {
-        const user = await LogInAdmin(email, password)
+        const user = await logInAdmin(email, password)
+        if (user) {
+            navigate('/admin-dashboard')
+        }
     }
 
     return (

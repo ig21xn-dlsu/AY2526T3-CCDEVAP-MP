@@ -37,6 +37,6 @@ export const useLogInAdmin = () => {
 
     }
 
-    return { login, isLoading, error }
+    return { logInAdmin, isLoading, error }
     
 }

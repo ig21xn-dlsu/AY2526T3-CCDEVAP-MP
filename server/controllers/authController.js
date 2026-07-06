@@ -106,7 +106,12 @@ const loginAdmin = async (req, res) => {
     } else {
       
       const token = await checkCredentials(existingAdmin, password);
-      return res.status(200).json({ message: 'Logged In!', token });
+      return res.status(200).json({
+        message: 'Logged In!',
+        email: existingAdmin.email,
+        role: existingAdmin.role,
+        token
+      });
 
     }
   } catch (err) {

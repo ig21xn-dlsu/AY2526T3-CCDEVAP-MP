@@ -1,0 +1,15 @@
+.parentContainer {
+  overflow: hidden;
+  border-radius: 15px;
+  min-height: 50px;
+}
+
+.thumbnail {
+  flex: 2;
+  background-color: black;
+  min-height: 200px;
+}
+
+.rightContainer {
+  flex: 5;
+}

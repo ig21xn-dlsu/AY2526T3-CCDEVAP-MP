@@ -10,11 +10,11 @@ import {
 
 import { Bar } from "react-chartjs-2";
 
+//Shares styling with square statistics
 import "../../stylesheets/square-stats.css"
 
-
+//Dummy Data 
 import leaderboardResponse from "../../dummyData/userBase";
-
 
 
 ChartJS.register(

@@ -18,15 +18,15 @@ const registerUser = async (req, res) => {
     }
 
     if (!validator.isEmail(email)) {
-      return res.status(400).json({ message: 'Not a valid email' }); 
+      return res.status(400).json({ message: 'Not a valid email' });
     }
 
     if (!validator.isStrongPassword(password)) {
-      return res.status(400).json({ message: 'Password should start hitting the gym, eh?' }); 
+      return res.status(400).json({ message: 'Password should start hitting the gym, eh?' });
     }
 
     if (!(password === confirmPassword)) {
-      return res.status(400).json({ message: 'Passwords do not match.' }); 
+      return res.status(400).json({ message: 'Passwords do not match.' });
     }
 
     const existingUser = await User.findOne({ email });
@@ -59,75 +59,31 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
     const existingUser = await User.findOne({ email });
+
     if (!existingUser) {
       return res.status(400).json({ message: 'User does not exists' });
-    } 
-    
-    if (existingUser.role === 'admin') {
-      return res.status(400).json({ message: 'You stupid ah, use the admin button down here dawg' });
     }
 
-    const token = await checkCredentials(existingUser, password);
-    return res.status(200).json({
-      message: 'Logged In!',
-      email: existingUser.email,
-      role: existingUser.role,
-      token
-    });
-    
-  } catch (err) {
-    return res.status(400).json({ message: err.message });
-  }
-}
+    const match = await bcrypt.compare(password, existingUser.password);
 
-// This function first if the user is an admin that's trying to log-in
-const loginAdmin = async (req, res) => {
-  try {
-
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ message: 'All fields are required.' });
-    }
-
-    const existingAdmin = await User.findOne({ email });
-    if (!existingAdmin) {
-      return res.status(400).json({ message: 'Admin account not found' });
-    }
-
-    if (!(existingAdmin.role === 'admin')) {
-      return res.status(400).json({ message: 'Admin account not found' });
+    if (!match) {
+      return res.status(400).json({ message: 'Incorrect Password' });
     } else {
-      
-      const token = await checkCredentials(existingAdmin, password);
-      return res.status(200).json({
-        message: 'Logged In!',
-        email: existingAdmin.email,
-        role: existingAdmin.role,
-        token
-      });
-
+      const token = createToken(existingUser._id);
+      return res.status(200).json({ message: 'Logged In!', token });
     }
+
   } catch (err) {
-    return res.status(400).json({ message: err.message });
+    console.error(err.message);
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
-const checkCredentials = async (user, password) => {
 
-  const match = await bcrypt.compare(password, user.password);
-
-  if (!match) {
-      throw Error('Invalid credentials.')
-  }
-
-  return createToken(user._id);
-} 
-
-module.exports = { loginUser, registerUser, loginAdmin };
+module.exports = { loginUser, registerUser };

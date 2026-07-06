@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import '../stylesheets/Login-Admin.css'
+import { useLogInAdmin } from "../hook/useLogInAdmin";
 
 function LogInAdmin() {
 
@@ -10,31 +11,7 @@ function LogInAdmin() {
     const [password, setPassword] = useState('');
 
     const handleAdminLogin = async () => {
-
-        try {
-      const response = await fetch('http://localhost:5000/api/auth/adminlogin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
-
-      const data = await response.json();
-
-        if (!response.ok) {
-            console.error('LogIn Failed:', data.message);
-            return;
-        }
-
-        console.log('Login successful:', data);
-
-    } catch (err) {
-       console.error('Network error:', err.message);
-    }
+        const user = await LogInAdmin(email, password)
     }
 
     return (
@@ -127,7 +104,8 @@ function LogInAdmin() {
                                     d="M9 18V16H16V2H9V0H16C16.55 0 17.0208 0.195833 17.4125 0.5875C17.8042 0.979167 18 1.45 18 2V16C18 16.55 17.8042 17.0208 17.4125 17.4125C17.0208 17.8042 16.55 18 16 18H9ZM7 14L5.625 12.55L8.175 10H0V8H8.175L5.625 5.45L7 4L12 9L7 14Z"
                                     fill="white" />
                             </svg>
-                        </div>
+                                </div>
+                                {error && <div className='error'>{error}</div>}
                     </section>
                 </section>
 

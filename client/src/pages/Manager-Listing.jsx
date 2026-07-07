@@ -11,12 +11,23 @@ function ManagerListing() {
           <button className="btn btn-primary">Create Listing</button>
         </div>
         <div className="listingsDiv d-flex flex-column gap-2">
-          <ListingContainer />
-          <ListingContainer />
-          <ListingContainer />
-          <ListingContainer />
-          <ListingContainer />
-          <ListingContainer />
+          <div className="row justify-content-lg-start g-4">
+            <div className="col-12 col-lg-3 justify-content-center">
+              <ListingContainer />
+            </div>
+            <div className="col-12 col-lg-3 justify-content-center">
+              <ListingContainer />
+            </div>
+            <div className="col-12 col-lg-3 justify-content-center">
+              <ListingContainer />
+            </div>
+            <div className="col-12 col-lg-3 justify-content-center">
+              <ListingContainer />
+            </div>
+            <div className="col-12 col-lg-3 justify-content-center">
+              <ListingContainer />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,22 +1,69 @@
-.parentContainer {
+.listingParentContainer {
   overflow: hidden;
   border-radius: 15px;
-  max-height: 300px;
+  max-height: 500px;
+  max-width: 400px;
 }
 
 .thumbnail {
-  flex: 2;
-  background-color: black;
+  position: relative;
+  aspect-ratio: 1/1;
   overflow: hidden;
+  height: 200px;
 }
+
+.priceBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  font-size: 1.2em;
+  font-weight: 700;
+  font-family: 'Monsterrat', sans-serif;
+  color: #0050CB;
+
+  padding: 2px 15px;
+  background-color: rgb(255, 255, 255, 0.85);
+  border-radius: 20px;
+}
+
 
 .thumbnail img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
+  object-position: center;
 }
 
-.rightContainer {
-  flex: 5;
+.bottomContainer {
+  font-family: 'Monsterrat', sans-serif;
+}
+
+.bottomContainer h1 {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.bottomContainer h2 {
+  font-size: 1em;
+  font-weight: 300;
+}
+
+
+.occupancyBadge {
+  padding: 2px 15px;
+  border-radius: 20px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: 'Monsterrat', sans-serif;
+}
+
+.avail {
+  color: rgba(0, 100, 96, 1);
+  background: rgba(0, 127, 122, 0.20);
+}
+
+.occupied {
+  color: rgba(186, 26, 26, 1);
+  background: rgba(255, 218, 214, 0.50);
 }

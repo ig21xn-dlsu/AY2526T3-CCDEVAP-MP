@@ -37,4 +37,17 @@ npm create vite@latest my-app -- --template react-ts
 ## Data Structures 
 
 ### Listing Data Structure
-![](../repoImages/listingDataStruct.png)
+![](../repoImages/listingDataStruct.png) 
+#### New Addition: Location Data
+  meta data
+```JSON
+{
+  "position":[
+    "longitude",
+    "latitude",
+  ]
+}
+
+```
+
+  

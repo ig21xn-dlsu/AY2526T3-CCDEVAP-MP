@@ -34,8 +34,10 @@ npm create vite@latest my-app -- --template react-ts
   - Message - accepts string and serves as a subtitle to the statistics. 
 
 
-## Data Structures 
+## Models 
 
+## Space Listings
+  Created by Space managers - viewed by all users, location sensitive. Tag Sensitive. The attributes and characters of the listing is also the tags that are used for search optimization
 ### Listing Data Structure
 ```JSON
 {

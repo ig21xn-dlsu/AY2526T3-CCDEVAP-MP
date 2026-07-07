@@ -47,9 +47,20 @@ Professor allowed us to restrict scope to big four: campuses include:
 5. Ateneo De Manila - Main Campus
 */
 ```
-#### New Addition: Location Data
-  User will be able to input building name: 
-  metadata:
+### Location Data
+  User will be able to input building name
+    Services are open source 
+  * geocoding: `Nominatim` | (building name/address -> Nominatim -> lat/lng data -> store into db)
+  * present: `React Leaflet` Map UI && `Open Street Map` Map tiles/data | (db.latNlong -> OpenStreetMap) 
+      * Presentation: 1 Marker - neraby campus loc | 2 marker - actual listing loc
+      ```
+      { 
+        <Leaflet {params provided by leaflet}>
+            mapdata = openstreetmap
+        </LeafLet>
+      }
+      ```
+#### metadata:
 ```JSON
 {
   "position":[

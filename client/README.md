@@ -15,29 +15,18 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
 
+# React Migration
+Moved old HTML files and refactored into react components. React components may differ from first submission html/css based components due to comments and suggestions by professor
 
+MCO1 files are archived main branch is currently serving MCO1 output
 
-#### JUNE 28 2026
-- moved all the old HTML files 'oldHTML/' kept it for reference 
-- started the react front end by using vite 
-```
-npm create vite@latest my-app -- --template react-ts
-```
-
-- we can now start development under client directory
-
-
-#### Admin-Dashboard Development
-- [July 04] developed `square statistics` a react component to formatize reusable statistic components
-  - Title - the header of the statistics
-  - Data - the data itself, > [!CAUTION] card does not process data
-  - Message - accepts string and serves as a subtitle to the statistics. 
-
-
-## Models 
-
+# Models 
 ## Space Listings
   Created by Space managers - viewed by all users, location sensitive. Tag Sensitive. The attributes and characters of the listing is also the tags that are used for search optimization
+
+### Components
+  under 'client/src/components/ManagerDashComponents/listing-container' is a component that presents each listing in a square format with include edit, create and view inquiries
+
 ### Listing Data Structure
 ```JSON
 {

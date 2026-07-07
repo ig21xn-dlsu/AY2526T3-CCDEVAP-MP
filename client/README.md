@@ -37,9 +37,23 @@ npm create vite@latest my-app -- --template react-ts
 ## Data Structures 
 
 ### Listing Data Structure
-![](../repoImages/listingDataStruct.png) 
+```JSON
+{
+  "id": "randomly generated data",
+  "title": "upt to the user however, preferably building name and sizing",
+  "description": "3,000 MAX CHAR",
+  "Price": "PER MONTH LUMP SUM, up to the roomies to split",
+  "STATUS": "settable by space manager occupied or available occupied will not show up in search results",
+  "NEARBY CAMPUS": "impt, hardcoded campus location data will be used enum data only"
+  "IMG_URL": "/uploads/{}.jpg"
+```
+```
+
+}
+```
 #### New Addition: Location Data
-  meta data
+  User will be able to input building name: 
+  metadata:
 ```JSON
 {
   "position":[

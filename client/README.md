@@ -46,10 +46,15 @@ npm create vite@latest my-app -- --template react-ts
   "STATUS": "settable by space manager occupied or available occupied will not show up in search results",
   "NEARBY CAMPUS": "impt, hardcoded campus location data will be used enum data only"
   "IMG_URL": "/uploads/{}.jpg"
-```
-```
-
 }
+/*
+Professor allowed us to restrict scope to big four: campuses include:
+1. DLSU Manila
+2. UP Manila
+3. UST
+4. UP Diliman
+5. Ateneo De Manila - Main Campus
+*/
 ```
 #### New Addition: Location Data
   User will be able to input building name: 

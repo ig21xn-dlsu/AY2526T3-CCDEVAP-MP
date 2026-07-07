@@ -25,7 +25,7 @@ MCO1 files are archived main branch is currently serving MCO1 output
   Created by Space managers - viewed by all users, location sensitive. Tag Sensitive. The attributes and characters of the listing is also the tags that are used for search optimization
 
 ### Components
-  under 'client/src/components/ManagerDashComponents/listing-container' is a component that presents each listing in a square format with include edit, create and view inquiries
+  under `client/src/components/ManagerDashComponents/listing-container` is a component that presents each listing in a square format with include edit, create and view inquiries
 
 ### Listing Data Structure
 ```JSON

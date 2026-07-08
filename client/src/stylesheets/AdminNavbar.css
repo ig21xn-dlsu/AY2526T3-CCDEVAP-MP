@@ -133,8 +133,16 @@
         .navbar-option-button-text { color: #424656; font-family: 'Montserrat'; font-size: 14px; font-weight: 500; }
 
         .selected {
-          border-right: #0050CB;
-          fill: #0050CB;
-          color: #0050CB;
-        }
+  
+  border-right: 4px solid #0050CB; 
+  background-color: #F0F4FF; 
+}
+.selected .navbar-option-button-text {
+  color: #0050CB;
+  font-weight: 600; 
+}
+
+.selected svg path {
+  fill: #0050CB; 
+}
       

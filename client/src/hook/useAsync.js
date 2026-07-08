@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * const { data, loading, error, refetch } = useAsync(() => fetchThing(id), [id]);
  */
 export function useAsync(asyncFn, deps = []) {
-  const [state, setState] = useState({ data: null, error: null, loading: true });
+  const [state, setState] = useState({ data: undefined, error: null, loading: true });
   const requestId = useRef(0);
 
   const run = useCallback(() => {
@@ -20,7 +20,7 @@ export function useAsync(asyncFn, deps = []) {
         if (id === requestId.current) setState({ data, error: null, loading: false });
       })
       .catch((error) => {
-        if (id === requestId.current) setState({ data: null, error, loading: false });
+        if (id === requestId.current) setState({ data: undefined, error, loading: false });
       });
     // eslint-disable-next-line react-hook/exhaustive-deps
   }, deps);

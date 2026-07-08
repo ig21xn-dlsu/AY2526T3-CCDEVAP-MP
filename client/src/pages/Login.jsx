@@ -18,7 +18,7 @@ function Login() {
       if (user.role === 'manager') {
         navigate('/manager-listings');
       } else if (user.role === 'student') {
-        navigate();
+        navigate('/student-discover-communities');
       }
     }
   };

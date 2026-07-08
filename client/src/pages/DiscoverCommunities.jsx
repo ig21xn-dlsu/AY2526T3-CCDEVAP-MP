@@ -45,7 +45,7 @@ export default function DiscoverCommunities() {
 
       <div id="tabControls">
         {isColiving ? (
-          <CoLivingFilters filters={coLivingFilters} onChange={setCoLivingFilters} campuses={campuses} />
+          <CoLivingFilters filters={coLivingFilters} onChange={setCoLivingFilters} campuses={campuses || []} />
         ) : (
           <SharedFilters
             filters={sharedFilters}

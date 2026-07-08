@@ -8,6 +8,8 @@ import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
 import { fetchCoLivingGroups, fetchSharedSpaces, fetchCampuses } from '../api/padpalApi';
 
+import '../stylesheets/padpal.css'
+
 export default function DiscoverCommunities() {
   const [activeTab, setActiveTab] = useState('coliving');
   const [coLivingFilters, setCoLivingFilters] = useState(DEFAULT_COLIVING_FILTERS);

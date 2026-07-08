@@ -117,7 +117,7 @@ function Login() {
 
             <section id="container-remember-me">
               <input type="checkbox" />
-              <span className="some-details">Remember me for 30 days</span>
+              <span className="some-details"> Remember me for 30 days</span>
             </section>
 
             <div id="sign-in-button-section" onClick={handleLogIn}>
@@ -138,7 +138,7 @@ function Login() {
           </section>
 
           <section id="container-additional-links">
-            <Link id="admin-login-button" className="nostyle" to="/login-admin" target="_blank">Admin?</Link>
+            <Link id="admin-login-button" className="nostyle" to="/login-admin">Admin?</Link>
           </section>
         </section>
       </section>

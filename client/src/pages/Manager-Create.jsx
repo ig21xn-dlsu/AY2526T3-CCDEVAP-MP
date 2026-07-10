@@ -2,13 +2,15 @@
 //ICON IMPORTS
 import roomDetIcon from '../assets/room-details.svg';
 import aboutSpaceIcon from '../assets/about-space.svg';
-
+import whereSpaceIcon from '../assets/whereSpace.svg'
+import ListingMap from '../components/TwoPointMap.jsx';
 
 import '../stylesheets/create-list-form.css'
 
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+
 
 function ManagerCreate() {
   const PROPERTY_TAGS = [
@@ -44,13 +46,40 @@ function ManagerCreate() {
     "Tap Card System"
   ];
 
+  const CAMPUSES = {
+    UPM: {
+      name: "University of the Philippines Manila",
+      lat: 14.5759437,
+      lng: 120.9864733
+    },
+    DLSU: {
+      name: "De La Salle University",
+      lat: 14.5644408,
+      lng: 120.993459
+    },
+    ADMU: {
+      name: "Ateneo de Manila",
+      lat: 14.6398984,
+      lng: 121.0781952
+    },
+    UST: {
+      name: "University of Santo Thomas",
+      lat: 14.6098426,
+      lng: 120.9894646
+    },
+    UPD: {
+      name: "University of the Philippines Diliman",
+      lat: 14.6547213,
+      long: 121.0663102,
+    }
+  };
 
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       tags: [],
       amenities: [],
       buildingName: "",
-      latittude: null,
+      latitude: null,
       longitude: null
     }
   });
@@ -93,7 +122,15 @@ function ManagerCreate() {
   }, [buildingName]);
 
 
-  const selectedTags = watch("tags")
+  const selectedTags = watch("tags");
+
+  //conditional rendering for the map -> only shows up when these three are present 
+  const selectedCampus = watch("nearestCampus");
+  const latitude = watch("latitude");
+  const longitude = watch("longitude");
+  const campus = CAMPUSES[selectedCampus];
+
+  const shouldShowMap = selectedCampus && latitude != null && longitude != null;
 
   const toggleTag = (tag) => {
     if (selectedTags.includes(tag)) {
@@ -112,6 +149,25 @@ function ManagerCreate() {
   const onSubmit = (data) => {
     console.log(data);
 
+  };
+
+  const selectLocation = (location) => {
+    setValue(
+      "buildingName",
+      location.display_name
+    );
+
+    setValue(
+      "latitude",
+      parseFloat(location.lat)
+    );
+
+    setValue(
+      "longitude",
+      parseFloat(location.lon)
+    );
+
+    setSearchResults([]);
   };
   return (
     <div className="man-create-main container-fluid d-flex flex-column gap-4 p-3 justify-content-center align-items-center">
@@ -215,12 +271,16 @@ function ManagerCreate() {
 
         {/*CARD 3: LOCATIONAL DATA */}
         <div className="card shadow container p-5">
-          <div className="locationInputContainer">
-            <p>Building Name</p>
+          <div className="blockHeader d-flex flex-row border-bottom pb-0 gap-2">
+            <img src={whereSpaceIcon} alt="" />
+            <h1>Where is the Space?</h1>
+          </div>
 
+          <div className="locationInputContainer">
+            <h4>Building Name or Address </h4>
             <input
               type="text"
-              className="form-control"
+              className="form-control border p-3"
               placeholder="Search building..."
               {...register("buildingName")}
             />
@@ -231,6 +291,7 @@ function ManagerCreate() {
                     key={location.place_id}
                     type="button"
                     className="list-group-item list-group-item-action"
+                    onClick={() => selectLocation(location)}
                   >
                     {location.display_name}
                   </button>
@@ -239,6 +300,31 @@ function ManagerCreate() {
             )}
           </div>
 
+          <div className="nearestCampus">
+            <p>What campus do you want to advertise to?</p>
+            <select {...register("nearestCampus")} className='form-select border p-3'>
+              <option value="">Select a campus</option>
+              <option value="DLSU">DLSU-Manila</option>
+              <option value="ADMU">ADMU</option>
+              <option value="UST">UST</option>
+              <option value="UPM">UP-Manila</option>
+              <option value="UPD">UP-Diliman</option>
+
+            </select>
+            <p>Selected {watch("nearestCampus")}</p>
+            <p className='p-2 '>This info will affect searches and create a map with the campus pinned </p>
+          </div>
+          {shouldShowMap && (
+            <div className="card shadow container p-5">
+              <h2>Location Preview</h2>
+
+              <ListingMap
+                latitude={latitude}
+                longitude={longitude}
+                campus={campus}
+              />
+            </div>
+          )}
         </div>
 
         <button type="submit" className='btn btn-primary'>submit</button>

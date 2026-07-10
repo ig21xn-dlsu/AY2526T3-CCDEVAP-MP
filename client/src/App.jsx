@@ -15,6 +15,7 @@ import ManagerListing from './pages/Manager-Listing';
 import ManagerNotif from './pages/Manager-Notif';
 import ManagerCreate from './pages/Manager-Create.jsx';
 
+import 'leaflet/dist/leaflet.css';
 
 import DiscoverCommunities from './pages/DiscoverCommunities';
 

@@ -7,6 +7,8 @@ import aboutSpaceIcon from '../assets/about-space.svg';
 import '../stylesheets/create-list-form.css'
 
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useEffect } from 'react'
 
 function ManagerCreate() {
   const PROPERTY_TAGS = [
@@ -27,6 +29,7 @@ function ManagerCreate() {
     "Good Ventilation"
   ];
 
+
   const AMENITIES = [
     "Free WiFi",
     "24/7 Security",
@@ -45,10 +48,49 @@ function ManagerCreate() {
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       tags: [],
-      ameneties: []
+      amenities: [],
+      buildingName: "",
+      latittude: null,
+      longitude: null
+    }
+  });
+
+  const [searchResults, setSearchResults] = useState([]) //for location search results, we store its longitude and latitude results so this isnt a form
+  const buildingName = watch("buildingName");
+
+  useEffect(() => {
+    if (!buildingName || buildingName.trim().length < 3) {
+      setSearchResults([]);
+      return;
     }
 
-  });
+    const timer = setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?${new URLSearchParams({
+            q: buildingName,
+            format: "jsonv2",
+            limit: 5,
+            addressdetails: 1,
+            countrycodes: "ph"
+          })}`,
+          {
+            headers: {
+              Accept: "application/json"
+            }
+          }
+        );
+
+        const data = await response.json();
+
+        setSearchResults(data);
+      } catch (error) {
+        console.error("Location search failed:", error);
+      }
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [buildingName]);
 
 
   const selectedTags = watch("tags")
@@ -136,14 +178,68 @@ function ManagerCreate() {
               ))}
             </div>
           </div>
+
+
+
+          <div className="amentitiesInputContainer ">
+            <p>Property Amenities</p>
+            <div className="row g-3 mt-1">
+              {AMENITIES.map((amenity) => (
+                <div className="col-md-4" key={amenity}>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={amenity}
+                      id={amenity}
+                      {...register("amenities")}
+                    />
+
+                    <label
+                      className="form-check-label"
+                      htmlFor={amenity}
+                    >
+                      {amenity}
+                    </label>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+
+
+
         </div>
 
 
+        {/*CARD 3: LOCATIONAL DATA */}
+        <div className="card shadow container p-5">
+          <div className="locationInputContainer">
+            <p>Building Name</p>
 
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search building..."
+              {...register("buildingName")}
+            />
+            {searchResults.length > 0 && (
+              <div className="list-group">
+                {searchResults.map((location) => (
+                  <button
+                    key={location.place_id}
+                    type="button"
+                    className="list-group-item list-group-item-action"
+                  >
+                    {location.display_name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
-
-
-
+        </div>
 
         <button type="submit" className='btn btn-primary'>submit</button>
       </form >

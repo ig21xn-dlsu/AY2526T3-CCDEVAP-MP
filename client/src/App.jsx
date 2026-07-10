@@ -13,6 +13,8 @@ import AdminModerations from './pages/AdminModerations';
 import ManagerDashboard from './pages/Manager-Dashboard';
 import ManagerListing from './pages/Manager-Listing';
 import ManagerNotif from './pages/Manager-Notif';
+import ManagerCreate from './pages/Manager-Create.jsx';
+
 
 import DiscoverCommunities from './pages/DiscoverCommunities';
 
@@ -30,12 +32,13 @@ function App() {
         <Route path="/admin-dashboard" element={user && user.role === 'admin' ? <AdminDashboard /> : <Navigate to="/" />} />
         <Route path="/admin-users" element={user && user.role === 'admin' ? <AdminUsers /> : <Navigate to="/" />} />
         <Route path="/admin-listings" element={user && user.role === 'admin' ? < AdminListings /> : <Navigate to="/" />} />
-        <Route path="/admin-moderations" element={user && user.role === 'admin' ? < AdminModerations />: <Navigate to="/" />} />
+        <Route path="/admin-moderations" element={user && user.role === 'admin' ? < AdminModerations /> : <Navigate to="/" />} />
 
         <Route path="/manager-dashboard" element={user && user.role === 'manager' ? <ManagerDashboard /> : <Navigate to="/" />} />
+        <Route path="/manager-create" element={user && user.role === 'manager' ? <ManagerCreate /> : <Navigate to="/" />} />
         <Route path="/manager-listings" element={user && user.role === 'manager' ? <ManagerListing /> : <Navigate to="/" />} />
-        <Route path="/manager-notifications" element={user && user.role === 'manager' ? <ManagerNotif />  : <Navigate to="/" />} />
-      
+        <Route path="/manager-notifications" element={user && user.role === 'manager' ? <ManagerNotif /> : <Navigate to="/" />} />
+
         <Route path="/student-discover-communities" element={user && user.role === 'student' ? <DiscoverCommunities /> : <Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

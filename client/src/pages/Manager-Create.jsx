@@ -86,8 +86,10 @@ function ManagerCreate() {
 
   const [searchResults, setSearchResults] = useState([]) //for location search results, we store its longitude and latitude results so this isnt a form
   const buildingName = watch("buildingName");
-
+  useEffect(() => { setSelectedLocation(false), [buildingName] })
+  const [selectedLocation, setSelectedLocation] = useState(false);
   useEffect(() => {
+    if (selectedLocation) return;
     if (!buildingName || buildingName.trim().length < 3) {
       setSearchResults([]);
       return;
@@ -130,7 +132,6 @@ function ManagerCreate() {
   const longitude = watch("longitude");
   const campus = CAMPUSES[selectedCampus];
 
-  const shouldShowMap = selectedCampus && latitude != null && longitude != null;
 
   const toggleTag = (tag) => {
     if (selectedTags.includes(tag)) {
@@ -166,6 +167,8 @@ function ManagerCreate() {
       "longitude",
       parseFloat(location.lon)
     );
+
+    setSelectedLocation(true);
 
     setSearchResults([]);
   };
@@ -279,6 +282,7 @@ function ManagerCreate() {
           <div className="locationInputContainer">
             <h4>Building Name or Address </h4>
             <input
+              autoComplete="off"
               type="text"
               className="form-control border p-3"
               placeholder="Search building..."
@@ -311,10 +315,9 @@ function ManagerCreate() {
               <option value="UPD">UP-Diliman</option>
 
             </select>
-            <p>Selected {watch("nearestCampus")}</p>
             <p className='p-2 '>This info will affect searches and create a map with the campus pinned </p>
           </div>
-          {shouldShowMap && (
+          {selectedCampus && (
             <div className="card shadow container p-5">
               <h2>Location Preview</h2>
 

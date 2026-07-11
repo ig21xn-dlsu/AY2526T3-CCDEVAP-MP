@@ -11,10 +11,13 @@ import '../stylesheets/create-list-form.css'
 
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect } from 'react'; //!@ME PLEASE REFACTOR THIS ITS MESSY — not right now though in a middle of a refactor
+import { useContext } from 'react';
 
+import { AuthContext } from '../context/AuthContext.jsx'
 
 function ManagerCreate() {
+  const { user } = useContext(AuthContext);
   const PROPERTY_TAGS = [
     "Corner Unit",
     "Newly Renovated",
@@ -144,6 +147,7 @@ function ManagerCreate() {
   const longitude = watch("longitude");
   const campus = CAMPUSES[selectedCampus];
 
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const toggleTag = (tag) => {
     if (selectedTags.includes(tag)) {
@@ -159,8 +163,61 @@ function ManagerCreate() {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+
+      // Multer image handling
+      const imageFormData = new FormData();
+
+      imageFormData.append("listingImage", uploadFile.file);
+
+      const uploadResponse =
+        await fetch(
+          `${API_URL}/api/upload`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: imageFormData
+          }
+
+        );
+
+      const uploadResult = await uploadResponse.json();
+      console.log("CONSOLE LOG:", uploadResult);
+
+      //multer returning the image url
+
+      const listingPayload = {
+        ...data,
+        imageUrl: uploadResult.imageUrl
+      };
+
+      console.log("listing payload: ", listingPayload);
+
+      // actual listing data
+
+      const listingResponse =
+        await fetch(
+          `${API_URL}/api/listing`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: JSON.stringify(listingPayload  //adding the url
+            )
+          }
+        );
+
+      const result = await listingResponse.json();
+
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
 
   };
 

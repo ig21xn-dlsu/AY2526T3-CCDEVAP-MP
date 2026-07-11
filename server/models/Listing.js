@@ -1,32 +1,65 @@
-import mongoose from 'mongoose';
+/* this file just got changed by Philip, the draft of the listing is not as updated as the final fields that the listing will take.
+ * This is now the (hopefully) final fields of a listing, i will refactor your react container for you too to take the new model thank u
+ */
 
-const { Schema } = mongoose;
 
-export const CAMPUSES = ['DLSU-MANILA', 'UP MANILA', 'UST', 'UP-DILIMAN', 'ATENEO MAIN CAMPUS'];
-export const STATUSES = ['occupied', 'available'];
+/* Changes from initial model
+ *
+ * no longer using an enum, the react front end already makes sure that the inputs in enum related fields are defined properly, 
+ * doing this since it makes the model page cleaner and less strict that might break things
+ * 
+ * making imageUrl a [string] JUST IN CASE  we plan to move to muliple pictures in the future
+ *
+ * */
 
-const listingSchema = new Schema(
-  {
-    // _id is supplied explicitly on helpers.js generateListingId().
-    _id: { type: Number },
-    title: { type: String, required: true, trim: true },
-    description: { type: String, default: '', maxlength: 3000 },
-    price: { type: Number, required: true, min: 0 },
-    status: { type: String, enum: STATUSES, default: 'available' },
-    nearbyCampus: { type: String, enum: CAMPUSES, required: true },
-    img: { type: String, default: null }, // /uploads/{generatedcode}.jpg
+import mongoose from "mongoose";
+
+const listingSchema = new mongoose.Schema({
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
-  { timestamps: { createdAt: 'createdAt', updatedAt: false } }
-);
 
-listingSchema.set('toJSON', {
-  virtuals: true,
-  transform: (doc, ret) => {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
-    return ret;
+  roomTitle: String,
+
+  price: Number,
+
+  gender: {
+    type: String,
+    enum: ["male", "female", "co-ed"]
   },
+
+  isOccupied: Boolean,
+
+  description: String,
+
+  tags: [String],
+
+  amenities: [String],
+
+  buildingName: String,
+
+  latitude: Number,
+
+  longitude: Number,
+
+  nearestCampus: String,
+
+  contacts: [String],
+
+  imageUrl: {
+    type: [String],
+    default: []
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-export const Listing = mongoose.model('Listing', listingSchema);
+export default mongoose.model(
+  "Listing",
+  listingSchema
+);

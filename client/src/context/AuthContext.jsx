@@ -1,28 +1,50 @@
-import { createContext, useReducer } from "react";
+/* Hey Ian, I notice that we dont actually store the user so it ends up logging us 
+ * out everytime after a refresh i will just add the two new useEffects to store our storedUser data
+ * I also need this since i need to attach a user when i create the listing 
+ * 
+ * -Philip
+ */
+
+
+import { createContext, useReducer, useEffect } from "react";
 
 export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
-    switch(action.type) {
-        case 'LOGIN':
-            return { user: action.payload }
-        case 'LOGOUT':
-            return { user: null }
-        default:
-            return state
-    } 
+  switch (action.type) {
+    case 'LOGIN':
+      return { user: action.payload }
+    case 'LOGOUT':
+      return { user: null }
+    default:
+      return state
+  }
 }
 
 export const AuthContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, {
-        user: null
-    })
+  const [state, dispatch] = useReducer(authReducer, {
+    user: null
+  })
 
-    console.log('AuthContext state: ', state)
+  console.log('AuthContext state: ', state)
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      dispatch({ type: "LOGIN", payload: JSON.parse(storedUser) });
+    }
+  }, []);
 
-    return (
-        <AuthContext.Provider value={{...state, dispatch}}>
-            { children }
-        </AuthContext.Provider>
-    )
+  useEffect(() => {
+    if (state.user) {
+      localStorage.setItem("user", JSON.stringify(state.user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [state.user]);
+
+  return (
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
+  )
 } 

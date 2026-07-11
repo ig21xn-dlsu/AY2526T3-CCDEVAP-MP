@@ -1,63 +1,61 @@
 import { useRef } from "react";
 
 // ============================================================
-// Controlled file upload component.
-// It owns NO state itself — the parent passes `files` down and
-// gets notified via `onFilesChange` when they change, same pattern
+// Controlled SINGLE-file upload component.
+// It owns NO state itself — the parent passes `file` down and
+// gets notified via `onFileChange` when it changes, same pattern
 // as a controlled <input value={x} onChange={setX} />.
 //
-// If anyone else in the group wants to use this, take not of this: 
+// If anyone wants to use this Box, please take not of what I note below: 
 //
-//   const [uploadedFiles, setUploadedFiles] = useState([]);
-//   <FileUpload files={uploadedFiles} onFilesChange={setUploadedFiles} />
+//   const [uploadedFile, setUploadedFile] = useState(null);
+//   <FileUpload file={uploadedFile} onFileChange={setUploadedFile} />
 //
-// At submit time, loop over uploadedFiles and do:
-//   uploadedFiles.forEach(({ file }) => formData.append("photos", file));
+// At submit time:
+//   if (uploadedFile) formData.append("photo", uploadedFile.file);
 // ============================================================
 
-export default function FileUpload({ files, onFilesChange, maxSizeMB = 10 }) {
+// CHANGED: props renamed files->file, onFilesChange->onFileChange (singular now)
+export default function FileUpload({ file, onFileChange, maxSizeMB = 10 }) {
   const inputRef = useRef(null);
 
   const ALLOWED_TYPES = ["image/png", "image/jpeg"];
 
-  const addFiles = (fileList) => {
-    const incoming = Array.from(fileList).filter((file) => {
-      if (!ALLOWED_TYPES.includes(file.type)) {
-        alert(`${file.name} isn't a PNG or JPG file`);
-        return false;
-      }
-      if (file.size > maxSizeMB * 1024 * 1024) {
-        alert(`${file.name} exceeds the ${maxSizeMB}MB limit`);
-        return false;
-      }
-      return true;
+  const setFile = (rawFile) => {
+    if (!rawFile) return;
+
+    if (!ALLOWED_TYPES.includes(rawFile.type)) {
+      alert(`${rawFile.name} isn't a PNG or JPG file`);
+      return;
+    }
+    if (rawFile.size > maxSizeMB * 1024 * 1024) {
+      alert(`${rawFile.name} exceeds the ${maxSizeMB}MB limit`);
+      return;
+    }
+
+    if (file?.previewUrl) URL.revokeObjectURL(file.previewUrl);
+
+    onFileChange({
+      file: rawFile,
+      previewUrl: URL.createObjectURL(rawFile),
     });
-
-    const withMeta = incoming.map((file) => ({
-      file,
-      id: `${file.name}-${file.size}-${Date.now()}-${Math.random()}`,
-      previewUrl: URL.createObjectURL(file),
-    }));
-
-    onFilesChange([...files, ...withMeta]);
   };
 
-  const removeFile = (id) => {
-    const target = files.find((f) => f.id === id);
-    if (target?.previewUrl) URL.revokeObjectURL(target.previewUrl);
-    onFilesChange(files.filter((f) => f.id !== id));
+  const removeFile = () => {
+    if (file?.previewUrl) URL.revokeObjectURL(file.previewUrl);
+    onFileChange(null);
   };
 
   const handleInputChange = (e) => {
-    addFiles(e.target.files);
-    e.target.value = ""; // allows re-selecting the same file later
+    setFile(e.target.files[0]);
+    e.target.value = "";
   };
 
   const handleDragOver = (e) => e.preventDefault();
 
   const handleDrop = (e) => {
     e.preventDefault();
-    addFiles(e.dataTransfer.files);
+    setFile(e.dataTransfer.files[0]);
   };
 
   const formatSize = (bytes) => {
@@ -82,34 +80,31 @@ export default function FileUpload({ files, onFilesChange, maxSizeMB = 10 }) {
         <input
           ref={inputRef}
           type="file"
-          multiple
           accept="image/png, image/jpeg"
           onChange={handleInputChange}
           style={{ display: "none" }}
         />
       </div>
 
-      {files.length > 0 && (
+      {file && (
         <div className="uploadedGrid d-flex flex-wrap gap-2 mt-3">
-          {files.map(({ file, id, previewUrl }) => (
-            <div key={id} className="uploadedItem">
-              <img src={previewUrl} alt={file.name} className="uploadedThumb" />
-              <div className="uploadedInfo">
-                <span className="uploadedName" title={file.name}>
-                  {file.name}
-                </span>
-                <span className="uploadedSize">{formatSize(file.size)}</span>
-              </div>
-              <button
-                type="button"
-                className="uploadedRemoveBtn"
-                aria-label={`Remove ${file.name}`}
-                onClick={() => removeFile(id)}
-              >
-                ×
-              </button>
+          <div className="uploadedItem">
+            <img src={file.previewUrl} alt={file.file.name} className="uploadedThumb" />
+            <div className="uploadedInfo">
+              <span className="uploadedName" title={file.file.name}>
+                {file.file.name}
+              </span>
+              <span className="uploadedSize">{formatSize(file.file.size)}</span>
             </div>
-          ))}
+            <button
+              type="button"
+              className="uploadedRemoveBtn"
+              aria-label={`Remove ${file.file.name}`}
+              onClick={removeFile}
+            >
+              ×
+            </button>
+          </div>
         </div>
       )}
     </div>

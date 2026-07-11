@@ -3,7 +3,10 @@
 import roomDetIcon from '../assets/room-details.svg';
 import aboutSpaceIcon from '../assets/about-space.svg';
 import whereSpaceIcon from '../assets/whereSpace.svg'
+import contactPrefIcon from '../assets/contactsIcon.svg';
+
 import ListingMap from '../components/TwoPointMap.jsx';
+import FileUpload from '../components/ManagerDashComponents/FileUpload.jsx';
 
 import '../stylesheets/create-list-form.css'
 
@@ -30,6 +33,12 @@ function ManagerCreate() {
     "Good Natural Light",
     "Good Ventilation"
   ];
+
+  const CONTACT_METHODS = [
+    "Email",
+    "SMS / Phone",
+    "Social Platform",
+  ]
 
 
   const AMENITIES = [
@@ -77,12 +86,15 @@ function ManagerCreate() {
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       tags: [],
+      contacts: [],
       amenities: [],
       buildingName: "",
       latitude: null,
       longitude: null
     }
   });
+
+  const [uploadFile, setUploadFile] = useState();
 
   const [searchResults, setSearchResults] = useState([]) //for location search results, we store its longitude and latitude results so this isnt a form
   const buildingName = watch("buildingName");
@@ -328,6 +340,39 @@ function ManagerCreate() {
               />
             </div>
           )}
+        </div>
+
+        <div className="card shadow container p-5">
+          <div className="blockHeader border-bottom d-flex flex-row pb-0">
+            <img src={contactPrefIcon} alt="" />
+            <h1>contact preferences</h1>
+          </div>
+          <p className='pb-0 mb-0'><em className='mb-0 pb-0'>note: you are responsible for making sure you addd your appropriate information in your account details!</em></p>
+          <div className="row g-3 mt-1">
+            {CONTACT_METHODS.map((contact) => (
+              <div className="col-md-4" key={contact}> <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value={contact}
+                  id={contact}
+                  {...register("contacts")}
+                />
+
+                <label
+                  className="form-check-label"
+                  htmlFor={contact}
+                >
+                  Via {contact}
+                </label>
+              </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="card shadow container p-5">
+          <FileUpload file={uploadFile} onFileChange={setUploadFile} />
         </div>
 
         <button type="submit" className='btn btn-primary'>submit</button>

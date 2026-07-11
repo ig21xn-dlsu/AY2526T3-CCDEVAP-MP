@@ -1,4 +1,3 @@
-
 //ICON IMPORTS
 import roomDetIcon from '../assets/room-details.svg';
 import aboutSpaceIcon from '../assets/about-space.svg';
@@ -90,7 +89,8 @@ function ManagerCreate() {
       amenities: [],
       buildingName: "",
       latitude: null,
-      longitude: null
+      longitude: null,
+      isOccupied: false,
     }
   });
 
@@ -204,11 +204,11 @@ function ManagerCreate() {
           </div>
 
           <div className="priceAndMoveContainer gap-3 d-flex flex-row justify-content-between">
-            <div className="priceInputContainer d-flex flex-column container-fluid ">
+            <div className="priceInputContainer d-flex flex-column container">
               <p>Rate per Month</p>
               <input {...register("price")} type="number" className='border p-2' />
             </div>
-            <div className="genderPreference d-flex flex-column container-fluid" >
+            <div className="genderPreference d-flex flex-column container" >
               <p>Gender Restrictions</p>
               <select {...register("gender")} className="form-select">
                 <option value="co-ed">Co-ed: No restrictions</option>
@@ -216,6 +216,15 @@ function ManagerCreate() {
                 <option value="female">Female</option>
               </select>
             </div>
+          </div>
+          <div className="isOccupiedInputContainer d-flex align-items-center gap-2">
+            <label htmlFor="" className="toggleSwitch">
+              <input type="checkbox" {...register("isOccupied")} />
+              <span className="toggleSlider"></span>
+            </label>
+            mark as occupied
+
+
           </div>
         </div>
 

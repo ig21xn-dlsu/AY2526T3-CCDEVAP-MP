@@ -81,7 +81,7 @@ function ManagerCreate() {
     UPD: {
       name: "University of the Philippines Diliman",
       lat: 14.6547213,
-      long: 121.0663102,
+      lng: 121.0663102,
     }
   };
 

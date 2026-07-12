@@ -12,6 +12,60 @@
   height: 200px;
 }
 
+.thumbnailFull {
+  height: 350px;
+  width: 622px;
+  border-radius: 20px;
+}
+
+.campusBadge {
+  position: absolute;
+  font-size: 1em;
+  font-weight: 800;
+  color: black;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: rgb(255, 255, 255, 0.85);
+}
+
+
+.genderBadge {
+  position: absolute;
+  font-size: 0.75em;
+  top: 20px;
+  right: 20px;
+
+}
+
+
+.descriptionBox p {
+  white-space: pre-wrap;
+}
+
+.priceBadgeFull {
+  position: absolute;
+  font-size: 1.5em;
+  bottom: 20px;
+  right: 20px;
+  color: #0050cb;
+}
+
+.amenitiesContainer h1 {
+  font-size: 1.5em;
+
+}
+
+.amenitiesBadge {
+  background-color: none;
+  font-weight: 200;
+}
+
+
+
+
+
+
 .priceBadge {
   position: absolute;
   top: 10px;
@@ -26,6 +80,28 @@
   background-color: rgb(255, 255, 255, 0.85);
   border-radius: 20px;
 }
+
+.occuFull {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.headInformation {
+  position: relative;
+}
+
+.headInformation h1 {
+  font-weight: 800;
+  font-family: 'Monsterrat', sans-serif;
+}
+
+.headInformation h2 {
+  font-weight: 600;
+  font-size: 1em;
+}
+
+
 
 
 .thumbnail img {

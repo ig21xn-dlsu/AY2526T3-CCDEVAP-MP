@@ -15,7 +15,7 @@ import ManagerListing from './pages/Manager-Listing';
 import ManagerNotif from './pages/Manager-Notif';
 import ManagerCreate from './pages/Manager-Create.jsx';
 
-import FullView from './pages/FullListingView.jsx';
+import ManagerViewListing from './pages/Manager-View-Listing.jsx';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -37,12 +37,14 @@ function App() {
         <Route path="/admin-listings" element={user && user.role === 'admin' ? < AdminListings /> : <Navigate to="/" />} />
         <Route path="/admin-moderations" element={user && user.role === 'admin' ? < AdminModerations /> : <Navigate to="/" />} />
 
-        <Route path="/full-view/:id" element={<FullView />} />
 
         <Route path="/manager-dashboard" element={user && user.role === 'manager' ? <ManagerDashboard /> : <Navigate to="/" />} />
         <Route path="/manager-create" element={user && user.role === 'manager' ? <ManagerCreate /> : <Navigate to="/" />} />
         <Route path="/manager-listings" element={user && user.role === 'manager' ? <ManagerListing /> : <Navigate to="/" />} />
         <Route path="/manager-notifications" element={user && user.role === 'manager' ? <ManagerNotif /> : <Navigate to="/" />} />
+        <Route path="/manager-view-listing/:id" element={user && user.role === 'manager' ? <ManagerViewListing /> : <Navigate to="/" />} />
+
+
 
         <Route path="/student-discover-communities" element={user && user.role === 'student' ? <DiscoverCommunities /> : <Navigate to="/" />} />
       </Routes>

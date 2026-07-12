@@ -7,7 +7,7 @@ function ListingContainer({ _id, roomTitle, nearestCampus, price, isOccupied, im
   return (
     <div
       className="listingParentContainer card shadow d-flex flex-col gap-2"
-      onClick={() => navigate(`/full-view/${_id}`)}
+      onClick={() => navigate(`/manager-view-listing/${_id}`)}
       role="button"
       tabIndex={0}
     >

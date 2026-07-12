@@ -251,7 +251,7 @@ function ManagerCreate() {
         {/* CARD1 : ROOM TITLE CONTAINER*/}
 
         <div className="card shadow container p-5">
-          <div className="blockHeader d-flex flex-row border-bottom pb-0 gap-2">
+          <div className="blockHeader d-flex flex-row border-bottom pb-2 gap-2 align-items-center">
             <img src={roomDetIcon} alt="" />
             <h1>Room Details</h1>
           </div>
@@ -288,7 +288,7 @@ function ManagerCreate() {
         {/* CARD2 : About the space */}
 
         <div className="card shadow container p-5">
-          <div className="blockHeader d-flex flex-row border-bottom pb-0 gap-2">
+          <div className="blockHeader d-flex flex-row border-bottom pb-2 gap-2">
             <img src={aboutSpaceIcon} alt="" />
             <h1>About the Space</h1>
           </div>
@@ -352,13 +352,13 @@ function ManagerCreate() {
 
         {/*CARD 3: LOCATIONAL DATA */}
         <div className="card shadow container p-5">
-          <div className="blockHeader d-flex flex-row border-bottom pb-0 gap-2">
+          <div className="blockHeader d-flex flex-row border-bottom pb-2 gap-2">
             <img src={whereSpaceIcon} alt="" />
             <h1>Where is the Space?</h1>
           </div>
 
           <div className="locationInputContainer">
-            <h4>Building Name or Address </h4>
+            <p>Building Name or Address </p>
             <input
               autoComplete="off"
               type="text"
@@ -409,11 +409,11 @@ function ManagerCreate() {
         </div>
 
         <div className="card shadow container p-5">
-          <div className="blockHeader border-bottom d-flex flex-row pb-0">
+          <div className="blockHeader border-bottom d-flex flex-row pb-2">
             <img src={contactPrefIcon} alt="" />
             <h1>contact preferences</h1>
           </div>
-          <p className='pb-0 mb-0'><em className='mb-0 pb-0'>note: you are responsible for making sure you addd your appropriate information in your account details!</em></p>
+          <p className='pb-2 mb-0'><em className='mb-0 pb-2'>note: you are responsible for making sure you addd your appropriate information in your account details!</em></p>
           <div className="row g-3 mt-1">
             {CONTACT_METHODS.map((contact) => (
               <div className="col-md-4" key={contact}> <div className="form-check">
@@ -440,6 +440,8 @@ function ManagerCreate() {
         <div className="card shadow container p-5">
           <FileUpload file={uploadFile} onFileChange={setUploadFile} />
         </div>
+
+
 
         <button type="submit" className='btn btn-primary'>submit</button>
       </form >

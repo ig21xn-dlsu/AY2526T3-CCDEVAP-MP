@@ -38,6 +38,20 @@ const VALID_CAMPUSES = new Set([
  * ?maxPrice=15000
  */
 
+router.get("/manager", requireAuth, async (req, res) => {
+  try {
+    const listings = await Listing.find({ owner: req.user._id }).sort({ createdAt: -1 });
+    res.status(200).json(listings);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
+
+
+
 router.get(
   "/",
   requireAuth,

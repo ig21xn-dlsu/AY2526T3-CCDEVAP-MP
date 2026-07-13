@@ -77,21 +77,21 @@ function ListingFullView({ listing }) {
             </div>
           </div>
         </div>
-
-        <div>
-          <h4>Contact methods</h4>
-          <ul>
-            {contacts?.map((c, i) => <li key={i}>{c}</li>)}
-          </ul>
-        </div>
-
       </div>
 
       {/* SIDEBAR COLUMN */}
       <div className="listing-sidebar" style={{ flexBasis: '25%', minWidth: '280px' }}>
-        <div className="sticky-top" style={{ top: '2rem' }}>
+        <div className="sticky-top d-flex flex-column gap-4" style={{ top: '2rem' }}>
           <ManagerCard ownerId={owner} />
+          <div className="card shadow d-flex flex-column">
+            <h4>Contact Through: </h4>
+            <ul>
+              {contacts?.map((c, i) => <li key={i}>{c}</li>)}
+            </ul>
+          </div>
+
         </div>
+
       </div>
 
     </div>

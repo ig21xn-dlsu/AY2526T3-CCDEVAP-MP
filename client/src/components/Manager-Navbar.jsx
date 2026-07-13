@@ -19,6 +19,9 @@ function ManagerNavbar() {
 
       </div>
       <div className="d-flex flex-row gap-4 align-items-center">
+        <NavLink to="/manager-calling-card" className={({ isActive }) =>
+          isActive ? "nav-entry nav-active" : "nav-entry"
+        }>InformationDetails</NavLink>
         <NavLink to="/manager-listings" className={({ isActive }) =>
           isActive ? "nav-entry nav-active" : "nav-entry"
         }>listings</NavLink>

@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
 const authRoutes = require('./routes/authRoutes');
 const listingRoutes = require('./routes/listingRoutes.js');
 const uploadRoutes = require('./routes/uploadRoutes.js');
+const callingCardRoutes = require('./routes/callingCardRoutes.js');
+
+
 const path = require("path");
 connectDB();
 
@@ -21,7 +24,7 @@ app.use(express.json());
 
 
 
-
+app.use('/api/calling-card', callingCardRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/listing', listingRoutes);
 app.use('/api/auth', authRoutes);

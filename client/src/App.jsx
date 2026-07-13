@@ -14,12 +14,14 @@ import ManagerDashboard from './pages/Manager-Dashboard';
 import ManagerListing from './pages/Manager-Listing';
 import ManagerNotif from './pages/Manager-Notif';
 import ManagerCreate from './pages/Manager-Create.jsx';
-
 import ManagerViewListing from './pages/Manager-View-Listing.jsx';
+import ManagerCallingCard from './pages/Manager-Calling-Card.jsx';
+
 
 import 'leaflet/dist/leaflet.css';
 
 import DiscoverCommunities from './pages/DiscoverCommunities';
+
 
 function App() {
 
@@ -39,6 +41,7 @@ function App() {
 
 
         <Route path="/manager-dashboard" element={user && user.role === 'manager' ? <ManagerDashboard /> : <Navigate to="/" />} />
+        <Route path="/manager-calling-card" element={user && user.role === 'manager' ? <ManagerCallingCard /> : <Navigate to="/" />} />
         <Route path="/manager-create" element={user && user.role === 'manager' ? <ManagerCreate /> : <Navigate to="/" />} />
         <Route path="/manager-listings" element={user && user.role === 'manager' ? <ManagerListing /> : <Navigate to="/" />} />
         <Route path="/manager-notifications" element={user && user.role === 'manager' ? <ManagerNotif /> : <Navigate to="/" />} />

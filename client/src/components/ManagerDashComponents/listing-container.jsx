@@ -25,7 +25,7 @@ function ListingContainer({ _id, roomTitle, nearestCampus, price, isOccupied, im
         <h1>{roomTitle}</h1>
         <h2>{nearestCampus}</h2>
         <div className="footer d-flex flex-row">
-          <div className={`occupancyBadge ${isOccupied ? 'occupied' : 'vacant'}`}>
+          <div className={`occupancyBadge ${isOccupied ? 'occupied' : 'avail'}`}>
             {isOccupied ? 'occupied' : 'vacant'}
           </div>
         </div>

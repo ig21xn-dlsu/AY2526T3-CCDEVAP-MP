@@ -2,9 +2,16 @@ import '../stylesheets/listing-card.css'
 import MapContainer from '../components/TwoPointMap.jsx'
 import CAMPUSES from '../assets/util/CAMPUSES.js'
 import ManagerCard from '../components/ViewListing-ManagerSideCard.jsx'
+import { useState } from 'react'
+import InquiryModal from './InquiryModal.jsx'
+
 
 function ListingFullView({ listing }) {
   if (!listing) return <p>Listing not found.</p>;
+  console.log("From ViewListing.jsx: ", { listing });
+  const [showInquiryModal, setShowInquiryModal] = useState(false);
+  console.log("From ViewListing.jsx: ", { showInquiryModal });
+
 
   const {
     roomTitle,
@@ -77,21 +84,30 @@ function ListingFullView({ listing }) {
             </div>
           </div>
         </div>
-
-        <div>
-          <h4>Contact methods</h4>
-          <ul>
-            {contacts?.map((c, i) => <li key={i}>{c}</li>)}
-          </ul>
-        </div>
-
       </div>
 
       {/* SIDEBAR COLUMN */}
       <div className="listing-sidebar" style={{ flexBasis: '25%', minWidth: '280px' }}>
-        <div className="sticky-top" style={{ top: '2rem' }}>
+        <div className="sticky-top d-flex flex-column gap-4" style={{ top: '2rem' }}>
           <ManagerCard ownerId={owner} />
+          <div className="card shadow d-flex flex-column">
+            <h4>Contact Through: </h4>
+            <ul>
+              {contacts?.map((c, i) => <li key={i}>{c}</li>)}
+            </ul>
+          </div>
+
+
+          <button className="inquire-btn" onClick={() => setShowInquiryModal(true)}>
+            Send a brief message
+          </button>
+
+          {showInquiryModal && (
+            <InquiryModal listingId={listing._id}
+              onClose={() => setShowInquiryModal(false)} />
+          )}
         </div>
+
       </div>
 
     </div>

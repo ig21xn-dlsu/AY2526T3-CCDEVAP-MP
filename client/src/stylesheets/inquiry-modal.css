@@ -1,0 +1,67 @@
+.inquiry-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.inquiry-modal-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.modal-textarea {
+  width: 100%;
+  resize: none;
+  font-family: inherit;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.modal-footer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.char-counter {
+  font-size: 0.8em;
+  color: #666;
+  align-self: flex-end;
+}
+
+.modal-submit-btn {
+  align-self: flex-end;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #0050CB;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

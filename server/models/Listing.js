@@ -14,6 +14,7 @@
 
 /*
 * CHANGES BY IAN: converted to CommonJS to match the backend
+* Noted by Philip: okey, had to convert controller too thanks 
 */
 
 const mongoose = require("mongoose");

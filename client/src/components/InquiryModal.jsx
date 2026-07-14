@@ -6,7 +6,7 @@ const MAX_LENGTH = 500;
 
 function InquiryModal({ listingId, onClose }) {
   const [messageBody, setMessageBody] = useState("");
-  const { sendInquiry, loading, error } = useInquiry();
+  const { sendInquiry, sending, error } = useInquiry();
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
@@ -58,9 +58,9 @@ function InquiryModal({ listingId, onClose }) {
           <button
             className="modal-submit-btn"
             onClick={handleSubmit}
-            disabled={loading || !messageBody.trim()}
+            disabled={sending || !messageBody.trim()}
           >
-            {loading ? "Sending..." : "Send Inquiry"}
+            {sending ? "Sending..." : "Send Inquiry"}
           </button>
         </div>
       </div>

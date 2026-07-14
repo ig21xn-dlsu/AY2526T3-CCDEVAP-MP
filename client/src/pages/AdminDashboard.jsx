@@ -3,7 +3,15 @@ import AdminNavbar from '../components/AdminNavbar';
 import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import { useState, useEffect } from 'react';
 
-import { fetchTotalUsers, fetchTotalListings, fetchTotalGroups, fetchTotalReports } from '../api/adminDashboard';
+import { fetchTotalUsers, fetchTotalListings, fetchTotalGroups, fetchTotalReports, fetchRecentActivity } from '../api/adminDashboard';
+import { formatTimeAgo } from '../utils/formatTimeAgo';
+
+const ACTIVITY_ICON_MAP = {
+    user_created: { icon: '👤', className: 'icon-blue' },
+    group_created: { icon: '👥', className: 'icon-purple' },
+    listing_created: { icon: '🏠', className: 'icon-orange' },
+    report_created: { icon: '❗', className: 'icon-red' },
+};
 
 function AdminDashboard() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -12,6 +20,7 @@ function AdminDashboard() {
     const [totalListings, setTotalListings] = useState(0);
     const [totalGroups, setTotalGroups] = useState(0);
     const [totalReports, setTotalReports] = useState(0);
+    const [recentActivity, setRecentActivity] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,43 +29,42 @@ function AdminDashboard() {
         const loadDashboardData = async () => {
             setLoading(true);
             setError(null);
-            
+
             try {
-                // Promise.all runs all these fetches in parallel at the same time.
-                const [usersData, listingsData, groupsData, reportsData] = await Promise.all([
+                const [usersData, listingsData, groupsData, reportsData, activityData] = await Promise.all([
                     fetchTotalUsers(),
                     fetchTotalListings(),
                     fetchTotalGroups(),
-                    fetchTotalReports()
+                    fetchTotalReports(),
+                    fetchRecentActivity()
                 ]);
 
-                // Once ALL promises resolve, update the states
                 setTotalUsers(usersData.totalUsers);
                 setTotalListings(listingsData.totalListings);
                 setTotalGroups(groupsData.totalGroups);
                 setTotalReports(reportsData.totalReports);
-                
+                setRecentActivity(activityData);
+
             } catch (err) {
                 console.error('Error fetching dashboard data:', err);
                 setError('Failed to load');
             } finally {
-                // Loading is only set to false once everything is completely finished
                 setLoading(false);
             }
         };
 
         loadDashboardData();
-    }, []); 
+    }, []);
 
     return (
         <div id="dashboard-wrapper">
             <AdminNavbar onOpenSettings={() => setIsSettingsOpen(true)} />
             {isSettingsOpen && <ProfileSettingsModal onClose={() => setIsSettingsOpen(false)} />}
-            
+
             <section id="admin-dashboard">
                 <section id="page-heading">System Overview</section>
                 <section className="dashboard-row">
-                    
+
                     <div className="analytics-box">
                         <div className="analytics-title">
                             Total Users
@@ -86,13 +94,11 @@ function AdminDashboard() {
                             Pending Flags
                             {/* SVG omitted for brevity, keep your existing SVG here */}
                         </div>
-                        {/* Note: Fixed a minor typo here where you had a nested div with the same class */}
                         <div className="analytics-number">{loading ? '...' : error ? '—' : totalReports}</div>
                     </div>
                 </section>
 
                 <section className="dashboard-row trends">
-                    {/* The rest of your JSX remains exactly the same */}
                     <div className="dashboard-card card-large">
                         <div className="card-title">Growth Trends</div>
                         <div className="chart-placeholder">
@@ -104,27 +110,27 @@ function AdminDashboard() {
                     <div className="dashboard-card card-small">
                         <div className="card-title">Recent Activity</div>
                         <div className="activity-list">
-                            <div className="activity-item">
-                                <div className="activity-icon icon-blue">👤</div>
-                                <div className="activity-text">
-                                    <div><strong>Sarah J.</strong> created a new account.</div>
-                                    <div className="activity-time">2 mins ago</div>
-                                </div>
-                            </div>
-                            <div className="activity-item">
-                                <div className="activity-icon icon-orange">🏠</div>
-                                <div className="activity-text">
-                                    <div>New listing published in Austin, TX.</div>
-                                    <div className="activity-time">15 mins ago</div>
-                                </div>
-                            </div>
-                            <div className="activity-item">
-                                <div className="activity-icon icon-red">❗</div>
-                                <div className="activity-text">
-                                    <div>User @mike99 was flagged for spam.</div>
-                                    <div className="activity-time">1 hr ago</div>
-                                </div>
-                            </div>
+                            {loading ? (
+                                <div>Loading...</div>
+                            ) : recentActivity.length === 0 ? (
+                                <div>No recent activity.</div>
+                            ) : (
+                                recentActivity.map((item) => {
+                                    const iconData = ACTIVITY_ICON_MAP[item.type] || { icon: '•', className: '' };
+
+                                    return (
+                                        <div className="activity-item" key={item._id}>
+                                            <div className={`activity-icon ${iconData.className}`}>
+                                                {iconData.icon}
+                                            </div>
+                                            <div className="activity-text">
+                                                <div>{item.message}</div>
+                                                <div className="activity-time">{formatTimeAgo(item.createdAt)}</div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            )}
                         </div>
                     </div>
                 </section>
@@ -194,8 +200,8 @@ function AdminDashboard() {
                             </div>
                         </div>
                     </div>
-                </section>    
-            </section>    
+                </section>
+            </section>
         </div>
     );
 }

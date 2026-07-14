@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
+const ActivityLog = require('../models/ActivityLog');
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' }); // expires in three days
@@ -43,6 +44,16 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
       role,
     });
+
+    try {
+      await ActivityLog.create({
+        type: 'user_created',
+        message: `${user.firstName} ${user.lastName} created a new account.`,
+        relatedId: user._id,
+      });
+    } catch (logErr) {
+      console.error('Failed to log activity:', logErr.message);
+    }
 
     res.status(201).json({
       message: 'User created successfully',

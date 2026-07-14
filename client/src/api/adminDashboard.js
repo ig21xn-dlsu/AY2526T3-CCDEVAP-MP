@@ -21,3 +21,8 @@ export const fetchTotalReports = async () => {
     const { data } = await axios.get(`${API_BASE}/api/dashboard/total-reports`);
     return data;
 }
+
+export const fetchRecentActivity = async () => {
+    const { data } = await axios.get(`${API_BASE}/api/dashboard/recent-activity`);
+    return data;
+}

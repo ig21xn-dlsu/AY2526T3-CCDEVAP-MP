@@ -58,3 +58,73 @@ exports.getRecentActivity = async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch recent activity' });
     }
 };
+
+// STUFF FOR THE GRAPH
+// Builds the last `count` months as { year, month, label }, oldest first
+const getLastNMonths = (count) => {
+    const months = [];
+    const now = new Date();
+
+    for (let i = count - 1; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        months.push({
+            year: d.getFullYear(),
+            month: d.getMonth() + 1, 
+            label: d.toLocaleString('default', { month: 'short' }), 
+        });
+    }
+
+    return months;
+};
+
+// Groups a model's documents by year+month, returns a lookup map like { "2026-7": 12 }
+const getMonthlyCounts = async (Model) => {
+    const results = await Model.aggregate([
+        {
+            $group: {
+                _id: {
+                    year: { $year: '$createdAt' },
+                    month: { $month: '$createdAt' },
+                },
+                count: { $sum: 1 },
+            },
+        },
+    ]);
+
+    const map = {};
+    results.forEach((r) => {
+        const key = `${r._id.year}-${r._id.month}`;
+        map[key] = r.count;
+    });
+
+    return map;
+};
+
+exports.getGrowthTrends = async (req, res) => {
+    try {
+        const months = getLastNMonths(6);
+
+        const [userCounts, listingCounts, groupCounts, reportCounts] = await Promise.all([
+            getMonthlyCounts(User),
+            getMonthlyCounts(Listing),
+            getMonthlyCounts(Group),
+            getMonthlyCounts(Report),
+        ]);
+
+        const chartData = months.map(({ year, month, label }) => {
+            const key = `${year}-${month}`;
+            return {
+                month: label,
+                users: userCounts[key] || 0,
+                listings: listingCounts[key] || 0,
+                groups: groupCounts[key] || 0,
+                reports: reportCounts[key] || 0,
+            };
+        });
+
+        res.status(200).json(chartData);
+    } catch (err) {
+        console.error('Error fetching growth trends:', err);
+        res.status(500).json({ message: 'Failed to fetch growth trends' });
+    }
+};

@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Listing = require('../models/Listing');
+const Group = require('../models/Group');
 
 exports.getTotalUsers = async (req, res) => {
     try {
@@ -21,5 +22,15 @@ exports.getTotalListings = async (req, res) => {
     } catch (err) {
         console.error('Error fetching total listings:', err);
         res.status(500).json({ message: 'Failed to fetch total listings' });
+    }
+}
+
+exports.getTotalGroups = async (req, res) => {
+    try {
+        const totalGroups = await Group.countDocuments();
+        res.status(200).json({ totalGroups });
+    } catch (err) {
+        console.error('Error fetching total groups: ', err);
+        res.status(500).json({ message: 'Failed to fetch total listings ' });
     }
 }

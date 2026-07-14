@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
@@ -17,10 +17,6 @@ const groupSchema = new Schema(
     spots: { type: Number, required: true },
     genderPreference: { type: String, default: '' },
 
-    // this is a safety net, and acts as a defined place for storing values in the future,
-    // like setting a hero image or linking a listing.
-    // these have no UI to set them yet (create group does not collect these parameters).
-    // they default to empty so the profile page renders safely.
     badge: { type: String, default: '' },
     heroImgUrl: { type: String, default: '' },
     lease: { type: String, default: '' },
@@ -41,7 +37,7 @@ const groupSchema = new Schema(
       type: [
         {
           _id: false,
-          icon: String, // 'clean' | 'noise' | 'social'
+          icon: String,
           label: String,
           value: String,
         },
@@ -62,4 +58,4 @@ groupSchema.set('toJSON', {
   },
 });
 
-export const Group = mongoose.model('Group', groupSchema);
+module.exports = mongoose.model('Group', groupSchema);

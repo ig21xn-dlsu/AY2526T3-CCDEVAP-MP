@@ -3,7 +3,7 @@ import AdminNavbar from '../components/AdminNavbar';
 import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import { useState, useEffect } from 'react';
 
-import { fetchTotalUsers, fetchTotalListings } from '../api/adminDashboard';
+import { fetchTotalUsers, fetchTotalListings, fetchTotalGroups } from '../api/adminDashboard';
 
 function AdminDashboard() {
 
@@ -11,6 +11,7 @@ function AdminDashboard() {
 
     const [totalUsers, setTotalUsers] = useState(0);
     const [totalListings, setTotalListings] = useState(0);
+    const [totalGroups, setTotalGroups] = useState(0);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -36,6 +37,20 @@ function AdminDashboard() {
             })
             .catch((err) => {
                 console.error('Error fetching total listings:', err);
+                setError('Failed to load');
+            })
+            .finally(() => {
+                setLoading(false); 
+            });
+    }, []); 
+
+    useEffect(() => {
+        fetchTotalGroups()
+            .then((data) => {
+                setTotalGroups(data.totalGroups); 
+            })
+            .catch((err) => {
+                console.error('Error fetching total groups:', err);
                 setError('Failed to load');
             })
             .finally(() => {
@@ -85,13 +100,7 @@ function AdminDashboard() {
                             fill="#727687" />
                     </svg>
                 </div>
-                <div className="analytics-number">0</div>
-                <div className="analytics-status"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="2"
-                        viewBox="0 0 11 2" fill="none">
-                        <path d="M0 1.33333V0H10.6667V1.33333H0Z" fill="#424656" />
-                    </svg>
-                    Steady
-                </div>
+                <div className="analytics-number">{loading ? '...' : error ? '—' : totalGroups}</div>
             </div>
 
             <div className="analytics-box">

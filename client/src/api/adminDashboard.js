@@ -31,3 +31,13 @@ export const fetchGrowthTrends = async () => {
     const { data } = await axios.get(`${API_BASE}/api/dashboard/growth-trends`);
     return data;
 }
+
+export const fetchListingsByCampus = async () => {
+    const { data } = await axios.get(`${API_BASE}/api/dashboard/listings-by-campus`);
+    return data;
+};
+
+export const fetchGroupsByUniversity = async () => {
+    const { data } = await axios.get(`${API_BASE}/api/dashboard/groups-by-university`);
+    return data;
+};

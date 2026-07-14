@@ -128,3 +128,50 @@ exports.getGrowthTrends = async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch growth trends' });
     }
 };
+
+// Yes
+exports.getListingsByCampus = async (req, res) => {
+    try {
+        const results = await Listing.aggregate([
+            {
+                $group: {
+                    _id: '$nearestCampus',
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        const data = results.map((r) => ({
+            campus: r._id || 'Unspecified',
+            count: r.count,
+        }));
+
+        res.status(200).json(data);
+    } catch (err) {
+        console.error('Error fetching listings by campus:', err);
+        res.status(500).json({ message: 'Failed to fetch listings by campus' });
+    }
+};
+
+exports.getGroupsByUniversity = async (req, res) => {
+    try {
+        const results = await Group.aggregate([
+            {
+                $group: {
+                    _id: '$university',
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        const data = results.map((r) => ({
+            university: r._id?.trim() ? r._id : 'Unspecified',
+            count: r.count,
+        }));
+
+        res.status(200).json(data);
+    } catch (err) {
+        console.error('Error fetching groups by university:', err);
+        res.status(500).json({ message: 'Failed to fetch groups by university' });
+    }
+};

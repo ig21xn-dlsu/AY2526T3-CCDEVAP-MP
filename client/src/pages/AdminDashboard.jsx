@@ -3,9 +3,13 @@ import AdminNavbar from '../components/AdminNavbar';
 import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import { useState, useEffect } from 'react';
 
-import { fetchTotalUsers, fetchTotalListings, fetchTotalGroups, fetchTotalReports, fetchRecentActivity, fetchGrowthTrends } from '../api/adminDashboard';
+import { fetchTotalUsers, fetchTotalListings, fetchTotalGroups, fetchTotalReports, fetchRecentActivity, fetchGrowthTrends, fetchListingsByCampus, fetchGroupsByUniversity } from '../api/adminDashboard';
 import { formatTimeAgo } from '../utils/formatTimeAgo';
+
 import GrowthTrendsChart from '../components/GrowthTrendsChart';
+import ListingsByCampusChart from '../components/ListingsByCampusChart';
+import GroupsByUniversityChart from '../components/GroupsByUniversityChart';
+
 
 const ACTIVITY_ICON_MAP = {
     user_created: { icon: '👤', className: 'icon-blue' },
@@ -21,8 +25,12 @@ function AdminDashboard() {
     const [totalListings, setTotalListings] = useState(0);
     const [totalGroups, setTotalGroups] = useState(0);
     const [totalReports, setTotalReports] = useState(0);
+
     const [recentActivity, setRecentActivity] = useState([]);
+
     const [growthTrends, setGrowthTrends] = useState([]);
+    const [listingsByCampus, setListingsByCampus] = useState([]);
+    const [groupsByUniversity, setGroupsByUniversity] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -35,22 +43,26 @@ function AdminDashboard() {
         setError(null);
 
         try {
-            const [usersData, listingsData, groupsData, reportsData, activityData, growthData] = await Promise.all([
+            const [usersData, listingsData, groupsData, reportsData, activityData, growthData, listingsByCampusData, groupsByUniversityData] = await Promise.all([
                 fetchTotalUsers(),
                 fetchTotalListings(),
                 fetchTotalGroups(),
                 fetchTotalReports(),
                 fetchRecentActivity(),
-                fetchGrowthTrends()
+                fetchGrowthTrends(),
+                fetchListingsByCampus(),
+                fetchGroupsByUniversity()
             ]);
 
-            if (isMounted) { 
+            if (isMounted) {
                 setTotalUsers(usersData.totalUsers);
                 setTotalListings(listingsData.totalListings);
                 setTotalGroups(groupsData.totalGroups);
                 setTotalReports(reportsData.totalReports);
                 setRecentActivity(activityData);
                 setGrowthTrends(growthData);
+                setListingsByCampus(listingsByCampusData);
+                setGroupsByUniversity(groupsByUniversityData);
             }
 
         } catch (err) {
@@ -125,7 +137,7 @@ function AdminDashboard() {
                 <section className="dashboard-row trends">
                     <div className="dashboard-card card-large">
                         <div className="card-title">Growth Trends</div>
-                        <div style={{ height: '300px' }}>
+                        <div style={{ height: '350px' }}>
                             {loading ? (
                                 <div>Loading chart...</div>
                             ) : (
@@ -157,6 +169,30 @@ function AdminDashboard() {
                                         </div>
                                     );
                                 })
+                            )}
+                        </div>
+                    </div>
+                </section>
+
+                <section className="dashboard-row breakdowns">
+                    <div className="dashboard-card card-square">
+                        <div className="card-title">Listings by Campus</div>
+                        <div className="chart-square-wrapper">
+                            {loading ? (
+                                <div>Loading chart...</div>
+                            ) : (
+                                <ListingsByCampusChart data={listingsByCampus} />
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="dashboard-card card-square">
+                        <div className="card-title">Groups by University</div>
+                        <div className="chart-square-wrapper">
+                            {loading ? (
+                                <div>Loading chart...</div>
+                            ) : (
+                                <GroupsByUniversityChart data={groupsByUniversity} />
                             )}
                         </div>
                     </div>

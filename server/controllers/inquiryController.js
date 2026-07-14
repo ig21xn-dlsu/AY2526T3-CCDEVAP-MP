@@ -1,5 +1,5 @@
 const Inquiry = require("../models/InquiryMessage.js").default;
-const Listing = require("../models/Listing.js").default;
+const Listing = require("../models/Listing.js");
 
 const createInquiry = async (req, res) => {
   try {

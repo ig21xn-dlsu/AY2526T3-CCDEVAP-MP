@@ -98,7 +98,7 @@ function ListingFullView({ listing }) {
           </div>
 
 
-          <button className="inquire-btn" onClick={() => setShowInquiryModal(true)}>
+          <button className="inquire-btn btn btn-primary" onClick={() => setShowInquiryModal(true)}>
             Send a brief message
           </button>
 

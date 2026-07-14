@@ -2,9 +2,16 @@ import '../stylesheets/listing-card.css'
 import MapContainer from '../components/TwoPointMap.jsx'
 import CAMPUSES from '../assets/util/CAMPUSES.js'
 import ManagerCard from '../components/ViewListing-ManagerSideCard.jsx'
+import { useState } from 'react'
+import InquiryModal from './InquiryModal.jsx'
+
 
 function ListingFullView({ listing }) {
   if (!listing) return <p>Listing not found.</p>;
+  console.log("From ViewListing.jsx: ", { listing });
+  const [showInquiryModal, setShowInquiryModal] = useState(false);
+  console.log("From ViewListing.jsx: ", { showInquiryModal });
+
 
   const {
     roomTitle,
@@ -90,6 +97,15 @@ function ListingFullView({ listing }) {
             </ul>
           </div>
 
+
+          <button className="inquire-btn" onClick={() => setShowInquiryModal(true)}>
+            Send a brief message
+          </button>
+
+          {showInquiryModal && (
+            <InquiryModal listingId={listing._id}
+              onClose={() => setShowInquiryModal(false)} />
+          )}
         </div>
 
       </div>

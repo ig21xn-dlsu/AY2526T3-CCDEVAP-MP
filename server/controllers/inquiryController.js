@@ -1,5 +1,5 @@
-const Inquiry = "../models/Inquiry.js";
-const Listing = "../models/Listing.js";
+const Inquiry = require("../models/InquiryMessage.js").default;
+const Listing = require("../models/Listing.js").default;
 
 const createInquiry = async (req, res) => {
   try {
@@ -19,9 +19,9 @@ const createInquiry = async (req, res) => {
       return res.status(404).json({ message: "Listing not found." });
     }
 
-    if (listing.owner.toString() === senderId.toString()) {
-      return res.status(400).json({ message: "You can't inquire on your own listing." });
-    }
+    //if (listing.owner.toString() === senderId.toString()) {
+    // return res.status(400).json({ message: "You can't inquire on your own listing." });
+    //}
 
     const inquiry = await Inquiry.create({
       sender: senderId,

@@ -3,7 +3,7 @@ import AdminNavbar from '../components/AdminNavbar';
 import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import { useState, useEffect } from 'react';
 
-import { fetchTotalUsers, fetchTotalListings, fetchTotalGroups } from '../api/adminDashboard';
+import { fetchTotalUsers, fetchTotalListings, fetchTotalGroups, fetchTotalReports } from '../api/adminDashboard';
 
 function AdminDashboard() {
 
@@ -12,6 +12,7 @@ function AdminDashboard() {
     const [totalUsers, setTotalUsers] = useState(0);
     const [totalListings, setTotalListings] = useState(0);
     const [totalGroups, setTotalGroups] = useState(0);
+    const [totalReports, setTotalReports] = useState(0);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -57,6 +58,20 @@ function AdminDashboard() {
                 setLoading(false); 
             });
     }, []); 
+
+    useEffect(() => {
+        fetchTotalReports()
+            .then((data) => {
+                setTotalReports(data.totalReports); 
+            })
+            .catch((err) => {
+                console.error('Error fetching total reports:', err);
+                setError('Failed to load');
+            })
+            .finally(() => {
+                setLoading(false); 
+            });
+    }, []);     
 
     return (
         <div id="dashboard-wrapper">
@@ -111,15 +126,7 @@ function AdminDashboard() {
                             fill="#BA1A1A" />
                     </svg>
                 </div>
-                <div className="analytics-number">0</div>
-                <div className="analytics-status pending-flags">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="13" viewBox="0 0 15 13" fill="none">
-                        <path
-                            d="M0 12.6667L7.33333 0L14.6667 12.6667H0ZM2.3 11.3333H12.3667L7.33333 2.66667L2.3 11.3333ZM7.33333 10.6667C7.52222 10.6667 7.68056 10.6028 7.80833 10.475C7.93611 10.3472 8 10.1889 8 10C8 9.81111 7.93611 9.65278 7.80833 9.525C7.68056 9.39722 7.52222 9.33333 7.33333 9.33333C7.14444 9.33333 6.98611 9.39722 6.85833 9.525C6.73056 9.65278 6.66667 9.81111 6.66667 10C6.66667 10.1889 6.73056 10.3472 6.85833 10.475C6.98611 10.6028 7.14444 10.6667 7.33333 10.6667ZM6.66667 8.66667H8V5.33333H6.66667V8.66667Z"
-                            fill="#BA1A1A" />
-                    </svg>
-                    Action Required
-                </div>
+                <div className="analytics-number"><div className="analytics-number">{loading ? '...' : error ? '—' : totalReports}</div></div>
             </div>
         </section>
 

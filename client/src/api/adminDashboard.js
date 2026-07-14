@@ -16,3 +16,8 @@ export const fetchTotalGroups = async () => {
     const { data } = await axios.get(`${API_BASE}/api/dashboard/total-groups`);
     return data;
 }
+
+export const fetchTotalReports = async () => {
+    const { data } = await axios.get(`${API_BASE}/api/dashboard/total-reports`);
+    return data;
+}

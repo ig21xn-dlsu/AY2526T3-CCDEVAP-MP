@@ -8,7 +8,7 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const requireAuth = require("../middleware/requireAuth");
-const Listing = require("../models/Listing").default;
+const Listing = require("../models/Listing");
 console.log("LISTING MODEL: ", Listing);
 
 const router = express.Router();

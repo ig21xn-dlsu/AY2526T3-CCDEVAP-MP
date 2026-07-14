@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Listing = require('../models/Listing');
 const Group = require('../models/Group');
-const Report = require('../models/Group');
+const Report = require('../models/Report');
 const ActivityLog = require('../models/ActivityLog');
 
 exports.getTotalUsers = async (req, res) => {

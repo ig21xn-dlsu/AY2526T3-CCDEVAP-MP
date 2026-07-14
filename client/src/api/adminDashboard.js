@@ -6,3 +6,8 @@ export const fetchTotalUsers = async () => {
     const { data } = await axios.get(`${API_BASE}/api/dashboard/total-users`);
     return data;
 };
+
+export const fetchTotalListings = async () => {
+    const { data } = await axios.get(`${API_BASE}/api/dashboard/total-listings`);
+    return data;
+}

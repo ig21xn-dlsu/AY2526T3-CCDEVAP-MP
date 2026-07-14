@@ -12,7 +12,11 @@
  *
  * */
 
-import mongoose from "mongoose";
+/*
+* CHANGES BY IAN: converted to CommonJS to match the backend
+*/
+
+const mongoose = require("mongoose");
 
 const listingSchema = new mongoose.Schema({
   owner: {
@@ -22,7 +26,6 @@ const listingSchema = new mongoose.Schema({
   },
 
   roomTitle: String,
-
   price: Number,
 
   gender: {
@@ -31,21 +34,13 @@ const listingSchema = new mongoose.Schema({
   },
 
   isOccupied: Boolean,
-
   description: String,
-
   tags: [String],
-
   amenities: [String],
-
   buildingName: String,
-
   latitude: Number,
-
   longitude: Number,
-
   nearestCampus: String,
-
   contacts: [String],
 
   imageUrl: {
@@ -59,7 +54,4 @@ const listingSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model(
-  "Listing",
-  listingSchema
-);
+module.exports = mongoose.model("Listing", listingSchema);

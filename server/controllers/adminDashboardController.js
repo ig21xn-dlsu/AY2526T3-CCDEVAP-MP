@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Listing = require('../models/Listing');
 
 exports.getTotalUsers = async (req, res) => {
     try {
@@ -12,3 +13,13 @@ exports.getTotalUsers = async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch total users' });
     }
 };
+
+exports.getTotalListings = async (req, res) => {
+    try {
+        const totalListings = await Listing.countDocuments();
+        res.status(200).json({ totalListings });
+    } catch (err) {
+        console.error('Error fetching total listings:', err);
+        res.status(500).json({ message: 'Failed to fetch total listings' });
+    }
+}

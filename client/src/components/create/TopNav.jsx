@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function TopNav({
   label = "SETUP",
@@ -8,9 +8,9 @@ export default function TopNav({
     <nav className="topnav">
       <span className="topnav__label">{label}</span>
 
-      <Link to="/discover" className="topnav__back">
+      <NavLink to="/student-discover-communities" className="topnav__back">
         &#8592; {backLabel}
-      </Link>
+      </NavLink>
     </nav>
   );
 }

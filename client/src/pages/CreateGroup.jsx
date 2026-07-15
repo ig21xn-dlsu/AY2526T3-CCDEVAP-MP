@@ -11,6 +11,25 @@ import { useCreateGroupForm } from '../hook/useCreateGroupForm.js';
 
 import '../stylesheets/create-group.css';
 
+const NO_PREFERENCE_OPTION = { value: '', label: 'No preference' };
+
+export default function CreateGroup({ onSuccess }) {
+  const { config, status: configStatus, error: configError, isLoading } = useGroupFormConfig();
+
+  // Called unconditionally (before any early return) to satisfy the Rules of Hooks.
+  // If useCreateGroupForm reads into `config` immediately (e.g. config.budget) on
+  // every render, make sure it can tolerate `config` being undefined/partial while
+  // the form config is still loading.
+  const {
+    fields,
+    lifestyleTags,
+    budgetSlider,
+    fieldErrors,
+    submitStatus,
+    submitError,
+    submit,
+  } = useCreateGroupForm(config, onSuccess);
+
   if (isLoading) {
     return (
       <div className="page-wrapper">
@@ -35,27 +54,11 @@ import '../stylesheets/create-group.css';
     );
   }
 
-const NO_PREFERENCE_OPTION = { value: '', label: 'No preference' };
-
-export default function CreateGroup({ onSuccess }) {
-  const { config, status: configStatus, error: configError, isLoading } = useGroupFormConfig();
-
-  const {
-    fields,
-    lifestyleTags,
-    budgetSlider,
-    fieldErrors,
-    submitStatus,
-    submitError,
-    submit,
-  } = useCreateGroupForm(config, onSuccess);
-
   const genderOptions = [NO_PREFERENCE_OPTION, ...config.genderPreferences];
 
   async function handleLaunch() {
     await submit();
   }
-
 
   return (
     <div className="page-wrapper">

@@ -17,7 +17,7 @@ export async function fetchAdminListings(params = {}) {
 }
 
 export async function createAdminListing(payload) {
-  const { data } = await axios.post(`${API_BASE}/api/admim/listing`, payload, {
+  const { data } = await axios.post(`${API_BASE}/api/admin/listing`, payload, {
     headers: authHeaders(),
   });
   return data;
@@ -25,7 +25,7 @@ export async function createAdminListing(payload) {
 
 export async function setListingSoftDeleted(id, isDeleted) {
   const { data } = await axios.patch(
-    `${API_BASE}/api/listing/${id}`,
+    `${API_BASE}/api/admin/listing/${id}`,
     { isDeleted, deletedAt: isDeleted ? new Date().toISOString() : null },
     { headers: authHeaders() }
   );

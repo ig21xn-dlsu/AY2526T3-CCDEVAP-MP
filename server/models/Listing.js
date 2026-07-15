@@ -56,7 +56,11 @@ const listingSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+
+  isDeleted: {type: Boolean, default: false},
+  deletedAt: {type: Date, default: null},
+
 });
 
 module.exports = mongoose.model("Listing", listingSchema);

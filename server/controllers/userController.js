@@ -59,4 +59,4 @@ const updateUserPassword = async (req, res) => {
   }
 };
 
-module.exports = { getUserById, loginUser, registerUser, loginAdmin, updateUserProfile, updateUserPassword };
+module.exports = { updateUserProfile, updateUserPassword };

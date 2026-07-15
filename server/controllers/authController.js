@@ -84,6 +84,10 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'You stupid ah, use the admin button down here dawg' });
     }
 
+    if (existingUser.status === 'suspended') {
+      return res.status(403).json({ message: 'This account has been suspended. Please contact support.' });
+    }
+
     const token = await checkCredentials(existingUser, password);
     return res.status(200).json({
       message: 'Logged In!',

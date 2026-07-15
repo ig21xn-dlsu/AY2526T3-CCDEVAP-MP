@@ -10,6 +10,7 @@ const callingCardRoutes = require('./routes/callingCardRoutes.js');
 const inquiryRoutes = require('./routes/inquiryRoutes.js');
 
 const adminDashboardRoutes = require('./routes/adminDashboardRoutes');
+const adminUsersRoutes = require('./routes/adminUsersRoutes');
 
 const path = require("path");
 connectDB();
@@ -37,6 +38,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Admin Related Routes
 app.use('/api/dashboard', adminDashboardRoutes);
+app.use('/api/admin/users', adminUsersRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

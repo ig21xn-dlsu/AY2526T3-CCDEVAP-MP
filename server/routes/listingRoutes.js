@@ -3,7 +3,6 @@
  *
  */
 
-
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
@@ -27,17 +26,6 @@ const VALID_CAMPUSES = new Set([
   "UPD"
 ]);
 
-/**
- * GET /api/listings
- *
- * Optional:
- * ?campus=UPD
- * ?occupied=false
- * ?search=katipunan
- * ?minPrice=5000
- * ?maxPrice=15000
- */
-
 router.get("/manager", requireAuth, async (req, res) => {
   try {
     const listings = await Listing.find({ owner: req.user._id }).sort({ createdAt: -1 });
@@ -46,11 +34,6 @@ router.get("/manager", requireAuth, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-
-
-
-
 
 router.get(
   "/",
@@ -120,10 +103,6 @@ router.get(
   })
 );
 
-/**
- * GET /api/listings/:id
- */
-
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -151,10 +130,6 @@ router.get(
   })
 );
 
-/**
- * POST /api/listings
- */
-
 router.post(
   "/",
   requireAuth,
@@ -177,8 +152,6 @@ router.post(
 
     const errors = {};
 
-    // Room Title
-
     if (!roomTitle?.trim()) {
       errors.roomTitle =
         "Room title is required.";
@@ -188,8 +161,6 @@ router.post(
       errors.roomTitle =
         "Room title must be under 120 characters.";
     }
-
-    // Price
 
     const parsedPrice =
       Number(price);
@@ -208,8 +179,6 @@ router.post(
         "Price cannot be negative.";
     }
 
-    // Description
-
     if (
       description &&
       description.length > 3000
@@ -217,8 +186,6 @@ router.post(
       errors.description =
         "Description must be 3000 characters or fewer.";
     }
-
-    // Enum checks
 
     if (
       !VALID_GENDERS.has(gender)
@@ -289,12 +256,9 @@ router.post(
   })
 );
 
-/**
- * PATCH /api/listings/:id/status
- */
-
 router.patch(
   "/:id/status",
+  requireAuth,
   asyncHandler(async (req, res) => {
 
     const { id } = req.params;
@@ -308,6 +272,20 @@ router.patch(
       });
     }
 
+    const listing = await Listing.findById(id);
+
+    if (!listing) {
+      return res.status(404).json({
+        message: "Listing not found."
+      });
+    }
+
+    if (listing.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        message: "You don't own this listing."
+      });
+    }
+
     const updated =
       await Listing.findByIdAndUpdate(
         id,
@@ -317,22 +295,13 @@ router.patch(
         }
       );
 
-    if (!updated) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
     res.json(updated);
   })
 );
 
-/**
- * PATCH /api/listings/:id
- */
-
 router.patch(
   "/:id",
+  requireAuth,
   asyncHandler(async (req, res) => {
 
     const { id } = req.params;
@@ -342,6 +311,20 @@ router.patch(
     ) {
       return res.status(400).json({
         message: "Invalid listing id."
+      });
+    }
+
+    const listing = await Listing.findById(id);
+
+    if (!listing) {
+      return res.status(404).json({
+        message: "Listing not found."
+      });
+    }
+
+    if (listing.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        message: "You don't own this listing."
       });
     }
 
@@ -355,22 +338,13 @@ router.patch(
         }
       );
 
-    if (!updated) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
     res.json(updated);
   })
 );
 
-/**
- * DELETE /api/listings/:id
- */
-
 router.delete(
   "/:id",
+  requireAuth,
   asyncHandler(async (req, res) => {
 
     const { id } = req.params;
@@ -383,18 +357,24 @@ router.delete(
       });
     }
 
-    const deleted =
-      await Listing.findByIdAndDelete(id);
+    const listing = await Listing.findById(id);
 
-    if (!deleted) {
+    if (!listing) {
       return res.status(404).json({
         message: "Listing not found."
       });
     }
+
+    if (listing.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        message: "You don't own this listing."
+      });
+    }
+
+    await Listing.findByIdAndDelete(id);
 
     res.status(204).send();
   })
 );
 
 module.exports = router;
-

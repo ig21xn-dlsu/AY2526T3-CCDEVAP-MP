@@ -11,12 +11,12 @@ import '../stylesheets/create-list-form.css'
 
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useEffect } from 'react'; //!@ME PLEASE REFACTOR THIS ITS MESSY — not right now though in a middle of a refactor
+import { useEffect } from 'react';
 import { useContext } from 'react';
 
 import { AuthContext } from '../context/AuthContext.jsx'
 
-function ManagerCreate() {
+function ManagerCreate({ mode = "create", existingListing }) {
   const { user } = useContext(AuthContext);
   const PROPERTY_TAGS = [
     "Corner Unit",
@@ -85,7 +85,7 @@ function ManagerCreate() {
     }
   };
 
-  const { register, handleSubmit, watch, setValue } = useForm({
+  const { register, handleSubmit, watch, setValue, reset } = useForm({
     defaultValues: {
       tags: [],
       contacts: [],
@@ -99,10 +99,18 @@ function ManagerCreate() {
 
   const [uploadFile, setUploadFile] = useState();
 
-  const [searchResults, setSearchResults] = useState([]) //for location search results, we store its longitude and latitude results so this isnt a form
+  const [searchResults, setSearchResults] = useState([])
   const buildingName = watch("buildingName");
   useEffect(() => { setSelectedLocation(false), [buildingName] })
   const [selectedLocation, setSelectedLocation] = useState(false);
+
+  useEffect(() => {
+    if (mode === "edit" && existingListing) {
+      reset(existingListing);
+      setSelectedLocation(true);
+    }
+  }, [mode, existingListing, reset]);
+
   useEffect(() => {
     if (selectedLocation) return;
     if (!buildingName || buildingName.trim().length < 3) {
@@ -141,7 +149,6 @@ function ManagerCreate() {
 
   const selectedTags = watch("tags");
 
-  //conditional rendering for the map -> only shows up when these three are present 
   const selectedCampus = watch("nearestCampus");
   const latitude = watch("latitude");
   const longitude = watch("longitude");
@@ -165,50 +172,51 @@ function ManagerCreate() {
 
   const onSubmit = async (data) => {
     try {
+      let imageUrl = existingListing?.imageUrl;
 
-      // Multer image handling
-      const imageFormData = new FormData();
+      if (uploadFile) {
+        const imageFormData = new FormData();
+        imageFormData.append("listingImage", uploadFile.file);
 
-      imageFormData.append("listingImage", uploadFile.file);
+        const uploadResponse =
+          await fetch(
+            `${API_URL}/api/upload`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+              body: imageFormData
+            }
+          );
 
-      const uploadResponse =
-        await fetch(
-          `${API_URL}/api/upload`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-            body: imageFormData
-          }
+        const uploadResult = await uploadResponse.json();
+        console.log("CONSOLE LOG:", uploadResult);
 
-        );
-
-      const uploadResult = await uploadResponse.json();
-      console.log("CONSOLE LOG:", uploadResult);
-
-      //multer returning the image url
+        imageUrl = uploadResult.imageUrl;
+      }
 
       const listingPayload = {
         ...data,
-        imageUrl: uploadResult.imageUrl
+        imageUrl
       };
 
       console.log("listing payload: ", listingPayload);
 
-      // actual listing data
+      const endpoint = mode === "edit"
+        ? `${API_URL}/api/listing/${existingListing._id}`
+        : `${API_URL}/api/listing`;
 
       const listingResponse =
         await fetch(
-          `${API_URL}/api/listing`,
+          endpoint,
           {
-            method: "POST",
+            method: mode === "edit" ? "PATCH" : "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${user.token}`,
             },
-            body: JSON.stringify(listingPayload  //adding the url
-            )
+            body: JSON.stringify(listingPayload)
           }
         );
 
@@ -245,10 +253,9 @@ function ManagerCreate() {
     <div className="man-create-main container-fluid d-flex flex-column gap-4 p-3 justify-content-center align-items-center">
       <form onSubmit={handleSubmit(onSubmit)} className='container-fluid d-flex flex-column gap-4'>
         <div className="d-flex flex-column calloutTitle justify-content-center align-items-center">
-          <h1>List a Room</h1>
+          <h1>{mode === "edit" ? "Edit Room" : "List a Room"}</h1>
           <p>Fill in the details below to publish your room to roomies</p>
         </div>
-        {/* CARD1 : ROOM TITLE CONTAINER*/}
 
         <div className="card shadow container p-5">
           <div className="blockHeader d-flex flex-row border-bottom pb-2 gap-2 align-items-center">
@@ -284,8 +291,6 @@ function ManagerCreate() {
 
           </div>
         </div>
-
-        {/* CARD2 : About the space */}
 
         <div className="card shadow container p-5">
           <div className="blockHeader d-flex flex-row border-bottom pb-2 gap-2">
@@ -350,7 +355,6 @@ function ManagerCreate() {
         </div>
 
 
-        {/*CARD 3: LOCATIONAL DATA */}
         <div className="card shadow container p-5">
           <div className="blockHeader d-flex flex-row border-bottom pb-2 gap-2">
             <img src={whereSpaceIcon} alt="" />
@@ -439,11 +443,21 @@ function ManagerCreate() {
 
         <div className="card shadow container p-5">
           <FileUpload file={uploadFile} onFileChange={setUploadFile} />
+          {mode === "edit" && existingListing?.imageUrl && !uploadFile && (
+            <div className="currentImagePreview mt-3">
+              <p>Current image:</p>
+              <img
+                src={`${API_URL}${existingListing.imageUrl}`}
+                alt="Current listing"
+                style={{ maxWidth: "200px", borderRadius: "8px" }}
+              />
+            </div>
+          )}
         </div>
 
 
 
-        <button type="submit" className='btn btn-primary'>submit</button>
+        <button type="submit" className='btn btn-primary'>{mode === "edit" ? "Save Changes" : "submit"}</button>
       </form >
     </div >
   )

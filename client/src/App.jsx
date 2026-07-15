@@ -16,7 +16,7 @@ import ManagerNotif from './pages/Manager-Notif';
 import ManagerCreate from './pages/Manager-Create.jsx';
 import ManagerViewListing from './pages/Manager-View-Listing.jsx';
 import ManagerCallingCard from './pages/Manager-Calling-Card.jsx';
-
+import ManagerEdit from './pages/Manager-Edit.jsx';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -40,6 +40,7 @@ function App() {
         <Route path="/admin-moderations" element={user && user.role === 'admin' ? < AdminModerations /> : <Navigate to="/" />} />
 
 
+        <Route path="/manager-edit/:id" element={user && user.role === 'manager' ? <ManagerEdit /> : <Navigate to="/" />} />
         <Route path="/manager-dashboard" element={user && user.role === 'manager' ? <ManagerDashboard /> : <Navigate to="/" />} />
         <Route path="/manager-calling-card" element={user && user.role === 'manager' ? <ManagerCallingCard /> : <Navigate to="/" />} />
         <Route path="/manager-create" element={user && user.role === 'manager' ? <ManagerCreate /> : <Navigate to="/" />} />

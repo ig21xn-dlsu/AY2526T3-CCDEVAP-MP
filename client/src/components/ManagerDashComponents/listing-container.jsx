@@ -1,9 +1,50 @@
 import '../../stylesheets/listing-card.css'
 import { useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../context/AuthContext.jsx'
 
-function ListingContainer({ _id, roomTitle, nearestCampus, price, isOccupied, imgUrl }) {
+function ListingContainer({ _id, roomTitle, nearestCampus, price, isOccupied, imgUrl, owner, onDeleted }) {
   const navigate = useNavigate();
-  console.log(imgUrl);
+  const { user } = useContext(AuthContext);
+  const [deleting, setDeleting] = useState(false);
+
+  const isOwner = user?.role === 'manager' && owner === user?._id;
+
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    navigate(`/manager-edit/${_id}`);
+  };
+
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+
+    const confirmed = window.confirm("Are you sure you want to delete this listing?");
+    if (!confirmed) return;
+
+    setDeleting(true);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/listing/${_id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.message || "Failed to delete listing.");
+      }
+
+      if (onDeleted) onDeleted(_id);
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert(err.message);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <div
       className="listingParentContainer card shadow d-flex flex-col gap-2"
@@ -29,6 +70,26 @@ function ListingContainer({ _id, roomTitle, nearestCampus, price, isOccupied, im
             {isOccupied ? 'occupied' : 'vacant'}
           </div>
         </div>
+
+        {isOwner && (
+          <div className="managerActions d-flex flex-row gap-2 mt-2">
+            <button
+              type="button"
+              className="btn btn-outline-primary btn-sm"
+              onClick={handleEdit}
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-danger btn-sm"
+              onClick={handleDelete}
+              disabled={deleting}
+            >
+              {deleting ? "Deleting..." : "Delete"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

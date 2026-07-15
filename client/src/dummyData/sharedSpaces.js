@@ -1,0 +1,36 @@
+const SHARED_SPACES = [
+  {
+    _id: 'shared-1',
+    roomTitle: '2 Torre Lorenzo',
+    nearestCampus: 'DLSU',
+    price: 23000,
+    maximumCapacity: 5,
+    isOccupied: false,
+    buildingName: '2 Torre Lorenzo, Taft Avenue, Manila',
+    description: 'Student-friendly shared space with study areas and nearby campus access.',
+    tags: ['Corner Unit', 'Well-Maintained', 'Move-In Ready'],
+    amenities: ['24/7 Security', 'Utilities Included', 'Parking'],
+    contacts: ['Email', 'Phone'],
+    latitude: 14.5654061,
+    longitude: 120.9942641,
+    imageUrl: ['/uploads/listing-images/demo.jpg'],
+  },
+  {
+    _id: 'shared-2',
+    roomTitle: 'Campus Studio Loft',
+    nearestCampus: 'UPD',
+    price: 18500,
+    maximumCapacity: 3,
+    isOccupied: false,
+    buildingName: 'Katipunan Avenue, Quezon City',
+    description: 'Compact shared space ideal for roommates who want easy campus access.',
+    tags: ['Semi-Furnished', 'Near Transit'],
+    amenities: ['Wi-Fi', 'Gym', 'Laundry'],
+    contacts: ['Messenger'],
+    latitude: 14.6547213,
+    longitude: 121.0663102,
+    imageUrl: ['/uploads/listing-images/demo-2.jpg'],
+  },
+];
+
+export default SHARED_SPACES;

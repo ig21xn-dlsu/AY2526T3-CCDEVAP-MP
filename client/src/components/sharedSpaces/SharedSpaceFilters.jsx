@@ -1,5 +1,4 @@
-import React from 'react';
-import { SearchIcon } from './icons';
+import { SearchIcon } from '../discover/icons';
 
 const OCCUPANCY_OPTIONS = [
   { value: '1-person', label: '1 Person (Private)' },
@@ -16,27 +15,27 @@ const AMENITY_OPTIONS = [
   { value: 'parking', label: 'Parking' },
 ];
 
-export const DEFAULT_SHARED_FILTERS = {
+export const DEFAULT_SHARED_SPACE_FILTERS = {
   search: '',
   campus: '',
   maxDistanceKm: 2.5,
-  minPrice: 0,
-  maxPrice: 999999,
-  occupancy: [],
+  minPrice: 10000,
+  maxPrice: 20000,
+  occupancy: ['2-3-people'],
   amenities: [],
 };
 
-export default function SharedFilters({ filters, onChange, onReset }) {
+function SharedSpaceFilters({ filters, onChange, onReset }) {
   const update = (key) => (e) => onChange({ ...filters, [key]: e.target.value });
 
   const toggleListValue = (key, value) => {
     const current = filters[key];
-    const next = current.includes(value) ? current.filter((v) => v !== value) : [...current, value];
+    const next = current.includes(value) ? current.filter((item) => item !== value) : [...current, value];
     onChange({ ...filters, [key]: next });
   };
 
   return (
-    <div className="shared-filters">
+    <div className="shared-space-filters shared-filters">
       <div className="shared-filters-grid">
         <div className="search-wrap shared-search-wrap">
           <SearchIcon />
@@ -100,41 +99,43 @@ export default function SharedFilters({ filters, onChange, onReset }) {
 
         <div className="shared-option-group">
           <span className="shared-group-label">Occupancy</span>
-          {OCCUPANCY_OPTIONS.map((o) => (
-            <label className="shared-option" key={o.value}>
+          {OCCUPANCY_OPTIONS.map((option) => (
+            <label className="shared-option" key={option.value}>
               <input
                 type="checkbox"
-                checked={filters.occupancy.includes(o.value)}
-                onChange={() => toggleListValue('occupancy', o.value)}
+                checked={filters.occupancy.includes(option.value)}
+                onChange={() => toggleListValue('occupancy', option.value)}
               />
-              <span>{o.label}</span>
+              <span>{option.label}</span>
             </label>
           ))}
         </div>
 
         <div className="shared-option-group">
           <span className="shared-group-label">Must Have Amenities</span>
-          {AMENITY_OPTIONS.map((o) => (
-            <label className="shared-option" key={o.value}>
+          {AMENITY_OPTIONS.map((option) => (
+            <label className="shared-option" key={option.value}>
               <input
                 type="checkbox"
-                checked={filters.amenities.includes(o.value)}
-                onChange={() => toggleListValue('amenities', o.value)}
+                checked={filters.amenities.includes(option.value)}
+                onChange={() => toggleListValue('amenities', option.value)}
               />
-              <span>{o.label}</span>
+              <span>{option.label}</span>
             </label>
           ))}
         </div>
       </div>
 
       <div className="shared-filter-actions">
-        <button type="button" className="btn-your-group shared-apply-btn" onClick={() => onChange({ ...filters })}>
+        <button type="button" className="btn btn-primary shared-apply-btn" onClick={() => onChange({ ...filters })}>
           Apply Filters
         </button>
-        <button type="button" className="shared-reset-btn" onClick={onReset}>
+        <button type="button" className="btn btn-outline-secondary shared-reset-btn" onClick={onReset}>
           Reset
         </button>
       </div>
     </div>
   );
 }
+
+export default SharedSpaceFilters;

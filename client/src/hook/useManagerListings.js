@@ -1,4 +1,3 @@
-// client/hooks/useManagerListings.js
 import { useState, useEffect, useCallback, useContext } from 'react'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext.jsx'

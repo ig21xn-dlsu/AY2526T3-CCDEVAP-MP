@@ -1,5 +1,5 @@
 import React from 'react';
-import AvatarStack from '../AvatarStack';
+import AvatarStack from '../discover/AvatarStack';
 
 export default function BelowHero({ members, onApplyClick }) {
   return (

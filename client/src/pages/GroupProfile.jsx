@@ -9,7 +9,7 @@ import StatsCard from '../components/group/StatsCard';
 import ApplyModal from '../components/group/ApplyModal';
 import { useAsync } from '../hook/useAsync';
 import { fetchGroupById } from '../api/padpalApi'; // added for when api is ready
-import '../padpal-group.css';
+import '../stylesheets/padpal-group.css';
 
 function useGroupIdFromQuery() {
   return useMemo(() => new URLSearchParams(window.location.search).get('id'), []);

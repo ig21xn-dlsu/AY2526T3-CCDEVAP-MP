@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from './hook/useAuthContext';
+import GroupProfile from './pages/GroupProfile';
+import CreateGroup from './pages/CreateGroup';
+
 
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -47,7 +50,9 @@ function App() {
         <Route path="/manager-listings" element={user && user.role === 'manager' ? <ManagerListing /> : <Navigate to="/" />} />
         <Route path="/manager-notifications" element={user && user.role === 'manager' ? <ManagerNotif /> : <Navigate to="/" />} />
         <Route path="/manager-view-listing/:id" element={user && user.role === 'manager' ? <ManagerViewListing /> : <Navigate to="/" />} />
-
+        
+        <Route path="/student-group-profile/:id" element={user && user.role === 'student' ? <GroupProfile /> : <Navigate to="/" />} />
+        <Route path="/student-create-group" element={user && user.role === 'student' ? <CreateGroup /> : <Navigate to="/" />} />
 
 
         <Route path="/student-discover-communities" element={user && user.role === 'student' ? <DiscoverCommunities /> : <Navigate to="/" />} />

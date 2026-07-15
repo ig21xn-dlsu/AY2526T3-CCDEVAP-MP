@@ -6,36 +6,32 @@ export const useLogIn = () => {
   const [isLoading, setIsLoading] = useState(null)
   const { dispatch } = useAuthContext()
 
-  const login = async (email, password) => {
-    setIsLoading(true)
-    setError(null)
+  const login = async (email, password, rememberMe) => {
+  setIsLoading(true)
+  setError(null)
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    })
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  })
 
-    const json = await response.json()
+  const json = await response.json()
 
-    if (!response.ok) {
-      setIsLoading(false)
-      setError(json.message)
-    }
-
-    if (response.ok) {
-      // save the user to local storage
-      localStorage.setItem('user', JSON.stringify(json))
-
-      // update AuthContext
-      dispatch({ type: 'LOGIN', payload: json })
-
-      setIsLoading(false)
-
-      return json;
-
-    }
+  if (!response.ok) {
+    setIsLoading(false)
+    setError(json.message)
   }
+
+  if (response.ok) {
+    const storage = rememberMe ? localStorage : sessionStorage
+    storage.setItem('user', JSON.stringify(json))
+
+    dispatch({ type: 'LOGIN', payload: json })
+    setIsLoading(false)
+    return json;
+  }
+}
 
   return { login, isLoading, error }
 }

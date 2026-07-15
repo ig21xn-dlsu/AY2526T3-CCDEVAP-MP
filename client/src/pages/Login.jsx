@@ -11,15 +11,13 @@ function Login() {
   const { login, error, isLoading } = useLogIn()
   const navigate = useNavigate();
 
+  const [rememberMe, setRememberMe] = useState(false);
+
   const handleLogIn = async () => {
-  const user = await login(email, password)
-    
+    const user = await login(email, password, rememberMe)
     if (user) {
-      if (user.role === 'manager') {
-        navigate('/manager-listings');
-      } else if (user.role === 'student') {
-        navigate('/student-discover-communities');
-      }
+      if (user.role === 'manager') navigate('/manager-listings');
+    else if (user.role === 'student') navigate('/student-discover-communities');
     }
   };
 
@@ -40,6 +38,8 @@ function Login() {
 
     return () => clearInterval(interval);
   }, []);
+
+  
 
   return (
     <div className="login-page-wrapper">
@@ -116,8 +116,12 @@ function Login() {
             </section>
 
             <section id="container-remember-me">
-              <input type="checkbox" />
-              <span className="some-details"> Remember me for 30 days</span>
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <span className="some-details"> Remember me</span>
             </section>
 
             <div id="sign-in-button-section" onClick={handleLogIn}>

@@ -30,8 +30,12 @@ import 'leaflet/dist/leaflet.css';
 import DiscoverCommunities from './pages/DiscoverCommunities';
 
 function AppRoutes() {
-  const { user } = useAuthContext();
-  const navigate = useNavigate(); // safe here — this component renders inside <BrowserRouter>
+  const { user, isReady } = useAuthContext();
+  const navigate = useNavigate();
+
+  if (!isReady) {
+    return null; 
+  }
 
   return (
     <Routes>

@@ -14,8 +14,10 @@ function LogInAdmin() {
     const { logInAdmin, error, isLoading } = useLogInAdmin()
     const navigate = useNavigate();
 
+    const [rememberMe, setRememberMe] = useState(false);
+
     const handleAdminLogin = async () => {
-        const user = await logInAdmin(email, password)
+        const user = await logInAdmin(email, password, rememberMe)
         if (user) {
             navigate('/admin-dashboard')
         }
@@ -98,8 +100,13 @@ function LogInAdmin() {
                         </section>
                     </div>
 
-                    <div id="remember-container"><input type="checkbox"/>
-                        <div>Remember this workstation</div>
+                    <div id="remember-container">
+                        <input
+                        type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        />
+                      <div>Remember this workstation</div>
                     </div>
 
                     <section className="nostyle" id="go-to-admin-button" onClick={handleAdminLogin}>

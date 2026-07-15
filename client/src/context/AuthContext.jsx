@@ -13,13 +13,16 @@ export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case 'LOGIN': {
       const decoded = jwtDecode(action.payload.token);
-      return { user: { ...action.payload, _id: decoded._id } }
+      return { ...state, user: { ...action.payload, _id: decoded._id }, isReady: true }
+    }
     case 'LOGOUT':
-      return { user: null }
+      return { ...state, user: null, isReady: true }
+    case 'AUTH_READY':
+      return { ...state, isReady: true }
     case 'UPDATE_USER':
-      return { user: { ...state.user, ...action.payload } }
+      return { ...state, user: { ...state.user, ...action.payload } }
     default:
       return state
   }
@@ -27,28 +30,22 @@ export const authReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
-    user: null
+    user: null,
+    isReady: false, 
   })
 
-  console.log('AuthContext state: ', state)
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user");
     if (storedUser) {
       dispatch({ type: "LOGIN", payload: JSON.parse(storedUser) });
+    } else {
+      dispatch({ type: "AUTH_READY" });
     }
   }, []);
-
-  useEffect(() => {
-    if (state.user) {
-      localStorage.setItem("user", JSON.stringify(state.user));
-    } else {
-      localStorage.removeItem("user");
-    }
-  }, [state.user]);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
     </AuthContext.Provider>
   )
-} 
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import AvatarStack from './AvatarStack';
 import { SchoolIcon, CheckIcon, PinIcon } from './icons';
 
@@ -45,9 +45,9 @@ export default function GroupCard({ item }) {
         ))}
       </div>
 
-      <Link className="btn-view" to={viewHref}>
+      <NavLink className="btn-view" to={`/student-group-profile/${item.id}`}>
         {isShared ? 'View Listing' : 'View Group Profile'}
-      </Link>
+      </NavLink>
     </div>
   );
 }

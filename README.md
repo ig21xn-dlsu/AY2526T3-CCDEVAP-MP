@@ -34,6 +34,7 @@ MONGO_URI=<your MongoDB connection string>
 PORT=6767
 SECRET=<a long, random string used to sign JWTs>
 ```
+Along with the submission on canvas is a txt file instead of a script file. This will give you access to our live development cloud that this server connects to. 
 
 **What each variable is for:**
 

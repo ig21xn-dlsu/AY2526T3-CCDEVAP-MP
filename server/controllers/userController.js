@@ -1,5 +1,3 @@
-module.exports = { getUserById, loginUser, registerUser, loginAdmin, updateUserProfile, updateUserPassword };
-
 const updateUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
@@ -61,4 +59,4 @@ const updateUserPassword = async (req, res) => {
   }
 };
 
-module.exports = { getUserById, loginUser, registerUser, loginAdmin, updateUserProfile, updateUserPassword };
+module.exports = { updateUserProfile, updateUserPassword };

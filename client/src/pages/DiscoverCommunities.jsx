@@ -9,7 +9,7 @@ import { useDebouncedValue } from '../hook/useDebouncedValue';
 import { fetchCoLivingGroups, fetchSharedSpaces, fetchCampuses } from '../api/padpalApi';
 
 import '../stylesheets/padpal.css'
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function DiscoverCommunities() {
   const [activeTab, setActiveTab] = useState('coliving');
@@ -59,7 +59,7 @@ export default function DiscoverCommunities() {
       </div>
 
       <div className="tab-actions">
-        <Link to="/student-create-group" className="button button-primary">+ Create New Group</Link>
+        <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
       </div>
 
       {loading && <p className="page-sub">Loading…</p>}

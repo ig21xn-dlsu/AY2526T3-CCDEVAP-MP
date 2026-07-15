@@ -2,34 +2,31 @@ import ManagerNavbar from '../components/Manager-Navbar.jsx'
 import '../stylesheets/manager-dashboard.css'
 import SquareStatistics from '../components/ManagerDashComponents/square-statistics.jsx';
 import ChartUniversityDist from '../components/ChartJS/UniLeaderboards.jsx'
-
 //sizeIcons 
 import groupSizeIcon from '../assets/avgGrpSize.svg'
-import topUniIcon from '../assets/topUni.svg'
 import budgetIcon from '../assets/budgetIcon.svg'
 import yourSpaces from '../assets/u_spaces.svg'
 import inquiries from '../assets/inquiries.svg'
 import occupiedSpace from '../assets/occupiedSpace.svg'
-//---- dummy import
-import leaderBoardData from '../dummyData/userBase.js';
+
+import useGroupStats from '../hook/useGroupStats.js';
+
+const formatBudget = (value) => {
+  if (value === undefined || value === null) return 'P 0';
+  return `P ${Math.round(value).toLocaleString()}`;
+};
 
 function ManagerDashboard() {
-
-  //---- Dummy Data for statistics delete after db -----
-
-  let avg_grp_size = 3.2;
-  let topUniversity = "";
-  let avg_budget = "P 15,000";
-
   let user_space = 3;
   let active_inquiries = 5;
   let occupied = 1;
 
+  const { stats, loading, error } = useGroupStats();
 
-  const leaderBoard = leaderBoardData.data;
-
-  const top1 = leaderBoard.sort((a, b) => b.count - a.count)[0];
-
+  const avgGroupSize = stats ? stats.averageGroupSize : null;
+  const avgMinBudget = stats ? stats.averageBudget.avgMin : null;
+  const avgMaxBudget = stats ? stats.averageBudget.avgMax : null;
+  const universityLeaderboard = stats ? stats.universityLeaderboard : [];
 
   return (
     <div className="dashboard-container container-fluid">
@@ -48,18 +45,34 @@ function ManagerDashboard() {
           <h3 className="pb-2 border-bottom">PadPal's Stats</h3>
           <p>We give you the data, make your best decision.</p>
         </div>
+
+        {error && <p className="text-danger">Couldn't load PadPal's stats: {error}</p>}
+
         <div className="PadPalStats d-flex flex-row gap-5 justify-content-center align-items-center">
-          <SquareStatistics title="Average Group Size" data={avg_grp_size} icon={groupSizeIcon} message="Roomies usually group up in:" />
-          <SquareStatistics title="Average Minimum Budget" data={avg_budget} icon={budgetIcon} message="Lowest Amount that Roomies want to pay" />
-          <SquareStatistics title="Average Average Maximum Budget" data={avg_budget} icon={budgetIcon} message="Higest Amount that roomies want to pay" />
+          <SquareStatistics
+            title="Average Group Size"
+            data={loading ? '...' : avgGroupSize}
+            icon={groupSizeIcon}
+            message="Roomies usually group up in:"
+          />
+          <SquareStatistics
+            title="Average Minimum Budget"
+            data={loading ? '...' : formatBudget(avgMinBudget)}
+            icon={budgetIcon}
+            message="Lowest Amount that Roomies want to pay"
+          />
+          <SquareStatistics
+            title="Average Maximum Budget"
+            data={loading ? '...' : formatBudget(avgMaxBudget)}
+            icon={budgetIcon}
+            message="Highest Amount that roomies want to pay"
+          />
         </div>
         <div className="leaderboard-container d-flex justify-content-center align-items-center">
-          <ChartUniversityDist />
+          <ChartUniversityDist data={universityLeaderboard} />
         </div>
-
       </div>
     </div>
   )
-
 }
 export default ManagerDashboard;

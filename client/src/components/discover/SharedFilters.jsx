@@ -1,5 +1,6 @@
 import React from 'react';
 import { SearchIcon } from './icons';
+import CAMPUSES from '../../assets/util/CAMPUSES.js';
 
 const OCCUPANCY_OPTIONS = [
   { value: '1-person', label: '1 Person (Private)' },
@@ -19,6 +20,14 @@ const AMENITY_OPTIONS = [
   { value: 'Utilities Included', label: 'Utilities Included' },
   { value: 'Pet Friendly', label: 'Pet Friendly' },
   { value: 'Study Lounge', label: 'Study Lounge' },
+];
+
+const CAMPUS_OPTIONS = [
+  { value: '', label: 'Any Campus' },
+  ...Object.entries(CAMPUSES).map(([code, campus]) => ({
+    value: code,
+    label: campus.name,
+  })),
 ];
 
 export const DEFAULT_SHARED_FILTERS = {
@@ -57,14 +66,18 @@ export default function SharedFilters({ filters, onChange, onReset, onApply }) {
         <div className="shared-filter-card shared-filter-card--field">
           <div className="shared-labeled-field">
             <label htmlFor="sharedCampusInput">Campus / Area</label>
-            <input
+            <select
               id="sharedCampusInput"
               className="shared-field"
-              type="text"
-              placeholder="De La Salle University"
               value={filters.campus}
               onChange={update('campus')}
-            />
+            >
+              {CAMPUS_OPTIONS.map((option) => (
+                <option key={option.value || 'any'} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 

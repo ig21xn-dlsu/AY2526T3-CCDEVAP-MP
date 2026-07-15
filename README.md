@@ -174,3 +174,27 @@ app.use((err, req, res, next) => {
   server.js         → app entry point
   .env              → MONGO_URI, PORT, SECRET
 ```
+
+
+
+## Test Accounts 
+
+Assuming that the mongoDB connection works you will have the data for these accounts. 
+
+### Admin account:
+ian_gabriel_ilagan@dlsu.edu.ph
+Admin1234!
+
+admin@dlsu.edu.ph
+Admin1234!
+
+### Student account
+student@dlsu.edu.ph
+Student1234!
+
+### Manager account
+manager@padpal.com
+Manager1234!
+
+philip@gmail.com
+Philip1234567!

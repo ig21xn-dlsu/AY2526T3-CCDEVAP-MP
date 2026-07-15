@@ -182,6 +182,18 @@
           letter-spacing: 0.14px;
         }
 
+        /* ── Name row (First / Last) ───────────────────────────────── */
+        #name-input-row {
+          display: flex;
+          flex-direction: row;
+          gap: 1.5rem;
+          width: 100%;
+        }
+
+        #name-input-row .personal-info-input {
+          flex: 1;
+        }
+
         .personal-info-input {
           display: flex;
           flex-direction: column;
@@ -294,11 +306,14 @@
           width: 100%;
         }
 
-        /* ── Footer ─────────────────────────────────────────────────── */
+        /* ── Footer ─────────────────────────────────────────────────── 
+           Message sits on the left, buttons are grouped in .footer-actions
+           and pushed to the right via margin-left: auto.
+        ─────────────────────────────────────────────────────────────── */
         #modal-footer {
           display: flex;
           flex-direction: row;
-          justify-content: flex-end;
+          align-items: center;
           width: 100%;
           flex-shrink: 0;
 
@@ -308,6 +323,28 @@
           border-radius: 0 0 12px 12px;
           border-top: 1px solid #C2C6D8;
           background: #F3F3F6;
+        }
+
+        .footer-message {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 20px;
+        }
+
+        .footer-message.success {
+          color: #007F7A;
+        }
+
+        .footer-message.error {
+          color: #BA1A1A;
+        }
+
+        .footer-actions {
+          display: flex;
+          flex-direction: row;
+          gap: 16px;
+          margin-left: auto;
         }
 
         #cancel-button {
@@ -385,6 +422,12 @@
             align-items: center;
           }
 
+          /* Name pair: stack vertically */
+          #name-input-row {
+            flex-direction: column;
+            gap: 1.25rem;
+          }
+
           /* Password pair: stack vertically */
           #old-new-password {
             flex-direction: column;
@@ -409,11 +452,23 @@
 
         /* ═══════════════════════════════════════════════════════════════
            VERY SMALL  ≤ 380 px  (e.g. iPhone SE)
-           – collapse footer buttons to fill available space evenly
+           – stack the message above the buttons, and let the two
+             buttons fill the row evenly
         ═══════════════════════════════════════════════════════════════ */
         @media (max-width: 380px) {
           #modal-footer {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
+          }
+
+          .footer-message {
+            text-align: center;
+          }
+
+          .footer-actions {
             justify-content: stretch;
+            margin-left: 0;
           }
 
           #cancel-button,

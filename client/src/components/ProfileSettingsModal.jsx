@@ -1,13 +1,89 @@
 import '../stylesheets/ProfileSettingsModal.css'
+import { useState } from 'react';
+import { useAuthContext } from '../hook/useAuthContext';
+import { updateProfile, updatePassword } from '../api/profileSettings';
 
 function ProfileSettingsModal({ onClose }) {
+    const { user, dispatch } = useAuthContext();
+    const isAdmin = user?.role === 'admin';
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+    const [message, setMessage] = useState(null); 
+    const [isSaving, setIsSaving] = useState(false);
+
+    const handleCancel = () => {
+        setMessage(null);
+        onClose();
+    };
+
+    const handleSaveChanges = async () => {
+        setMessage(null);
+
+        const wantsProfileUpdate = firstName.trim() || lastName.trim() || email.trim();
+        const wantsPasswordUpdate = currentPassword || newPassword || confirmNewPassword;
+
+        if (!wantsProfileUpdate && !wantsPasswordUpdate) {
+            setMessage({ type: 'error', text: 'No changes to save.' });
+            return;
+        }
+
+        try {
+            setIsSaving(true);
+
+            if (wantsProfileUpdate) {
+                const updates = {};
+                if (firstName.trim()) updates.firstName = firstName.trim();
+                if (lastName.trim()) updates.lastName = lastName.trim();
+                if (email.trim()) updates.email = email.trim();
+
+                const updatedUser = await updateProfile(user._id, updates, user.token);
+
+                // NOTE: adjust this action type/payload shape to match your AuthContext reducer
+                dispatch({ type: 'UPDATE_USER', payload: updatedUser });
+            }
+
+            if (wantsPasswordUpdate) {
+                if (!currentPassword) {
+                    throw new Error('Enter your current password.');
+                }
+                if (!newPassword || !confirmNewPassword) {
+                    throw new Error('Fill in both new password fields.');
+                }
+                if (newPassword !== confirmNewPassword) {
+                    throw new Error('New passwords do not match.');
+                }
+
+                await updatePassword(user._id, { currentPassword, newPassword }, user.token);
+            }
+
+            setMessage({ type: 'success', text: 'Changes saved successfully.' });
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmNewPassword('');
+        } catch (err) {
+            setMessage({ type: 'error', text: err.message || 'Something went wrong. Please try again.' });
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     return (
         <div id="modal-wrap">
         <div id="grey-overlay"></div>
       <section id="settings-modal">
         <section id="modal-header">
           Settings
-          <svg onClick={onClose} className="clickable" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <svg onClick={handleCancel} className="clickable" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#727687" />
           </svg>
         </section>
@@ -21,24 +97,55 @@ function ProfileSettingsModal({ onClose }) {
               Personal Information
             </div>
             <section id="personal-info-content">
-              <section id="profile-picture-container">
-                <div id="image-container"></div>
-                <div id="profile-photo-settings">
-                  <div style={{color: '#424656', fontFamily: 'Montserrat', fontSize: '14px', fontWeight: '500', lineHeight: '20px', letterSpacing: '0.14px' }}>
-                    Profile Photo
+              {!isAdmin && (
+                <section id="profile-picture-container">
+                  <div id="image-container"></div>
+                  <div id="profile-photo-settings">
+                    <div style={{color: '#424656', fontFamily: 'Montserrat', fontSize: '14px', fontWeight: '500', lineHeight: '20px', letterSpacing: '0.14px' }}>
+                      Profile Photo
+                    </div>
+                    <div style={{color: '#727687', fontFamily: 'Montserrat', fontSize: '16px', fontWeight: '400', lineHeight: '24px'}}>
+                      Accepts PNG, JPG under 5MB
+                    </div>
+                    <div id="upload-new-button">Upload New</div>
                   </div>
-                  <div style={{color: '#727687', fontFamily: 'Montserrat', fontSize: '16px', fontWeight: '400', lineHeight: '24px'}}>
-                    Accepts PNG, JPG under 5MB
+                </section>
+              )}
+
+              <section id="name-input-row">
+                <section className="personal-info-input">
+                  First Name
+                  <div className="info-container">
+                    <input
+                      type="text"
+                      placeholder={user?.firstName || 'First Name'}
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
                   </div>
-                  <div id="upload-new-button">Upload New</div>
-                </div>
+                </section>
+                <section className="personal-info-input">
+                  Last Name
+                  <div className="info-container">
+                    <input
+                      type="text"
+                      placeholder={user?.lastName || 'Last Name'}
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </div>
+                </section>
               </section>
 
-              <section className="personal-info-input">Name
-                <div className="info-container"><input type="text" placeholder="Ian Gabriel Ilagan"/></div>
-              </section>
               <section className="personal-info-input">Email Address
-                <div className="info-container"><input type="text" placeholder="ian_gabriel_ilagan@dlsu.edu.ph"/></div>
+                <div className="info-container">
+                  <input
+                    type="text"
+                    placeholder={user?.email || 'Email Address'}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
               </section>
             </section>
           </section>
@@ -56,20 +163,35 @@ function ProfileSettingsModal({ onClose }) {
               <section className="password-contanier">
                 Current Password
                 <section className="password-container-legit">
-                  <input type="password" placeholder="••••••••"/>
+                  <input
+                    type="password"
+                    placeholder="••••••••"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                  />
                 </section>
               </section>
               <section id="old-new-password">
                 <section className="password-contanier">
                   New Password
                   <section className="password-container-legit">
-                    <input type="password" placeholder="••••••••"/>
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
                   </section>
                 </section>
                 <section className="password-contanier">
                   Confirm New Password
                   <section className="password-container-legit">
-                    <input type="password" placeholder="••••••••"/>
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      value={confirmNewPassword}
+                      onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    />
                   </section>
                 </section>
               </section>
@@ -78,13 +200,25 @@ function ProfileSettingsModal({ onClose }) {
         </section>
 
         <section id="modal-footer">
-          <section className="clickable" id="cancel-button" onClick={onClose}>Cancel</section>
-          <section className="clickable" id="save-changes-button" onClick={onClose}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M18 4V16C18 16.55 17.8042 17.0208 17.4125 17.4125C17.0208 17.8042 16.55 18 16 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H14L18 4ZM9 15C9.83333 15 10.5417 14.7083 11.125 14.125C11.7083 13.5417 12 12.8333 12 12C12 11.1667 11.7083 10.4583 11.125 9.875C10.5417 9.29167 9.83333 9 9 9C8.16667 9 7.45833 9.29167 6.875 9.875C6.29167 10.4583 6 11.1667 6 12C6 12.8333 6.29167 13.5417 6.875 14.125C7.45833 14.7083 8.16667 15 9 15ZM3 7H12V3H3V7Z" fill="#633700" />
-            </svg>
-            Save Changes
-          </section>
+          {message && (
+            <div className={`footer-message ${message.type}`}>
+              {message.text}
+            </div>
+          )}
+          <div className="footer-actions">
+            <section className="clickable" id="cancel-button" onClick={handleCancel}>Cancel</section>
+            <section
+              className="clickable"
+              id="save-changes-button"
+              onClick={isSaving ? undefined : handleSaveChanges}
+              style={{ opacity: isSaving ? 0.7 : 1, pointerEvents: isSaving ? 'none' : 'auto' }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M18 4V16C18 16.55 17.8042 17.0208 17.4125 17.4125C17.0208 17.8042 16.55 18 16 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H14L18 4ZM9 15C9.83333 15 10.5417 14.7083 11.125 14.125C11.7083 13.5417 12 12.8333 12 12C12 11.1667 11.7083 10.4583 11.125 9.875C10.5417 9.29167 9.83333 9 9 9C8.16667 9 7.45833 9.29167 6.875 9.875C6.29167 10.4583 6 11.1667 6 12C6 12.8333 6.29167 13.5417 6.875 14.125C7.45833 14.7083 8.16667 15 9 15ZM3 7H12V3H3V7Z" fill="#633700" />
+              </svg>
+              {isSaving ? 'Saving...' : 'Save Changes'}
+            </section>
+          </div>
         </section>
       </section>
 </div>

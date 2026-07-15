@@ -101,7 +101,6 @@ const loginUser = async (req, res) => {
   }
 }
 
-// This function first if the user is an admin that's trying to log-in
 const loginAdmin = async (req, res) => {
   try {
 
@@ -124,8 +123,10 @@ const loginAdmin = async (req, res) => {
       return res.status(200).json({
         message: 'Logged In!',
         email: existingAdmin.email,
+        firstName: existingAdmin.firstName,
+        lastName: existingAdmin.lastName,
         role: existingAdmin.role,
-        _id: User._id,
+        _id: existingAdmin._id, 
         token
       });
 

@@ -48,16 +48,8 @@
           justify-content: flex-start;
           align-items: center;
           padding: 8px 16px 0 16px;
-          gap: 12px;
           align-self: stretch;
           width: 100%;
-        }
-
-        #admin-profile-picture-container {
-          width: 32px;
-          height: 32px;
-          background-color: #3498db;
-          border-radius: 50%;
         }
 
         #admin-profile-name {

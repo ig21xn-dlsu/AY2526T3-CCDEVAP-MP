@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import '../stylesheets/AdminNavbar.css';
 import { useLogOut } from '../hook/useLogOut';
+import { useAuthContext } from '../hook/useAuthContext';
 
 function AdminNavbar({ onOpenSettings }) {
 
@@ -9,6 +10,7 @@ function AdminNavbar({ onOpenSettings }) {
     const [arrowUp, setArrowUp] = useState(true);
 
     const location = useLocation();
+    const { user } = useAuthContext();
 
     const toggleNavBar = () => {
         setIsOpen(!isOpen);
@@ -19,6 +21,11 @@ function AdminNavbar({ onOpenSettings }) {
     const handleLogOutClick = () => {
         logout()
     }
+
+    const displayName = user?.firstName
+    ? `${user.firstName} ${user.lastName ?? ''}`.trim()
+    : 'Admin User';
+
 
     return (
         <section id="nav-drawer" className={isOpen  ?  'open' : ''}>
@@ -92,8 +99,7 @@ function AdminNavbar({ onOpenSettings }) {
                 </section>
                 <section id="admin-profile">
                     <div id="admin-profile-button">
-                        <div id="admin-profile-picture-container"></div>
-                        <div id="admin-profile-name">Admin User</div>
+                        <div id="admin-profile-name">{displayName}</div>
                     </div>
                 </section>
             </section>

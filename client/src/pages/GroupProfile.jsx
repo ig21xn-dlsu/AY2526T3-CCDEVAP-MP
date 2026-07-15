@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import GroupNav from '../components/group/GroupNav';
 import Hero from '../components/group/Hero';
 import BelowHero from '../components/group/BelowHero';
@@ -11,12 +12,8 @@ import { useAsync } from '../hook/useAsync';
 import { fetchGroupById } from '../api/padpalApi'; // added for when api is ready
 import '../stylesheets/padpal-group.css';
 
-function useGroupIdFromQuery() {
-  return useMemo(() => new URLSearchParams(window.location.search).get('id'), []);
-}
-
 export default function GroupProfile() {
-  const groupId = useGroupIdFromQuery();
+  const { id: groupId } = useParams();
   const [modalOpen, setModalOpen] = useState(false);
 
   const { data: group, loading, error } = useAsync(() => fetchGroupById(groupId), [groupId]);

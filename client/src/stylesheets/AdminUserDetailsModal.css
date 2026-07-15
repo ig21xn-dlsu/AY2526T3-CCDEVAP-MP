@@ -1,0 +1,46 @@
+/* Force the background and text to use your Admin Theme variables */
+[data-admin-theme='dark'] .admin-user-modal .modal-content {
+    background-color: var(--admin-surface) !important;
+    color: var(--admin-text) !important;
+    border: 1px solid var(--admin-border);
+}
+
+[data-admin-theme='dark'] .admin-user-modal .modal-header {
+    border-bottom-color: var(--admin-border);
+}
+
+/* This specifically fixes the bright white footer box */
+[data-admin-theme='dark'] .admin-user-modal .modal-footer {
+    border-top-color: var(--admin-border);
+    background-color: var(--admin-surface) !important;
+}
+
+[data-admin-theme='dark'] .admin-user-modal .modal-title {
+    color: var(--admin-text-strong);
+}
+
+[data-admin-theme='dark'] .admin-user-modal .modal-body p {
+    color: var(--admin-text);
+}
+
+[data-admin-theme='dark'] .admin-user-modal .modal-body strong {
+    color: var(--admin-text-soft);
+}
+
+/* Fix the Bootstrap Close (X) button visibility on dark backgrounds */
+[data-admin-theme='dark'] .admin-user-modal .btn-close {
+    filter: invert(1) grayscale(1) brightness(1.8);
+}
+
+/* Theme the secondary "Close" button */
+[data-admin-theme='dark'] .admin-user-modal .btn-secondary {
+    background-color: var(--admin-hover);
+    border-color: var(--admin-border-strong);
+    color: var(--admin-text);
+}
+
+[data-admin-theme='dark'] .admin-user-modal .btn-secondary:hover {
+    background-color: var(--admin-border);
+    border-color: var(--admin-border-strong);
+    color: var(--admin-text-strong);
+}

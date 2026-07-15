@@ -157,7 +157,7 @@ exports.setListingDeleted = async (req, res) => {
 
         listing.isDeleted = !!isDeleted;
         listing.deletedAt = isDeleted ? (deletedAt ? new Date(deletedAt) : new Date()) : null;
-        await listing.save();
+        await listing.save({validateModifiedOnly: true});
 
         res.status(200).json(listing);
     } catch (err) {

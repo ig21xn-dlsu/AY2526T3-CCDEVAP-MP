@@ -13,7 +13,7 @@ const inquiryRoutes = require('./routes/inquiryRoutes.js');
 
 const adminDashboardRoutes = require('./routes/adminDashboardRoutes');
 const adminUsersRoutes = require('./routes/adminUsersRoutes');
-const adminListingsRoutes = require('./routes/adminListingRoutes');
+const adminListingRoutes = require('./routes/adminListingRoutes');
 
 const statsRoutes = require('./routes/statRoutes.js');
 const personalStatRoutes = require('./routes/personalStatsRoutes.js');
@@ -38,7 +38,7 @@ app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/calling-card', callingCardRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/listing', listingRoutes);
-app.use('/api/admin/listing', adminListingsRoutes);
+app.use('/api/admin/listing', adminListingRoutes);
 
 // User authentication Routes
 app.use('/api/auth', authRoutes);

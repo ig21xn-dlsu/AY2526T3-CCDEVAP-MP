@@ -65,7 +65,7 @@ export default function FileUpload({ file, onFileChange, maxSizeMB = 10 }) {
   };
 
   return (
-    <div className="fileUploadRoot">
+    <div className="fileUploadRoot border border-secondary">
       <div
         className="dropzone d-flex flex-column justify-content-center align-items-center"
         onClick={() => inputRef.current?.click()}

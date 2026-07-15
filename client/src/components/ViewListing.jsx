@@ -50,7 +50,7 @@ function ListingFullView({ listing }) {
           <div className="headInfromationRight container-fluid">
             <div className="headInfo d-flex flex-column p-2 gap-2 ">
               <h1>{roomTitle}</h1>
-              <h2 className='text-muted'>{buildingName}</h2>
+              <h2 className=''>{buildingName}</h2>
             </div>
             <div className="card amenitiesContainer d-flex flex-column flex-wrap gap-2 container-fluid ">
               <h1 className="border-bottom pb-2 text-end">Amenities</h1>

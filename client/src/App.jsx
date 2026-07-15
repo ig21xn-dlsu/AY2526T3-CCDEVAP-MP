@@ -22,6 +22,8 @@ import ManagerViewListing from './pages/Manager-View-Listing.jsx';
 import ManagerCallingCard from './pages/Manager-Calling-Card.jsx';
 import ManagerEdit from './pages/Manager-Edit.jsx';
 import ListingDetail from './pages/Listing-Detail.jsx';
+import SharedSpaces from './pages/Shared-Spaces.jsx';
+import SharedSpaceDetail from './pages/Shared-Space-Detail.jsx';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -63,6 +65,8 @@ function AppRoutes() {
       />
 
       <Route path="/student-discover-communities" element={user && user.role === 'student' ? <DiscoverCommunities /> : <Navigate to="/" />} />
+        <Route path="/student-shared-spaces" element={user && user.role === 'student' ? <SharedSpaces /> : <Navigate to="/" />} />
+        <Route path="/student-shared-spaces/:id" element={user && user.role === 'student' ? <SharedSpaceDetail /> : <Navigate to="/" />} />
       <Route path="/listings/:id" element={user ? <ListingDetail /> : <Navigate to="/" />} />
     </Routes>
   );

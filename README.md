@@ -178,26 +178,25 @@ app.use((err, req, res, next) => {
 
 
 ## Test Accounts 
-
-Assuming that the mongoDB connection works you will have the data for these accounts. 
+The MongoDB Atlas server comes pre-prepared accounts with different roles. 
 
 ### Admin account:
-ian_gabriel_ilagan@dlsu.edu.ph
-Admin1234!
+User: ian_gabriel_ilagan@dlsu.edu.ph
+Pass: Admin1234!
 
-admin@dlsu.edu.ph
-Admin1234!
+User: admin@dlsu.edu.ph
+Pass: Admin1234!
 
 ### Student account
 student@dlsu.edu.ph
 Student1234!
 
 ### Manager account
-manager@padpal.com
-Manager1234!
+User: manager@padpal.com
+Pass: Manager1234!
 
-philip@gmail.com
-Philip1234567!
+User: philip@gmail.com
+Pass: Philip1234567!
 
 
 

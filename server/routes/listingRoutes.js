@@ -271,7 +271,7 @@ router.post(
           imageUrl || [],
         owner: req.user._id,
       });
-
+    console.log("FULL PAYLOAD:", listingData);
     res
       .status(201)
       .json(created);

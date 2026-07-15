@@ -81,7 +81,7 @@ const loginUser = async (req, res) => {
     }
 
     if (existingUser.role === 'admin') {
-      return res.status(400).json({ message: 'You stupid ah, use the admin button down here dawg' });
+      return res.status(400).json({ message: 'The admin button is literally down here bro -_-' });
     }
 
     if (existingUser.status === 'suspended') {

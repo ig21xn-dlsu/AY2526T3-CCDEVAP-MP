@@ -12,6 +12,46 @@ import { fetchCoLivingGroups, fetchSharedSpaces, fetchCampuses } from '../api/pa
 import '../stylesheets/padpal.css'
 import { NavLink } from "react-router-dom";
 
+const API_BASE = import.meta.env.VITE_API_URL ?? '';
+
+function apiPath(path) {
+  const base = API_BASE.replace(/\/$/, '');
+  return `${base}/api${path}`;
+}
+
+async function fetchDiscoverCampuses() {
+  const response = await fetch(apiPath('/campuses'), { credentials: 'include' });
+  if (!response.ok) {
+    const message = await response.text().catch(() => response.statusText);
+    throw new Error(`PadPal API error (${response.status}): ${message || response.statusText}`);
+  }
+  return response.json();
+}
+
+async function fetchDiscoverSharedSpaces(filters) {
+  const query = new URLSearchParams();
+  Object.entries(filters || {}).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === '') return;
+    if (Array.isArray(value)) {
+      value.forEach((item) => query.append(key, item));
+    } else {
+      query.append(key, value);
+    }
+  });
+
+  const response = await fetch(apiPath(`/shared-spaces${query.toString() ? `?${query.toString()}` : ''}`), {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    const message = await response.text().catch(() => response.statusText);
+    throw new Error(`PadPal API error (${response.status}): ${message || response.statusText}`);
+  }
+
+  return response.json();
+}
+
 export default function DiscoverCommunities() {
   const [activeTab, setActiveTab] = useState('coliving');
   const [coLivingFilters, setCoLivingFilters] = useState(DEFAULT_COLIVING_FILTERS);
@@ -21,7 +61,7 @@ export default function DiscoverCommunities() {
   const debouncedCoLivingFilters = useDebouncedValue(coLivingFilters, 300);
   const debouncedSharedFilters = useDebouncedValue(sharedFilters, 300);
 
-  const { data: campuses = [] } = useAsync(fetchCampuses, []);
+  const { data: campuses = [] } = useAsync(fetchDiscoverCampuses, []);
 
   const {
     data: groups,
@@ -33,7 +73,7 @@ export default function DiscoverCommunities() {
     data: sharedSpaces,
     loading: sharedLoading,
     error: sharedError,
-  } = useAsync(() => fetchSharedSpaces(debouncedSharedFilters), [JSON.stringify(debouncedSharedFilters)]);
+  } = useAsync(() => fetchDiscoverSharedSpaces(debouncedSharedFilters), [JSON.stringify(debouncedSharedFilters)]);
 
   const isColiving = activeTab === 'coliving';
   const items = isColiving ? groups : sharedSpaces;

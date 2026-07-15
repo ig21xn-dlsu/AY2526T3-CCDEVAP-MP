@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAsync } from '../../hook/useAsync';
 import { fetchCurrentUser } from '../../api/padpalApi'; // api placeholder
-import { BellIcon } from '../icons';
+import { BellIcon } from '../discover/icons';
 
 export default function GroupNav({ backHref = '/' }) {
   const { data: user } = useAsync(fetchCurrentUser, []);

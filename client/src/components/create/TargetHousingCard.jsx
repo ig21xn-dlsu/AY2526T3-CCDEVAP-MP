@@ -1,5 +1,5 @@
 import { ClockIcon, CalendarIcon } from './icons.jsx';
-import BudgetRangeSlider from './BudgetRangeSlider.jsx';
+import BudgetRangerSlider from './BudgetRangerSlider.jsx';
 
 export default function TargetHousingCard({
   budgetConfig,
@@ -16,7 +16,7 @@ export default function TargetHousingCard({
         <h2 className="card__title">Target Housing</h2>
       </div>
 
-      <BudgetRangeSlider
+      <BudgetRangerSlider
         min={budgetConfig.min}
         max={budgetConfig.max}
         step={budgetConfig.step}

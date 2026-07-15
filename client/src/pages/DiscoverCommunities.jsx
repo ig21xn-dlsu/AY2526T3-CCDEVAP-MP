@@ -58,7 +58,7 @@ export default function DiscoverCommunities() {
       </div>
 
       <div className="tab-actions">
-        <a href="/create" className="btn-create-group">+ Create New Group</a>
+        <a href="/CreateGroup" className="btn-create-group">+ Create New Group</a>
       </div>
 
       {loading && <p className="page-sub">Loading…</p>}

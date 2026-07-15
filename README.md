@@ -174,3 +174,31 @@ app.use((err, req, res, next) => {
   server.js         → app entry point
   .env              → MONGO_URI, PORT, SECRET
 ```
+
+
+
+## Test Accounts 
+The MongoDB Atlas server comes pre-prepared accounts with different roles. 
+
+### Admin account:
+User: ian_gabriel_ilagan@dlsu.edu.ph
+Pass: Admin1234!
+
+User: admin@dlsu.edu.ph
+Pass: Admin1234!
+
+### Student account
+User: student@dlsu.edu.ph
+Pass: Student1234!
+
+### Manager account
+User: manager@padpal.com
+Pass: Manager1234!
+
+User: philip@gmail.com
+Pass: Philip1234567!
+
+
+
+
+### For Manager Accounts, for the best experience make sure you create a callling card! 

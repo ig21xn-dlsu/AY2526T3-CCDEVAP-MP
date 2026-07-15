@@ -4,6 +4,7 @@ import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import UserDetailsModal from '../components/AdminUserDetailsModal';
 import { useState, useEffect } from 'react';
 import { fetchUsers, updateUserStatus, getCSVExportUrl } from '../api/adminUsers';
+import AdminCreateUserModal from '../components/AdminCreateUserModal';
 
 function AdminUsers() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -22,6 +23,8 @@ function AdminUsers() {
 
     const [selectedUser, setSelectedUser] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -74,6 +77,12 @@ function AdminUsers() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedUser(null);
+    };
+
+    const handleUserCreated = () => {
+    setCurrentPage(1); 
+    setDebouncedSearch(''); 
+    setSearchTerm('');
     };
 
     const handleStatusChange = async (userId, newStatus) => {
@@ -130,7 +139,12 @@ function AdminUsers() {
                             placeholder="Search users by name or email..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                            />
+                        <div className="filter">
+                            <button className="button button1" onClick={() => setIsCreateModalOpen(true)}>
+                            + Add User
+                            </button>
+                        </div>
                     </div>
 
                     <div className="table-container">
@@ -298,6 +312,12 @@ function AdminUsers() {
             show={isModalOpen}
             onClose={handleCloseModal}
             onStatusChange={handleStatusChange}
+        />
+            
+        <AdminCreateUserModal
+            show={isCreateModalOpen}
+            onClose={() => setIsCreateModalOpen(false)}
+            onUserCreated={handleUserCreated}
         />
     </>
 );

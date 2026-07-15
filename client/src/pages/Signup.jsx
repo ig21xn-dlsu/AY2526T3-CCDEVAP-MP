@@ -16,15 +16,19 @@ function SignUp() {
     const { signup, error, isLoading} = useSignup()
 
     const handleSignUp = async () => {
-        const success = await signup(lastName, firstName, email, password, confirmPassword, role);
+    // console.log('1. Button clicked');
+    const success = await signup(lastName, firstName, email, password, confirmPassword, role);
+    // console.log('2. signup() returned:', success);
 
-        if (success) {
-            setShowSuccess(true);
-            setTimeout(() => {
-                navigate('/');
-            }, 3000); // I think 3 seconds is good enough
-        }
+    if (success) {
+        // console.log('3. Setting showSuccess to true');
+        setShowSuccess(true);
+        setTimeout(() => {
+            // console.log('4. Navigating now');
+            navigate('/');
+        }, 3000);
     }
+}
 
 
     const [showPassword, setShowPassword] = useState(false);

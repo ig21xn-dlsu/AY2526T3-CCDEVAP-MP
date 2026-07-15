@@ -14,16 +14,15 @@ export function AdminThemeProvider({ children }) {
     });
 
     useEffect(() => {
-        
-        document.documentElement.setAttribute('data-admin-theme', theme);
+        document.documentElement.setAttribute('data-bs-theme', theme);
         try {
             localStorage.setItem(STORAGE_KEY, theme);
-        } catch {
-            // idk what to put here
+        } catch (e) {
+            console.error("Theme storage failed", e);
         }
 
         return () => {
-            document.documentElement.removeAttribute('data-admin-theme');
+            document.documentElement.removeAttribute('data-bs-theme');
         };
     }, [theme]);
 

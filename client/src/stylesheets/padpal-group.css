@@ -233,42 +233,6 @@ nav {
 .stat-value { font-size: 1.15rem; font-weight: 800; color: var(--blue); }
 .stat-label { font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px; }
 
-/* ── MODAL ── */
-.modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 500;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.2s;
-}
-.modal-backdrop.open { opacity: 1; pointer-events: all; }
-
-.modal {
-  background: var(--bg);
-  border-radius: 16px;
-  padding: 28px 28px 24px;
-  width: 100%;
-  max-width: 520px;
-  position: relative;
-  transform: translateY(16px);
-  transition: transform 0.2s;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-}
-.modal-backdrop.open .modal { transform: translateY(0); }
-
-.modal-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 22px;
-}
-.modal-title { font-size: 1.1rem; font-weight: 700; }
-.modal-close {
-  background: none; border: none; cursor: pointer;
-  color: var(--text-secondary); display: flex; align-items: center;
-  transition: color 0.15s; border-radius: 6px; padding: 2px;
-}
-.modal-close:hover { color: var(--text-primary); }
-
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group.full { grid-column: 1 / -1; }

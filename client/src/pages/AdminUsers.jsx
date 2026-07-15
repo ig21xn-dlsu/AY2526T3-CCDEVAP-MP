@@ -105,9 +105,12 @@ function AdminUsers() {
     const endIndex = Math.min(currentPage * limit, totalUsers);
 
     return (
+    <>
         <div id="users-wrapper">
             <AdminNavbar onOpenSettings={() => setIsSettingsOpen(true)} />
-            {isSettingsOpen && <ProfileSettingsModal onClose={() => setIsSettingsOpen(false)} />}
+            {isSettingsOpen && (
+                <ProfileSettingsModal onClose={() => setIsSettingsOpen(false)} />
+            )}
 
             <div className="main-content">
                 <div className="header">
@@ -150,7 +153,14 @@ function AdminUsers() {
                                     </tr>
                                 ) : error ? (
                                     <tr>
-                                        <td colSpan="4" style={{ textAlign: 'center', padding: '24px', color: '#e11d48' }}>
+                                        <td
+                                            colSpan="4"
+                                            style={{
+                                                textAlign: 'center',
+                                                padding: '24px',
+                                                color: '#e11d48',
+                                            }}
+                                        >
                                             {error}
                                         </td>
                                     </tr>
@@ -176,15 +186,25 @@ function AdminUsers() {
                                                     </div>
                                                 </div>
                                             </td>
+
                                             <td>{formatRole(user.role)}</td>
+
                                             <td>
-                                                <span className={`status-pill ${user.status === 'suspended' ? 'suspended' : 'active'}`}>
-                                                    {user.status === 'suspended' ? 'Suspended' : 'Active'}
+                                                <span
+                                                    className={`status-pill ${
+                                                        user.status === 'suspended'
+                                                            ? 'suspended'
+                                                            : 'active'
+                                                    }`}
+                                                >
+                                                    {user.status === 'suspended'
+                                                        ? 'Suspended'
+                                                        : 'Active'}
                                                 </span>
                                             </td>
+
                                             <td>
-                                                {/* FIXED: Added missing <a tag */}
-                                                <a 
+                                                <a
                                                     href="#"
                                                     className="edit-btn"
                                                     onClick={(e) => {
@@ -205,40 +225,58 @@ function AdminUsers() {
                                     <td colSpan="5">
                                         <div className="table-footer">
                                             <div className="csv-download-box">
-                                                <a href={getCSVExportUrl()} className="download-csv">
-                                                    <img src="assets/downloadIcon.svg" alt="" className="btn-icon" />
+                                                <a
+                                                    href={getCSVExportUrl()}
+                                                    className="download-csv"
+                                                >
+                                                    <img
+                                                        src="assets/downloadIcon.svg"
+                                                        alt=""
+                                                        className="btn-icon"
+                                                    />
                                                     Download CSV
                                                 </a>
                                             </div>
+
                                             <div className="pagination-wrapper">
                                                 <span className="footer-status">
                                                     {totalUsers === 0
                                                         ? 'No users'
                                                         : `Showing ${startIndex}-${endIndex} of ${totalUsers}`}
                                                 </span>
+
                                                 <ul className="pagination">
                                                     <li>
-                                                        {/* FIXED: Added missing <a tag */}
-                                                        <a 
+                                                        <a
                                                             href="#"
                                                             onClick={(e) => {
                                                                 e.preventDefault();
-                                                                if (currentPage > 1) setCurrentPage((p) => p - 1);
+                                                                if (currentPage > 1)
+                                                                    setCurrentPage((p) => p - 1);
                                                             }}
-                                                            style={{ opacity: currentPage === 1 ? 0.4 : 1 }}
+                                                            style={{
+                                                                opacity:
+                                                                    currentPage === 1 ? 0.4 : 1,
+                                                            }}
                                                         >
                                                             &#8592;
                                                         </a>
                                                     </li>
+
                                                     <li>
-                                                        {/* FIXED: Added missing <a tag */}
-                                                        <a 
+                                                        <a
                                                             href="#"
                                                             onClick={(e) => {
                                                                 e.preventDefault();
-                                                                if (currentPage < totalPages) setCurrentPage((p) => p + 1);
+                                                                if (currentPage < totalPages)
+                                                                    setCurrentPage((p) => p + 1);
                                                             }}
-                                                            style={{ opacity: currentPage === totalPages ? 0.4 : 1 }}
+                                                            style={{
+                                                                opacity:
+                                                                    currentPage === totalPages
+                                                                        ? 0.4
+                                                                        : 1,
+                                                            }}
                                                         >
                                                             &#8594;
                                                         </a>
@@ -254,15 +292,15 @@ function AdminUsers() {
 
                 </div>
             </div>
-
-            <UserDetailsModal
-                user={selectedUser}
-                show={isModalOpen}
-                onClose={handleCloseModal}
-                onStatusChange={handleStatusChange}
-            />
         </div>
-    );
+        <UserDetailsModal
+            user={selectedUser}
+            show={isModalOpen}
+            onClose={handleCloseModal}
+            onStatusChange={handleStatusChange}
+        />
+    </>
+);
 }
 
 export default AdminUsers;

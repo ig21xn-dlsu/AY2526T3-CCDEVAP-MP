@@ -1,8 +1,11 @@
 import { Modal, Button, Badge } from 'react-bootstrap';
 import '../stylesheets/AdminUserDetailsModal.css';
+import { useAdminTheme } from '../context/AdminThemeContext';
 
 function UserDetailsModal({ user, show, onClose, onStatusChange }) {
     if (!user) return null;
+
+    const { isDark } = useAdminTheme();
 
     const isSuspended = user.status === 'suspended';
 
@@ -12,7 +15,13 @@ function UserDetailsModal({ user, show, onClose, onStatusChange }) {
     };
 
     return (
-        <Modal show={show} onHide={onClose} centered className="admin-user-modal">
+        <Modal 
+            show={show} 
+            onHide={onClose} 
+            centered 
+            className="admin-user-modal"
+            data-bs-theme={isDark ? 'dark' : 'light'} 
+        >
             <Modal.Header closeButton>
                 <Modal.Title>User Details</Modal.Title>
             </Modal.Header>

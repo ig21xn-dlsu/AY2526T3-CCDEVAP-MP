@@ -297,6 +297,32 @@ a.nostyle:visited {
     color: inherit;
 }
 
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+
+    border-radius: 12px;
+    border: 1px solid #DC2626;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+    color: #DC2626;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
+}
+
 /* =========================================
    MOBILE RESPONSIVE LAYOUT (Max-width: 768px)
    ========================================= */

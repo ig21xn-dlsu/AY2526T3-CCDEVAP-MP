@@ -74,22 +74,31 @@
     color: var(--admin-text-soft);
 }
 
-.admin-create-input, 
-.admin-create-select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--admin-border-strong);
-    border-radius: 6px;
-    background-color: var(--admin-bg);
-    color: var(--admin-text);
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s;
+/* =========================================
+   FORCED FORM INPUTS (OVERRIDE GLOBAL CSS)
+   ========================================= */
+.admin-create-modal .admin-create-input, 
+.admin-create-modal .admin-create-select {
+    width: 100% !important;
+    padding: 10px 12px !important;
+    /* Force the border and background to appear using your theme variables */
+    border: 1px solid var(--admin-border-strong) !important;
+    background-color: var(--admin-bg) !important;
+    color: var(--admin-text) !important;
+    
+    border-radius: 6px !important;
+    font-size: 0.95rem !important;
+    outline: none !important;
+    
+    /* Ensure the boxes don't collapse */
+    min-height: 42px !important; 
+    display: block !important;
+    box-shadow: none !important;
 }
 
-.admin-create-input:focus, 
-.admin-create-select:focus {
-    border-color: var(--admin-accent);
+.admin-create-modal .admin-create-input:focus, 
+.admin-create-modal .admin-create-select:focus {
+    border-color: var(--admin-accent) !important;
 }
 
 /* Alerts */

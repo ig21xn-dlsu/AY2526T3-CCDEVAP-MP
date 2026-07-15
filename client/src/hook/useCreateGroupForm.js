@@ -77,11 +77,9 @@ export function useCreateGroupForm(config, onSuccess) {
     setSubmitStatus('submitting');
     setSubmitError(null);
 
+    let created;
     try {
-      const created = await createGroup(buildPayload());
-      setSubmitStatus('success');
-      onSuccess?.(created);
-      return { ok: true, data: created };
+      created = await createGroup(buildPayload());
     } catch (err) {
       setSubmitStatus('error');
       setSubmitError(
@@ -89,6 +87,10 @@ export function useCreateGroupForm(config, onSuccess) {
       );
       return { ok: false, error: err };
     }
+
+    setSubmitStatus('success');
+    onSuccess?.(created); // outside try/catch — a navigation error won't be mislabeled as a submit failure
+    return { ok: true, data: created };
   }, [validate, buildPayload, onSuccess]);
 
   return {

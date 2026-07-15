@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthContext } from './hook/useAuthContext';
 import GroupProfile from './pages/GroupProfile';
 import CreateGroup from './pages/CreateGroup';
@@ -27,41 +27,53 @@ import 'leaflet/dist/leaflet.css';
 
 import DiscoverCommunities from './pages/DiscoverCommunities';
 
-
-function App() {
-
+function AppRoutes() {
   const { user } = useAuthContext();
+  const navigate = useNavigate(); // safe here — this component renders inside <BrowserRouter>
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login-admin" element={<LogInAdmin />} />
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/login-admin" element={<LogInAdmin />} />
 
-        <Route path="/admin-dashboard" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminDashboard /></AdminThemeProvider> : <Navigate to="/" />} />
-        <Route path="/admin-users" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminUsers /></AdminThemeProvider> : <Navigate to="/" />} />
-        <Route path="/admin-listings" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminListings /></AdminThemeProvider> : <Navigate to="/" />} />
-        <Route path="/admin-moderations" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminModerations /></AdminThemeProvider> : <Navigate to="/" />} />
+      <Route path="/admin-dashboard" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminDashboard /></AdminThemeProvider> : <Navigate to="/" />} />
+      <Route path="/admin-users" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminUsers /></AdminThemeProvider> : <Navigate to="/" />} />
+      <Route path="/admin-listings" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminListings /></AdminThemeProvider> : <Navigate to="/" />} />
+      <Route path="/admin-moderations" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminModerations /></AdminThemeProvider> : <Navigate to="/" />} />
 
+      <Route path="/manager-edit/:id" element={user && user.role === 'manager' ? <ManagerEdit /> : <Navigate to="/" />} />
+      <Route path="/manager-dashboard" element={user && user.role === 'manager' ? <ManagerDashboard /> : <Navigate to="/" />} />
+      <Route path="/manager-calling-card" element={user && user.role === 'manager' ? <ManagerCallingCard /> : <Navigate to="/" />} />
+      <Route path="/manager-create" element={user && user.role === 'manager' ? <ManagerCreate /> : <Navigate to="/" />} />
+      <Route path="/manager-listings" element={user && user.role === 'manager' ? <ManagerListing /> : <Navigate to="/" />} />
+      <Route path="/manager-notifications" element={user && user.role === 'manager' ? <ManagerNotif /> : <Navigate to="/" />} />
+      <Route path="/manager-view-listing/:id" element={user && user.role === 'manager' ? <ManagerViewListing /> : <Navigate to="/" />} />
 
-        <Route path="/manager-edit/:id" element={user && user.role === 'manager' ? <ManagerEdit /> : <Navigate to="/" />} />
-        <Route path="/manager-dashboard" element={user && user.role === 'manager' ? <ManagerDashboard /> : <Navigate to="/" />} />
-        <Route path="/manager-calling-card" element={user && user.role === 'manager' ? <ManagerCallingCard /> : <Navigate to="/" />} />
-        <Route path="/manager-create" element={user && user.role === 'manager' ? <ManagerCreate /> : <Navigate to="/" />} />
-        <Route path="/manager-listings" element={user && user.role === 'manager' ? <ManagerListing /> : <Navigate to="/" />} />
-        <Route path="/manager-notifications" element={user && user.role === 'manager' ? <ManagerNotif /> : <Navigate to="/" />} />
-        <Route path="/manager-view-listing/:id" element={user && user.role === 'manager' ? <ManagerViewListing /> : <Navigate to="/" />} />
-        
-        <Route path="/student-group-profile/:id" element={user && user.role === 'student' ? <GroupProfile /> : <Navigate to="/" />} />
-        <Route path="/student-create-group" element={user && user.role === 'student' ? <CreateGroup /> : <Navigate to="/" />} />
+      <Route path="/student-group-profile/:id" element={user && user.role === 'student' ? <GroupProfile /> : <Navigate to="/" />} />
 
+      {/* single definition — onSuccess wired to redirect back to Discover Communities */}
+      <Route
+        path="/student-create-group"
+        element={
+          user && user.role === 'student'
+            ? <CreateGroup onSuccess={() => navigate('/student-discover-communities')} />
+            : <Navigate to="/" />
+        }
+      />
 
-        <Route path="/student-discover-communities" element={user && user.role === 'student' ? <DiscoverCommunities /> : <Navigate to="/" />} />
-        <Route path="/listings/:id" element={user ? <ListingDetail /> : <Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
-  )
+      <Route path="/student-discover-communities" element={user && user.role === 'student' ? <DiscoverCommunities /> : <Navigate to="/" />} />
+      <Route path="/listings/:id" element={user ? <ListingDetail /> : <Navigate to="/" />} />
+    </Routes>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+}
+
+export default App;

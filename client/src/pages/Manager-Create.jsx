@@ -13,8 +13,11 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
+import { NavLink } from 'react-router-dom'
+
 
 import { AuthContext } from '../context/AuthContext.jsx'
+
 
 function ManagerCreate({ mode = "create", existingListing }) {
   const { user } = useContext(AuthContext);
@@ -94,6 +97,7 @@ function ManagerCreate({ mode = "create", existingListing }) {
       latitude: null,
       longitude: null,
       isOccupied: false,
+      maxiumumCapacity: 0,
     }
   });
 
@@ -250,7 +254,10 @@ function ManagerCreate({ mode = "create", existingListing }) {
     setSearchResults([]);
   };
   return (
-    <div className="man-create-main container-fluid d-flex flex-column gap-4 p-3 justify-content-center align-items-center">
+    <div className="man-create-main container-fluid d-flex flex-column gap-4 justify-content-center align-items-center">
+      <div className="container-fluid w-100 d-flex flex-row border-bottom justify-content-start align-items-center">
+        <NavLink to="/manager-listings" className="p-4 fs-6">back</NavLink>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className='container-fluid d-flex flex-column gap-4'>
         <div className="d-flex flex-column calloutTitle justify-content-center align-items-center">
           <h1>{mode === "edit" ? "Edit Room" : "List a Room"}</h1>
@@ -271,6 +278,10 @@ function ManagerCreate({ mode = "create", existingListing }) {
             <div className="priceInputContainer d-flex flex-column container">
               <p>Rate per Month</p>
               <input {...register("price")} type="number" className='border p-2' />
+            </div>
+            <div className="capacityInputContainer d-flex flex-column container">
+              <p>Maximum Capacity</p>
+              <input {...register("maximumCapacity")} type="number" min="1" className='border p-2' />
             </div>
             <div className="genderPreference d-flex flex-column container" >
               <p>Gender Restrictions</p>

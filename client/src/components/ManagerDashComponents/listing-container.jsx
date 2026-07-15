@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext.jsx'
 
-function ListingContainer({ _id, roomTitle, nearestCampus, price, isOccupied, imgUrl, owner, onDeleted }) {
+function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacity, isOccupied, imgUrl, owner, onDeleted }) {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [deleting, setDeleting] = useState(false);
@@ -65,6 +65,7 @@ function ListingContainer({ _id, roomTitle, nearestCampus, price, isOccupied, im
       <div className="bottomContainer d-flex flex-column align-items-start justify-content-start gap-2 p-4">
         <h1>{roomTitle}</h1>
         <h2>{nearestCampus}</h2>
+        {maximumCapacity && <p className="text-muted mb-0">Max {maximumCapacity} pax</p>}
         <div className="footer d-flex flex-row">
           <div className={`occupancyBadge ${isOccupied ? 'occupied' : 'avail'}`}>
             {isOccupied ? 'occupied' : 'vacant'}

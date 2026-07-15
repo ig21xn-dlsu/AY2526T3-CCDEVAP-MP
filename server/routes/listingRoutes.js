@@ -134,9 +134,11 @@ router.post(
   "/",
   requireAuth,
   asyncHandler(async (req, res) => {
+    console.log("RAW req.body", req.body);
     const {
       roomTitle,
       price,
+      maximumCapacity,
       gender,
       isOccupied,
       description,
@@ -187,6 +189,23 @@ router.post(
         "Description must be 3000 characters or fewer.";
     }
 
+    const parsedCapacity =
+      Number(maximumCapacity);
+
+    if (
+      !Number.isFinite(parsedCapacity)
+    ) {
+      errors.maximumCapacity =
+        "Maximum capacity must be a valid number.";
+    }
+
+    else if (
+      parsedCapacity < 1
+    ) {
+      errors.maximumCapacity =
+        "Maximum capacity must be at least 1.";
+    }
+
     if (
       !VALID_GENDERS.has(gender)
     ) {
@@ -212,7 +231,7 @@ router.post(
         errors
       });
     }
-
+    console.log("PAYLOAD TO CREATE:", { maximumCapacity: parsedCapacity });
     const created =
       await Listing.create({
         roomTitle:
@@ -220,6 +239,9 @@ router.post(
 
         price:
           parsedPrice,
+
+        maximumCapacity:
+          parsedCapacity,
 
         gender,
 

@@ -7,7 +7,7 @@ import useManagerListings from '../hook/useManagerListings.js'
 
 function ManagerListing() {
   const navigate = useNavigate();
-  const { listings, loading, error } = useManagerListings();
+  const { listings, loading, error, refetch } = useManagerListings();
   return (
     <div className='listing-container container-fluid'>
       <NavBar />
@@ -27,7 +27,7 @@ function ManagerListing() {
           <div className="row justify-content-lg-start g-4">
             {listings.map((listing) => (
               <div className="col-12 col-lg-3 justify-content-center" key={listing._id}>
-                <ListingContainer {...listing} imgUrl={listing.imageUrl?.[0]} />
+                <ListingContainer {...listing} imgUrl={listing.imageUrl?.[0]} onDeleted={refetch} />
               </div>
             ))}
           </div>

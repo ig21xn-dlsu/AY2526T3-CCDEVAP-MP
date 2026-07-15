@@ -40,5 +40,12 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use('/api/dashboard', adminDashboardRoutes);
 app.use('/api/admin/users', adminUsersRoutes);
 
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: err.message || "Something went wrong." });
+});
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

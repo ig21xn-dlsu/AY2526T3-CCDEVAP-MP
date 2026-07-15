@@ -35,6 +35,10 @@ const listingSchema = new mongoose.Schema({
   },
 
   isOccupied: Boolean,
+  maximumCapacity: {
+    type: Number,
+    required: true,
+  },
   description: String,
   tags: [String],
   amenities: [String],

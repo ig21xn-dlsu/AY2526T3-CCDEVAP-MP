@@ -16,6 +16,7 @@ function ListingFullView({ listing }) {
   const {
     roomTitle,
     price,
+    maximumCapacity,
     gender,
     isOccupied,
     description,
@@ -59,6 +60,7 @@ function ListingFullView({ listing }) {
                 ))}
               </div>
             </div>
+            <div className="badge capacityBadge">Max {maximumCapacity} pax</div>
           </div>
         </div>
 

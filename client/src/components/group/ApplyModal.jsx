@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { submitGroupApplication } from '../../api/padpalApi'; // api placeholder
+import { NavLink } from 'react-router-dom';
 
 const EMPTY_FORM = { name: '', age: '', gender: '', email: '', notes: '' };
 
@@ -105,13 +106,22 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="modal">
-        <div className="modal-header">
-          <h2 id="modalTitle" className="modal-title">Apply to Join {groupName}</h2>
-          <button className="modal-close" aria-label="Close" onClick={onClose}>
-            <CloseIcon />
-          </button>
-        </div>
+
+<div className="modal">
+  <div className="modal-header">
+    <h2 id="modalTitle" className="modal-title">
+      Apply to Join {groupName}
+    </h2>
+
+    <NavLink
+      to="/student-discover-communities"
+      className="modal-close"
+      aria-label="Close"
+      
+    >
+      <CloseIcon />
+    </NavLink>
+  </div>
 
         {status !== 'success' ? (
           <form id="applyForm" noValidate onSubmit={handleSubmit}>

@@ -1,7 +1,16 @@
 import React from 'react';
 import { SearchIcon } from './icons';
 
-// fixed gender and budget options for coliving filters 
+// options for coliving filters 
+
+const CAMPUS_OPTIONS = [
+  { value: 'UPM', label: 'UPM' },
+  { value: 'DLSU', label: 'DLSU' },
+  { value: 'ADMU', label: 'ADMU' },
+  { value: 'UST', label: 'UST' },
+  { value: 'UPD', label: 'UPD' },
+];
+
 const GENDER_OPTIONS = [
   { value: '', label: 'Gender: Any' },
   { value: 'Co-ed', label: 'Co-ed' },
@@ -35,8 +44,8 @@ export default function CoLivingFilters({ filters, onChange, campuses = [] }) {
 
       <select className="filter-select" value={filters.campus} onChange={update('campus')}>
         <option value="">Any Campus</option>
-        {campuses.map((campus) => (
-          <option key={campus.id} value={campus.name}>{campus.name}</option>
+        {CAMPUS_OPTIONS.map((o) => (
+          <option key={o.value} value={o.value}>{o.label}</option>
         ))}
       </select>
 

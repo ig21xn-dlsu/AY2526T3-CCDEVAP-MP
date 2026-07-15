@@ -26,16 +26,23 @@ function SharedSpaceCard({ listing }) {
       </div>
 
       <div className="bottomContainer shared-space-card__body d-flex flex-column align-items-start justify-content-start gap-2 p-4">
-        <h1 className="shared-space-card__title">{title}</h1>
-        <h2 className="shared-space-card__subtitle">{campus}</h2>
-        {listing.maximumCapacity && <p className="text-muted mb-0">Max {listing.maximumCapacity} pax</p>}
-        <div className="footer d-flex flex-row">
-          <div className={`occupancyBadge ${listing.isOccupied ? 'occupied' : 'avail'}`}>
-            {listing.isOccupied ? 'occupied' : 'vacant'}
+        <div className="shared-space-card__info d-flex flex-column gap-2 w-100">
+          <h1 className="shared-space-card__title">{title}</h1>
+          <h2 className="shared-space-card__subtitle">{campus}</h2>
+          <div className="shared-space-card__meta-row">
+            {listing.maximumCapacity && <span className="shared-space-card__meta-pill">Max {listing.maximumCapacity} pax</span>}
+            <span className={`shared-space-card__meta-pill shared-space-card__status ${listing.isOccupied ? 'occupied' : 'avail'}`}>
+              {listing.isOccupied ? 'occupied' : 'vacant'}
+            </span>
+          </div>
+          <div className="shared-space-card__tags">
+            {(listing.tags || []).slice(0, 3).map((tag) => (
+              <span className="shared-space-card__tag" key={tag}>{tag}</span>
+            ))}
           </div>
         </div>
 
-        <Link className="btn btn-primary mt-2" to={`/student-shared-spaces/${id}`}>
+        <Link className="btn shared-space-card__button mt-auto" to={`/student-shared-spaces/${id}`}>
           View Listing
         </Link>
       </div>

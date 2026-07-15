@@ -7,7 +7,6 @@ import SharedSpaceCard from '../components/sharedSpaces/SharedSpaceCard.jsx';
 import EmptyState from '../components/discover/EmptyState';
 import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
-import { fetchCoLivingGroups } from '../api/padpalApi';
 
 import '../stylesheets/padpal.css'
 import { NavLink } from "react-router-dom";
@@ -40,6 +39,26 @@ async function fetchDiscoverSharedSpaces(filters) {
   });
 
   const response = await fetch(apiPath(`/shared-spaces${query.toString() ? `?${query.toString()}` : ''}`), {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    const message = await response.text().catch(() => response.statusText);
+    throw new Error(`PadPal API error (${response.status}): ${message || response.statusText}`);
+  }
+
+  return response.json();
+}
+
+async function fetchDiscoverGroups(filters) {
+  const query = new URLSearchParams();
+  Object.entries(filters || {}).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === '') return;
+    query.append(key, value);
+  });
+
+  const response = await fetch(apiPath(`/groups${query.toString() ? `?${query.toString()}` : ''}`), {
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
   });
@@ -151,7 +170,7 @@ export default function DiscoverCommunities() {
     data: groups,
     loading: groupsLoading,
     error: groupsError,
-  } = useCachedQuery(() => fetchCoLivingGroups(debouncedCoLivingFilters), coLivingCacheKey, [JSON.stringify(debouncedCoLivingFilters)]);
+  } = useCachedQuery(() => fetchDiscoverGroups(debouncedCoLivingFilters), coLivingCacheKey, [JSON.stringify(debouncedCoLivingFilters)]);
 
   const {
     data: sharedSpaces,

@@ -65,7 +65,7 @@ function ListingFullView({ listing }) {
         </div>
 
         <div className="card shadow neighborHoodCard d-flex flex-column">
-          <h1 className="border-bottom pb-4 fs-2">The Neighborhood</h1>
+          <h1 className="border-bottom pb-4 fs-2">Map</h1>
           <MapContainer latitude={latitude} longitude={longitude} campus={CAMPUSES[nearestCampus]} />
         </div>
 

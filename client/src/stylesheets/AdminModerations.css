@@ -337,4 +337,14 @@ tfoot td { padding: 16px 24px; background-color: var(--admin-surface-alt); }
     .info-panel { border-right: none; border-bottom: 1px solid var(--admin-border); padding-right: 0; padding-bottom: 16px; }
     .modal-footer { flex-direction: column-reverse; }
     .btn { width: 100%; text-align: center; }
+
+    .modal-overlay,
+.modal-overlay.active {
+    border-radius: 0 !important;
+    display: flex !important;
+    padding: 16px !important;
+    text-transform: none !important;
+    font-weight: normal !important;
+    letter-spacing: normal !important;
+}
 }

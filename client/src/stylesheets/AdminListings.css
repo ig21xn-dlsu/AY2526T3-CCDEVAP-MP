@@ -231,4 +231,120 @@ tfoot td { padding: 16px 24px; background-color: var(--admin-surface-alt); }
     .table-footer { display: flex; justify-content: space-between; align-items: center; }
     .pagination { justify-content: center; width: 100%; }
     .total-listings { max-width: 100%; box-sizing: border-box; }
+
+    .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--admin-overlay);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    padding: 16px;
+}
+
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.modal-card {
+    background-color: var(--admin-surface);
+    width: 100%;
+    max-width: 680px;
+    border-radius: 12px;
+    border: 1px solid var(--admin-border);
+    box-shadow: 0 20px 25px -5px var(--admin-shadow), 0 10px 10px -5px var(--admin-shadow);
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: transform 0.25s ease;
+}
+
+.modal-overlay.active .modal-card { transform: translateY(0); }
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.modal-header-title { font-weight: 700; font-size: 18px; color: var(--admin-text-strong); display: flex; align-items: center; gap: 8px; }
+.close-modal-btn { background: none; border: none; font-size: 24px; color: var(--admin-text-muted); cursor: pointer; }
+
+.modal-body { padding: 24px; max-height: 65vh; overflow-y: auto; }
+
+.listing-preview-card {
+    display: flex;
+    gap: 16px;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.listing-img-placeholder {
+    width: 110px;
+    height: 80px;
+    background-color: var(--admin-border-strong);
+    border-radius: 6px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.price-tag {
+    position: absolute;
+    top: 4px; left: 4px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.listing-info h4 { font-size: 16px; font-weight: 600; color: var(--admin-text-strong); margin-bottom: 4px; }
+.listing-desc { font-size: 13px; color: var(--admin-text-muted); line-height: 1.4; margin-bottom: 6px; }
+.listing-author { font-size: 12px; color: var(--admin-text-soft); }
+
+.modal-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; margin-bottom: 20px; }
+.panel-title { font-size: 12px; color: var(--admin-text-muted); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 12px; }
+
+.info-panel { border-right: 1px solid var(--admin-border); padding-right: 20px; }
+.info-row { font-size: 14px; margin-bottom: 10px; color: var(--admin-text); }
+.info-label { color: var(--admin-text-muted); width: 75px; display: inline-block; font-weight: 500; }
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    background-color: var(--admin-surface-alt);
+    border-top: 1px solid var(--admin-border);
+}
+
+.btn { padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+.btn-dismiss { background-color: var(--admin-surface); border-color: var(--admin-border-strong); color: var(--admin-text-soft); }
+.btn-danger { background-color: var(--admin-danger); color: #ffffff; }
+
+@media (max-width: 600px) {
+    .modal-grid { grid-template-columns: 1fr; }
+    .info-panel { border-right: none; border-bottom: 1px solid var(--admin-border); padding-right: 0; padding-bottom: 16px; }
+    .modal-footer { flex-direction: column-reverse; }
+    .btn { width: 100%; text-align: center; }
+}
+
+.modal-overlay,
+.modal-overlay.active {
+    border-radius: 0 !important;
+    display: flex !important;
+    padding: 16px !important;
+    text-transform: none !important;
+    font-weight: normal !important;
+    letter-spacing: normal !important;
+}
+
 }

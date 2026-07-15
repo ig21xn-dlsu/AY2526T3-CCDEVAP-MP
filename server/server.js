@@ -35,6 +35,7 @@ app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/calling-card', callingCardRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/listing', listingRoutes);
+app.use('/api/admin/listing', adminListingsRoutes);
 
 // User authentication Routes
 app.use('/api/auth', authRoutes);

@@ -1,7 +1,7 @@
-import multer from 'multer';
-import path from 'node:path';
-import fs from 'node:fs';
-import { generateUploadFilename } from '../utils/helpers.js';
+const multer = require('multer');
+const path = require('node:path');
+const fs = require('node:fs');
+const { generateUploadFilename } = require('../utils/helpers.js');
 
 const uploadsDir = process.env.UPLOADS_DIR ?? path.resolve('uploads');
 fs.mkdirSync(uploadsDir, { recursive: true });
@@ -19,10 +19,10 @@ function fileFilter(req, file, cb) {
   cb(null, true);
 }
 
-export const upload = multer({
+const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-export const uploadsDirPath = uploadsDir;
+module.exports = { upload, uploadsDirPath: uploadsDir };

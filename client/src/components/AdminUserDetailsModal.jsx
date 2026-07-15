@@ -1,7 +1,8 @@
 import { Modal, Button, Badge } from 'react-bootstrap';
+import '../stylesheets/AdminUserDetailsModal.css';
 
 function UserDetailsModal({ user, show, onClose, onStatusChange }) {
-    if (!user) return null; // nothing to show if no user is selected
+    if (!user) return null;
 
     const isSuspended = user.status === 'suspended';
 
@@ -11,7 +12,7 @@ function UserDetailsModal({ user, show, onClose, onStatusChange }) {
     };
 
     return (
-        <Modal show={show} onHide={onClose} centered>
+        <Modal show={show} onHide={onClose} centered className="admin-user-modal">
             <Modal.Header closeButton>
                 <Modal.Title>User Details</Modal.Title>
             </Modal.Header>

@@ -47,7 +47,7 @@ async function request(path, options = {}) {
  * }
  */
 export function fetchGroupFormConfig(signal) {
-  return request('/groups/form-config', { method: 'GET', signal });
+  return request('/api/groups/form-config', { method: 'GET', signal });
 }
 
 /**
@@ -55,7 +55,7 @@ export function fetchGroupFormConfig(signal) {
  * @param {object} payload - see useCreateGroupForm for the exact shape
  */
 export function createGroup(payload, signal) {
-  return request('/groups', {
+  return request('/api/groups', {
     method: 'POST',
     body: JSON.stringify(payload),
     signal,

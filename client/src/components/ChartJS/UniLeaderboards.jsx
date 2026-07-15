@@ -7,15 +7,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
 import { Bar } from "react-chartjs-2";
-
-//Shares styling with square statistics
 import "../../stylesheets/square-stats.css"
-
-//Dummy Data 
-import leaderboardResponse from "../../dummyData/userBase";
-
 
 ChartJS.register(
   CategoryScale,
@@ -26,22 +19,20 @@ ChartJS.register(
   Legend
 );
 
-function UniLeaderBoards() {
-  const labels = leaderboardResponse.data.map(item => item.University);
-  const values = leaderboardResponse.data.map(item => item.count);
-
+function UniLeaderBoards({ data = [] }) {
+  const labels = data.map(item => item.University);
+  const values = data.map(item => item.count);
   const chartData = {
     labels,
     datasets: [
       {
-        label: "Users",
+        label: "Groups",
         data: values,
         backgroundColor: "rgba(54, 162, 235, 0.6)",
         borderRadius: 6,
       },
     ],
   };
-
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -50,7 +41,7 @@ function UniLeaderBoards() {
       legend: { display: false },
       title: {
         display: true,
-        text: "User Distribution by University",
+        text: "Group Distribution by University",
       },
     },
     scales: {
@@ -69,9 +60,12 @@ function UniLeaderBoards() {
   };
   return (
     <div className="card shadow p-3 soft-card d-flex flex-row ">
-      <Bar data={chartData} options={options} />
+      {data.length > 0 ? (
+        <Bar data={chartData} options={options} />
+      ) : (
+        <p className="m-auto">No university data yet.</p>
+      )}
     </div>
   );
 }
-
 export default UniLeaderBoards;

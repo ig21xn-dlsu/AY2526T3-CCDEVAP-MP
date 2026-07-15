@@ -12,6 +12,8 @@ const inquiryRoutes = require('./routes/inquiryRoutes.js');
 const adminDashboardRoutes = require('./routes/adminDashboardRoutes');
 const adminUsersRoutes = require('./routes/adminUsersRoutes');
 
+const statsRoutes = require('./routes/statRoutes.js');
+
 const path = require("path");
 connectDB();
 
@@ -39,6 +41,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Admin Related Routes
 app.use('/api/dashboard', adminDashboardRoutes);
 app.use('/api/admin/users', adminUsersRoutes);
+
+
+app.use('/api/stats', statsRoutes);
 
 
 app.use((err, req, res, next) => {

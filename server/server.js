@@ -13,6 +13,7 @@ const inquiryRoutes = require('./routes/inquiryRoutes.js');
 
 const adminDashboardRoutes = require('./routes/adminDashboardRoutes');
 const adminUsersRoutes = require('./routes/adminUsersRoutes');
+const adminListingsRoutes = require('./routes/adminListingRoutes');
 
 const statsRoutes = require('./routes/statRoutes.js');
 

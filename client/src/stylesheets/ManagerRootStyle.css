@@ -1,0 +1,23 @@
+[data-bs-theme="dark"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+[data-bs-theme="dark"] img,
+[data-bs-theme="dark"] video,
+[data-bs-theme="dark"] svg {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+
+[data-bs-theme="dark"] body,
+[data-bs-theme="dark"] p,
+[data-bs-theme="dark"] h1,
+[data-bs-theme="dark"] h2,
+[data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4,
+[data-bs-theme="dark"] h5,
+[data-bs-theme="dark"] h6,
+[data-bs-theme="dark"] span,
+[data-bs-theme="dark"] label {
+  color: #000000;
+}

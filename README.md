@@ -12,8 +12,8 @@ This guide walks through setting up the PadPal project locally: a React (Vite) f
 ## 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd <repo-folder>
+git clone `repo-url`
+cd `/repo-folder`
 ```
 
 ## 2. Backend setup (`/server`)
@@ -34,6 +34,10 @@ MONGO_URI=<your MongoDB connection string>
 PORT=6767
 SECRET=<a long, random string used to sign JWTs>
 ```
+Along with the submission on canvas is a txt file instead of a script file. 
+
+Our Project is ran through the free version of MongoDB Atlas, it is a cloud service that allows us as a team to work on the same database during the development without the need of passing databse scripts for continuity. Due to this, a script file is no longer needed as sample data is stored in this cloud database along with the new sample data that will be created during our 
+group's live demonstration. With these credentials you will be given access to the cloud and be able to access the same data we all have in your local server instance. 
 
 **What each variable is for:**
 
@@ -43,7 +47,6 @@ SECRET=<a long, random string used to sign JWTs>
 | `PORT`       | The port the Express server listens on. `6767` is used throughout this project's frontend config — keep it consistent, or update `VITE_API_URL` (see below) to match whatever you choose. |
 | `SECRET`     | Used by `jsonwebtoken` to sign and verify auth tokens. Any long random string works — generate one with `openssl rand -hex 32` or similar. |
 
-> ⚠️ **Never commit `.env` to git.** Make sure `server/.env` is listed in `.gitignore`. Treat `MONGO_URI` and `SECRET` as sensitive — anyone with these can read/write your database or forge valid login tokens.
 
 ### Run the backend
 

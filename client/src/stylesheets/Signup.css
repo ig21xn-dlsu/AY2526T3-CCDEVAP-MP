@@ -424,11 +424,8 @@ body, main {
     color: #0050CB;
 }
 
-/* =========================================
-   MOBILE RESPONSIVE LAYOUT (Max-width: 768px)
-   ========================================= */
 @media (max-width: 768px) {
-    body {
+    #sign-up-page-wrapper {
         flex-direction: column;
         height: auto;
         min-height: 100vh;

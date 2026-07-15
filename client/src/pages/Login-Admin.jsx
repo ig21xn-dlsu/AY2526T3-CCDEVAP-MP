@@ -112,8 +112,8 @@ function LogInAdmin() {
                                     fill="white" />
                             </svg>
                                 </div>
-                                {error && <div className='error'>{error}</div>}
-                    </section>
+                            </section>
+                            {error && <div className='error'>{error}</div>}
                 </section>
 
                 <div id="container-back-to-login">

@@ -68,6 +68,8 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;   
+    flex-shrink: 0;        
 }
 
 .btn-icon {
@@ -234,15 +236,21 @@ tfoot td {
         padding: 16px;
     }
 
-    table, thead, tbody, th, td, tr, tfoot {
+    .table-container table,
+    .table-container thead,
+    .table-container tbody,
+    .table-container th,
+    .table-container td,
+    .table-container tr,
+    .table-container tfoot {
         display: block;
     }
 
-    thead {
+    .table-container thead {
         display: none;
     }
 
-    tr {
+    .table-container tr {
         margin-bottom: 16px;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
@@ -250,7 +258,7 @@ tfoot td {
         padding: 8px;
     }
 
-    td {
+    .table-container td {
         border-bottom: none;
         padding: 10px 12px;
         display: flex;
@@ -259,24 +267,24 @@ tfoot td {
         font-size: 14px;
     }
 
-    td:nth-of-type(1)::before { content: "USER"; font-weight: 600; color: #64748b; font-size: 11px; }
-    td:nth-of-type(2)::before { content: "ROLE"; font-weight: 600; color: #64748b; font-size: 11px; }
-    td:nth-of-type(3)::before { content: "STATUS"; font-weight: 600; color: #64748b; font-size: 11px; }
-    td:nth-of-type(4)::before { content: "ACTIONS"; font-weight: 600; color: #64748b; font-size: 11px; }
+    .table-container td:nth-of-type(1)::before { content: "USER"; font-weight: 600; color: #64748b; font-size: 11px; }
+    .table-container td:nth-of-type(2)::before { content: "ROLE"; font-weight: 600; color: #64748b; font-size: 11px; }
+    .table-container td:nth-of-type(3)::before { content: "STATUS"; font-weight: 600; color: #64748b; font-size: 11px; }
+    .table-container td:nth-of-type(4)::before { content: "ACTIONS"; font-weight: 600; color: #64748b; font-size: 11px; }
 
-    .user-cell {
+    .table-container .user-cell {
         text-align: right;
         justify-content: flex-end;
     }
 
-    .table-footer {
+    .table-container .table-footer {
         flex-direction: column;
         gap: 16px;
         align-items: center;
         text-align: center;
     }
 
-    .pagination-wrapper {
+    .table-container .pagination-wrapper {
         flex-direction: column;
         gap: 8px;
     }

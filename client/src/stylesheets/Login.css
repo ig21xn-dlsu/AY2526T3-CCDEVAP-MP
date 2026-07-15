@@ -378,11 +378,8 @@ input::placeholder {
     margin-bottom: 1rem;
 }
 
-/* =========================================
-   MOBILE RESPONSIVE LAYOUT (Max-width: 768px)
-   ========================================= */
 @media (max-width: 768px) {
-    body {
+    .login-page-wrapper {
         flex-direction: column;
         height: auto;
         min-height: 100vh;

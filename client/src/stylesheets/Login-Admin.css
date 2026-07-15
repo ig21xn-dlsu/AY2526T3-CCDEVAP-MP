@@ -228,7 +228,6 @@ input[type="text"], input[type="password"], textarea {
 #sign-in-section {
     display: flex;
     gap: 0.5rem;
-    flex-direction: 0.5rem;
     padding: 16px 0;
     justify-content: center;
     align-items: center;

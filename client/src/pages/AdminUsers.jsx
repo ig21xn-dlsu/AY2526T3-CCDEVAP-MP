@@ -180,7 +180,7 @@ function AdminUsers() {
                                     </tr>
                                 ) : users.length === 0 ? (
                                     <tr>
-                                        <td colSpan="5" style={{ textAlign: 'center', padding: '24px' }}>
+                                        <td colSpan="4" style={{ textAlign: 'center', padding: '24px' }}>
                                             No users found.
                                         </td>
                                     </tr>

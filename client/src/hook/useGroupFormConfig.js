@@ -5,6 +5,7 @@ import { fetchGroupFormConfig } from '../api/groupService.js'; // api placeholde
 const EMPTY_CONFIG = {
   lifestyleTags: [],
   genderPreferences: [],
+  campuses: [],
   budget: { min: 0, max: 0, step: 500, defaultMin: 0, defaultMax: 0, currencySymbol: '' },
   spots: { min: 1, max: 10, default: 1 },
 };

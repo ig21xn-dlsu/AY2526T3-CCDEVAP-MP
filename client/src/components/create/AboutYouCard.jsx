@@ -4,6 +4,8 @@ import LifestyleTags from './LifestyleTags.jsx';
 export default function AboutYouCard({
   university,
   onUniversityChange,
+  campusOptions,
+  universityError,
   major,
   onMajorChange,
   lifestyleTagOptions,
@@ -26,15 +28,24 @@ export default function AboutYouCard({
           </label>
           <div className="input-icon-wrap">
             <SchoolIcon className="input-icon" />
-            <input
+            <select
               className="form-input form-input--icon"
               id="university"
-              type="text"
-              placeholder="e.g., State University"
               value={university}
               onChange={(e) => onUniversityChange(e.target.value)}
-            />
+              required
+            >
+              <option value="" disabled>
+                Select your university
+              </option>
+              {(campusOptions ?? []).map((campus) => (
+                <option key={campus} value={campus}>
+                  {campus}
+                </option>
+              ))}
+            </select>
           </div>
+          {universityError && <p className="form-error">{universityError}</p>}
         </div>
         <div className="form-field">
           <label className="form-label" htmlFor="major">

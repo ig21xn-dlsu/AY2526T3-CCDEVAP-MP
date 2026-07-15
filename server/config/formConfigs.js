@@ -29,6 +29,9 @@ const GENDER_PREFERENCES = [
   { value: 'coed', label: 'Co-ed' },
 ];
 
+// same fixed list used by listingRoutes.js's VALID_CAMPUSES, kept consistent across groups & listings
+const CAMPUSES = ['UPM', 'DLSU', 'ADMU', 'UST', 'UPD'];
+
 const BUDGET = {
   min: 3000,
   max: 30000,
@@ -50,6 +53,7 @@ async function getFormConfig() {
   return {
     lifestyleTags: tags.map((t) => ({ id: t._id, label: t.label, icon: t.icon })),
     genderPreferences: GENDER_PREFERENCES,
+    campuses: CAMPUSES,
     budget: BUDGET,
     spots: SPOTS,
   };
@@ -61,6 +65,7 @@ async function getValidTagIds() {
 }
 
 const VALID_GENDER_VALUES = new Set(['', ...GENDER_PREFERENCES.map((g) => g.value)]);
+const VALID_CAMPUSES = new Set(CAMPUSES);
 const BUDGET_BOUNDS = BUDGET;
 const SPOTS_BOUNDS = SPOTS;
 
@@ -69,6 +74,7 @@ module.exports = {
   getFormConfig,
   getValidTagIds,
   VALID_GENDER_VALUES,
+  VALID_CAMPUSES,
   BUDGET_BOUNDS,
   SPOTS_BOUNDS,
 };

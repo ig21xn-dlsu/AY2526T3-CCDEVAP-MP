@@ -82,6 +82,8 @@ export default function CreateGroup({ onSuccess }) {
           <AboutYouCard
             university={fields.university}
             onUniversityChange={fields.setUniversity}
+            campusOptions={config.campuses}
+            universityError={fieldErrors.university}
             major={fields.major}
             onMajorChange={fields.setMajor}
             lifestyleTagOptions={config.lifestyleTags}

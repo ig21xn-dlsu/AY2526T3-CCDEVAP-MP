@@ -5,6 +5,7 @@ const {
   getFormConfig,
   getValidTagIds,
   VALID_GENDER_VALUES,
+  VALID_CAMPUSES,
   BUDGET_BOUNDS,
   SPOTS_BOUNDS,
 } = require('../config/formConfigs.js');
@@ -134,7 +135,7 @@ groupsRouter.post(
     const {
       name: groupName,
       description: vibeDescription = '',
-      university = '',
+      university,
       major = '',
       lifestyleTagIds: lifestyleTags = [],
       budget = {},
@@ -155,6 +156,10 @@ groupsRouter.post(
 
     if (!Array.isArray(lifestyleTags) || lifestyleTags.some((t) => !validTagIds.has(t))) {
       errors.lifestyleTags = 'One or more lifestyle tags are invalid.';
+    }
+
+    if (!university || typeof university !== 'string' || !VALID_CAMPUSES.has(university)) {
+      errors.university = 'Please select a valid university.';
     }
 
     const budgetMin = Number(budget.min);

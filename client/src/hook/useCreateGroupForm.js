@@ -38,9 +38,12 @@ export function useCreateGroupForm(config, onSuccess) {
     if (!groupName.trim()) {
       errors.groupName = 'Give your group a name.';
     }
+    if (!university) {
+      errors.university = 'Please select a university.';
+    }
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
-  }, [groupName]);
+  }, [groupName, university]);
 
   const buildPayload = useCallback(
     () => ({

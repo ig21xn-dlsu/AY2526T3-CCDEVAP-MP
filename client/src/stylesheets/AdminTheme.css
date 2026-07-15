@@ -1,0 +1,85 @@
+:root {
+    --admin-bg: #f8fafc;
+    --admin-surface: #ffffff;
+    --admin-surface-alt: #f9f9fc;
+    --admin-hover: #f1f5f9;
+    --admin-border: #e2e8f0;
+    --admin-border-strong: #cbd5e1;
+    --admin-text: #1e293b;
+    --admin-text-strong: #0f172a;
+    --admin-text-muted: #64748b;
+    --admin-text-soft: #475569;
+    --admin-accent: #0050cb;
+    --admin-accent-soft: #f0f4ff;
+    --admin-link: #2563eb;
+
+    --admin-danger: #ba1a1a;
+    --admin-danger-bg: #fee2e2;
+    --admin-danger-text: #b91c1c;
+    --admin-danger-border: #fecaca;
+
+    --admin-success: #007f7a;
+    --admin-success-bg: #007f7b40;
+    --admin-teal-soft-bg: #e6f6f4;
+    --admin-teal-soft-text: #007f7a;
+
+    --admin-amber-bg: #fef3c7;
+    --admin-amber-text: #d97706;
+
+    --admin-green-bg: #dcfce7;
+    --admin-green-text: #15803d;
+
+    --admin-rose-bg: #fff1f2;
+    --admin-rose-text: #f43f5e;
+
+    --admin-shadow: rgba(0, 0, 0, 0.05);
+    --admin-overlay: rgba(15, 23, 42, 0.6);
+
+    --admin-icon-blue-bg: #e6f0ff;
+    --admin-icon-purple-bg: #f1e9ff;
+    --admin-icon-orange-bg: #fff2e5;
+    --admin-icon-red-bg: #ffebee;
+}
+
+[data-admin-theme='dark'] {
+    --admin-bg: #0f1420;
+    --admin-surface: #1a2030;
+    --admin-surface-alt: #171c29;
+    --admin-hover: #232a3d;
+    --admin-border: #2b3247;
+    --admin-border-strong: #3a4258;
+    --admin-text: #e2e8f0;
+    --admin-text-strong: #f8fafc;
+    --admin-text-muted: #94a3b8;
+    --admin-text-soft: #cbd5e1;
+    --admin-accent: #5b9bff;
+    --admin-accent-soft: #1c2740;
+    --admin-link: #60a5fa;
+
+    --admin-danger: #f87171;
+    --admin-danger-bg: #3f1d1d;
+    --admin-danger-text: #fca5a5;
+    --admin-danger-border: #5b2323;
+
+    --admin-success: #34d399;
+    --admin-success-bg: #0f3330;
+    --admin-teal-soft-bg: #0f2e2c;
+    --admin-teal-soft-text: #2dd4bf;
+
+    --admin-amber-bg: #3a2a0d;
+    --admin-amber-text: #fbbf24;
+
+    --admin-green-bg: #113321;
+    --admin-green-text: #4ade80;
+
+    --admin-rose-bg: #3a1522;
+    --admin-rose-text: #fb7185;
+
+    --admin-shadow: rgba(0, 0, 0, 0.4);
+    --admin-overlay: rgba(0, 0, 0, 0.75);
+
+    --admin-icon-blue-bg: #16233d;
+    --admin-icon-purple-bg: #241c3d;
+    --admin-icon-orange-bg: #3a2413;
+    --admin-icon-red-bg: #3a1616;
+}

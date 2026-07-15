@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import LogInAdmin from './pages/Login-Admin';
 
+import { AdminThemeProvider } from './context/AdminThemeContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminUsers from './pages/AdminUsers';
 import AdminListings from './pages/AdminListings';
@@ -37,10 +38,10 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login-admin" element={<LogInAdmin />} />
 
-        <Route path="/admin-dashboard" element={user && user.role === 'admin' ? <AdminDashboard /> : <Navigate to="/" />} />
-        <Route path="/admin-users" element={user && user.role === 'admin' ? <AdminUsers /> : <Navigate to="/" />} />
-        <Route path="/admin-listings" element={user && user.role === 'admin' ? < AdminListings /> : <Navigate to="/" />} />
-        <Route path="/admin-moderations" element={user && user.role === 'admin' ? < AdminModerations /> : <Navigate to="/" />} />
+        <Route path="/admin-dashboard" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminDashboard /></AdminThemeProvider> : <Navigate to="/" />} />
+        <Route path="/admin-users" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminUsers /></AdminThemeProvider> : <Navigate to="/" />} />
+        <Route path="/admin-listings" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminListings /></AdminThemeProvider> : <Navigate to="/" />} />
+        <Route path="/admin-moderations" element={user && user.role === 'admin' ? <AdminThemeProvider><AdminModerations /></AdminThemeProvider> : <Navigate to="/" />} />
 
 
         <Route path="/manager-edit/:id" element={user && user.role === 'manager' ? <ManagerEdit /> : <Navigate to="/" />} />

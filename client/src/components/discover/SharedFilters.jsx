@@ -26,7 +26,7 @@ export const DEFAULT_SHARED_FILTERS = {
   amenities: [],
 };
 
-export default function SharedFilters({ filters, onChange, onReset }) {
+export default function SharedFilters({ filters, onChange, onReset, onApply }) {
   const update = (key) => (e) => onChange({ ...filters, [key]: e.target.value });
 
   const toggleListValue = (key, value) => {
@@ -49,16 +49,18 @@ export default function SharedFilters({ filters, onChange, onReset }) {
           />
         </div>
 
-        <div className="shared-labeled-field">
-          <label htmlFor="sharedCampusInput">Campus / Area</label>
-          <input
-            id="sharedCampusInput"
-            className="shared-field"
-            type="text"
-            placeholder="De La Salle University"
-            value={filters.campus}
-            onChange={update('campus')}
-          />
+        <div className="shared-filter-card shared-filter-card--field">
+          <div className="shared-labeled-field">
+            <label htmlFor="sharedCampusInput">Campus / Area</label>
+            <input
+              id="sharedCampusInput"
+              className="shared-field"
+              type="text"
+              placeholder="De La Salle University"
+              value={filters.campus}
+              onChange={update('campus')}
+            />
+          </div>
         </div>
 
         <div className="shared-range-field">
@@ -75,26 +77,32 @@ export default function SharedFilters({ filters, onChange, onReset }) {
           <span>{filters.maxDistanceKm} km</span>
         </div>
 
-        <div className="shared-price-row">
-          <div className="shared-labeled-field">
-            <label htmlFor="sharedMinPrice">Min Price</label>
-            <input
-              id="sharedMinPrice"
-              className="shared-field shared-price"
-              type="number"
-              value={filters.minPrice}
-              onChange={update('minPrice')}
-            />
+        <div className="shared-filter-card shared-filter-card--price">
+          <div className="shared-filter-card__header">
+            <span className="shared-group-label">Price Range</span>
+            <span className="shared-filter-card__hint">Set the budget window before applying</span>
           </div>
-          <div className="shared-labeled-field">
-            <label htmlFor="sharedMaxPrice">Max Price</label>
-            <input
-              id="sharedMaxPrice"
-              className="shared-field shared-price"
-              type="number"
-              value={filters.maxPrice}
-              onChange={update('maxPrice')}
-            />
+          <div className="shared-price-row">
+            <div className="shared-labeled-field">
+              <label htmlFor="sharedMinPrice">Min Price</label>
+              <input
+                id="sharedMinPrice"
+                className="shared-field shared-price"
+                type="number"
+                value={filters.minPrice}
+                onChange={update('minPrice')}
+              />
+            </div>
+            <div className="shared-labeled-field">
+              <label htmlFor="sharedMaxPrice">Max Price</label>
+              <input
+                id="sharedMaxPrice"
+                className="shared-field shared-price"
+                type="number"
+                value={filters.maxPrice}
+                onChange={update('maxPrice')}
+              />
+            </div>
           </div>
         </div>
 
@@ -128,7 +136,11 @@ export default function SharedFilters({ filters, onChange, onReset }) {
       </div>
 
       <div className="shared-filter-actions">
-        <button type="button" className="btn-your-group shared-apply-btn" onClick={() => onChange({ ...filters })}>
+        <button
+          type="button"
+          className="btn-your-group shared-apply-btn"
+          onClick={() => (onApply ? onApply() : onChange({ ...filters }))}
+        >
           Apply Filters
         </button>
         <button type="button" className="shared-reset-btn" onClick={onReset}>

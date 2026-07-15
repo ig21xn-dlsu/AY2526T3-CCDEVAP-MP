@@ -48,16 +48,18 @@ function SharedSpaceFilters({ filters, onChange, onReset }) {
           />
         </div>
 
-        <div className="shared-labeled-field">
-          <label htmlFor="sharedCampusInput">Campus / Area</label>
-          <input
-            id="sharedCampusInput"
-            className="shared-field"
-            type="text"
-            placeholder="De La Salle University"
-            value={filters.campus}
-            onChange={update('campus')}
-          />
+        <div className="shared-filter-card shared-filter-card--field">
+          <div className="shared-labeled-field">
+            <label htmlFor="sharedCampusInput">Campus / Area</label>
+            <input
+              id="sharedCampusInput"
+              className="shared-field"
+              type="text"
+              placeholder="De La Salle University"
+              value={filters.campus}
+              onChange={update('campus')}
+            />
+          </div>
         </div>
 
         <div className="shared-range-field">
@@ -74,26 +76,32 @@ function SharedSpaceFilters({ filters, onChange, onReset }) {
           <span>{filters.maxDistanceKm} km</span>
         </div>
 
-        <div className="shared-price-row">
-          <div className="shared-labeled-field">
-            <label htmlFor="sharedMinPrice">Min Price</label>
-            <input
-              id="sharedMinPrice"
-              className="shared-field shared-price"
-              type="number"
-              value={filters.minPrice}
-              onChange={update('minPrice')}
-            />
+        <div className="shared-filter-card shared-filter-card--price">
+          <div className="shared-filter-card__header">
+            <span className="shared-group-label">Price Range</span>
+            <span className="shared-filter-card__hint">Set the budget window before applying</span>
           </div>
-          <div className="shared-labeled-field">
-            <label htmlFor="sharedMaxPrice">Max Price</label>
-            <input
-              id="sharedMaxPrice"
-              className="shared-field shared-price"
-              type="number"
-              value={filters.maxPrice}
-              onChange={update('maxPrice')}
-            />
+          <div className="shared-price-row">
+            <div className="shared-labeled-field">
+              <label htmlFor="sharedMinPrice">Min Price</label>
+              <input
+                id="sharedMinPrice"
+                className="shared-field shared-price"
+                type="number"
+                value={filters.minPrice}
+                onChange={update('minPrice')}
+              />
+            </div>
+            <div className="shared-labeled-field">
+              <label htmlFor="sharedMaxPrice">Max Price</label>
+              <input
+                id="sharedMaxPrice"
+                className="shared-field shared-price"
+                type="number"
+                value={filters.maxPrice}
+                onChange={update('maxPrice')}
+              />
+            </div>
           </div>
         </div>
 

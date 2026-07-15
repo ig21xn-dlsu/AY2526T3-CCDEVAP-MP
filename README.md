@@ -12,8 +12,8 @@ This guide walks through setting up the PadPal project locally: a React (Vite) f
 ## 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd <repo-folder>
+git clone `repo-url`
+cd `/repo-folder`
 ```
 
 ## 2. Backend setup (`/server`)

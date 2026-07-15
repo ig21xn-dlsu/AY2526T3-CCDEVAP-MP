@@ -16,6 +16,7 @@ const sharedSpacesRoutes = require('./routes/sharedSpacesRoutes.js');
 const adminDashboardRoutes = require('./routes/adminDashboardRoutes');
 const adminUsersRoutes = require('./routes/adminUsersRoutes');
 const adminListingRoutes = require('./routes/adminListingRoutes');
+const adminReportsRoutes = require('./routes/adminReportsRoutes'); 
 
 const statsRoutes = require('./routes/statRoutes.js');
 const personalStatRoutes = require('./routes/personalStatsRoutes.js');
@@ -44,6 +45,7 @@ app.use('/api/listing', listingRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/shared-spaces', sharedSpacesRoutes);
 app.use('/api/admin/listing', adminListingRoutes);
+app.use('/api/admin/reports', adminReportsRoutes);
 
 // User authentication Routes
 app.use('/api/auth', authRoutes);

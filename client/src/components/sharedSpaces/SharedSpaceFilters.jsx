@@ -1,4 +1,5 @@
 import { SearchIcon } from '../discover/icons';
+import useTheme from '../../hook/useTheme.js';
 
 const OCCUPANCY_OPTIONS = [
   { value: '1-person', label: '1 Person (Private)' },
@@ -26,6 +27,8 @@ export const DEFAULT_SHARED_SPACE_FILTERS = {
 };
 
 function SharedSpaceFilters({ filters, onChange, onReset }) {
+  const { theme, toggleTheme } = useTheme();
+
   const update = (key) => (e) => onChange({ ...filters, [key]: e.target.value });
 
   const toggleListValue = (key, value) => {
@@ -135,6 +138,9 @@ function SharedSpaceFilters({ filters, onChange, onReset }) {
       </div>
 
       <div className="shared-filter-actions">
+        <button type="button" className="btn btn-outline-secondary shared-reset-btn" onClick={toggleTheme}>
+          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+        </button>
         <button type="button" className="btn btn-primary shared-apply-btn" onClick={() => onChange({ ...filters })}>
           Apply Filters
         </button>

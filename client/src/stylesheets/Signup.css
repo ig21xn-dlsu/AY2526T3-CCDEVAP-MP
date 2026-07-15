@@ -354,7 +354,6 @@ body, main {
     font-weight: 700;
     line-height: 16px; /* 140% */
 
-    margin-bottom: 1rem;
 }
 
 .success {
@@ -368,10 +367,11 @@ body, main {
     padding: 1rem;
 
     border-radius: 12px;
-    background: #16A34A;
+    border: 1px solid #16A34A;
+    background: white;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-    color: #FFFFFF;
+    color: #16A34A;
     text-align: center;
     font-family: 'Montserrat';
     font-size: 16px;
@@ -379,7 +379,6 @@ body, main {
     font-weight: 700;
     line-height: 16px;
 
-    margin-top: 0.75rem;
     margin-bottom: 1rem;
 }
 
@@ -394,10 +393,11 @@ body, main {
     padding: 1rem;
 
     border-radius: 12px;
-    background: #DC2626;
+    border: 1px solid #DC2626;
+    background: white;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-    color: #FFFFFF;
+    color: #DC2626;
     text-align: center;
     font-family: 'Montserrat';
     font-size: 16px;
@@ -405,7 +405,6 @@ body, main {
     font-weight: 700;
     line-height: 16px;
 
-    margin-top: 0.75rem;
     margin-bottom: 1rem;
 }
 
@@ -539,7 +538,6 @@ body, main {
         background: #945B00; 
         color: #FFFFFF; 
         padding: 16px;
-        margin-bottom: 24px;
     }
 
     #back-to-login {

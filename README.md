@@ -198,3 +198,8 @@ Manager1234!
 
 philip@gmail.com
 Philip1234567!
+
+
+
+
+### For Manager Accounts, for the best experience make sure you create a callling card! 

@@ -5,6 +5,8 @@ import './stylesheets/index.css'
 import App from './App.jsx'
 import { AuthContextProvider } from './context/AuthContext.jsx'
 import './stylesheets/AdminTheme.css';
+import './stylesheets/ManagerRootStyle.css'
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

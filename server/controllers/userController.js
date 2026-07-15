@@ -1,3 +1,7 @@
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
+const validator = require('validator');
+
 const updateUserProfile = async (req, res) => {
   try {
     const { id } = req.params;

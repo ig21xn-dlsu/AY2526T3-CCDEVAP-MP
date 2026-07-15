@@ -90,10 +90,13 @@ const loginUser = async (req, res) => {
 
     const token = await checkCredentials(existingUser, password);
     return res.status(200).json({
-      message: 'Logged In!',
-      email: existingUser.email,
-      role: existingUser.role,
-      token
+       message: 'Logged In!',
+        email: existingUser.email,
+        firstName: existingUser.firstName,
+        lastName: existingUser.lastName,
+        role: existingUser.role,
+        _id: existingUser._id, 
+        token
     });
 
   } catch (err) {

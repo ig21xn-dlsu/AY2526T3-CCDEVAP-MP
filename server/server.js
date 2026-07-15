@@ -10,7 +10,6 @@ const listingRoutes = require('./routes/listingRoutes.js');
 const uploadRoutes = require('./routes/uploadRoutes.js');
 const callingCardRoutes = require('./routes/callingCardRoutes.js');
 const inquiryRoutes = require('./routes/inquiryRoutes.js');
-const groupsRoutes = require('./routes/groupsRoutes.js');
 
 const adminDashboardRoutes = require('./routes/adminDashboardRoutes');
 const adminUsersRoutes = require('./routes/adminUsersRoutes');
@@ -39,7 +38,6 @@ app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/calling-card', callingCardRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/listing', listingRoutes);
-app.use('/api/groups', groupsRoutes);
 app.use('/api/admin/listing', adminListingsRoutes);
 
 // User authentication Routes

@@ -7,6 +7,7 @@ import SharedSpaceCard from '../components/sharedSpaces/SharedSpaceCard.jsx';
 import EmptyState from '../components/discover/EmptyState';
 import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
+import useTheme from '../hook/useTheme.js';
 
 import '../stylesheets/padpal.css'
 import { NavLink } from "react-router-dom";
@@ -151,6 +152,7 @@ function useCachedQuery(asyncFn, cacheKey, deps = []) {
 }
 
 export default function DiscoverCommunities() {
+  const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useSessionState('discover:activeTab', 'coliving');
   const [coLivingFilters, setCoLivingFilters] = useSessionState('discover:colivingFilters', DEFAULT_COLIVING_FILTERS);
   const [sharedDraftFilters, setSharedDraftFilters] = useSessionState('discover:sharedDraftFilters', DEFAULT_SHARED_FILTERS);
@@ -185,8 +187,17 @@ export default function DiscoverCommunities() {
 
   return (
     <main>
+      <div className="d-flex justify-content-end mb-2">
+        <button type="button" className="btn btn-outline-secondary btn-sm" onClick={toggleTheme}>
+          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+        </button>
+      </div>
       <h1 className="page-title">Discover Communities</h1>
       <p className="page-sub">Find the perfect group or space that matches your vibe.</p>
+
+      <div className="tab-actions d-flex flex-wrap gap-2 align-items-center justify-content-end">
+        <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
+      </div>
 
       <Tabs activeTab={activeTab} onChange={setActiveTab} />
 
@@ -204,10 +215,6 @@ export default function DiscoverCommunities() {
             }}
           />
         )}
-      </div>
-
-      <div className="tab-actions">
-        <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
       </div>
 
       {loading && <p className="page-sub">Loading…</p>}

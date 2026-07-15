@@ -3,9 +3,9 @@ import '../stylesheets/AdminUserDetailsModal.css';
 import { useAdminTheme } from '../context/AdminThemeContext';
 
 function UserDetailsModal({ user, show, onClose, onStatusChange }) {
-    if (!user) return null;
-
     const { isDark } = useAdminTheme();
+
+    if (!user) return null;
 
     const isSuspended = user.status === 'suspended';
 
@@ -19,8 +19,7 @@ function UserDetailsModal({ user, show, onClose, onStatusChange }) {
             show={show} 
             onHide={onClose} 
             centered 
-            className="admin-user-modal"
-            data-bs-theme={isDark ? 'dark' : 'light'} 
+            contentClassName={isDark ? 'admin-modal-dark' : 'admin-modal-light'}
         >
             <Modal.Header closeButton>
                 <Modal.Title>User Details</Modal.Title>

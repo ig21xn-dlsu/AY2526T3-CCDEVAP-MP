@@ -1,46 +1,60 @@
-/* Force the background and text to use your Admin Theme variables */
-[data-admin-theme='dark'] .admin-user-modal .modal-content {
+/* =======================================================
+   DARK MODE MODAL OVERRIDES
+   ======================================================= */
+.admin-modal-dark {
     background-color: var(--admin-surface) !important;
     color: var(--admin-text) !important;
-    border: 1px solid var(--admin-border);
+    border: 1px solid var(--admin-border) !important;
 }
 
-[data-admin-theme='dark'] .admin-user-modal .modal-header {
-    border-bottom-color: var(--admin-border);
-}
-
-/* This specifically fixes the bright white footer box */
-[data-admin-theme='dark'] .admin-user-modal .modal-footer {
-    border-top-color: var(--admin-border);
+/* Force the header and footer backgrounds */
+.admin-modal-dark .modal-header,
+.admin-modal-dark .modal-footer {
     background-color: var(--admin-surface) !important;
+    border-color: var(--admin-border) !important;
 }
 
-[data-admin-theme='dark'] .admin-user-modal .modal-title {
-    color: var(--admin-text-strong);
+/* Fix text visibility */
+.admin-modal-dark .modal-title {
+    color: var(--admin-text-strong) !important;
 }
 
-[data-admin-theme='dark'] .admin-user-modal .modal-body p {
-    color: var(--admin-text);
+.admin-modal-dark p {
+    color: var(--admin-text) !important;
 }
 
-[data-admin-theme='dark'] .admin-user-modal .modal-body strong {
-    color: var(--admin-text-soft);
+.admin-modal-dark strong {
+    color: var(--admin-text-soft) !important;
 }
 
-/* Fix the Bootstrap Close (X) button visibility on dark backgrounds */
-[data-admin-theme='dark'] .admin-user-modal .btn-close {
-    filter: invert(1) grayscale(1) brightness(1.8);
+/* Invert the Bootstrap X close button */
+.admin-modal-dark .btn-close {
+    filter: invert(1) grayscale(1) brightness(2) !important;
 }
 
-/* Theme the secondary "Close" button */
-[data-admin-theme='dark'] .admin-user-modal .btn-secondary {
-    background-color: var(--admin-hover);
-    border-color: var(--admin-border-strong);
-    color: var(--admin-text);
+/* Theme the Secondary 'Close' button to match */
+.admin-modal-dark .btn-secondary {
+    background-color: var(--admin-hover) !important;
+    border-color: var(--admin-border-strong) !important;
+    color: var(--admin-text) !important;
 }
 
-[data-admin-theme='dark'] .admin-user-modal .btn-secondary:hover {
-    background-color: var(--admin-border);
-    border-color: var(--admin-border-strong);
-    color: var(--admin-text-strong);
+.admin-modal-dark .btn-secondary:hover {
+    background-color: var(--admin-border) !important;
+    color: var(--admin-text-strong) !important;
+}
+
+/* =======================================================
+   LIGHT MODE MODAL OVERRIDES
+   ======================================================= */
+.admin-modal-light {
+    background-color: var(--admin-surface) !important;
+    color: var(--admin-text) !important;
+    border: 1px solid var(--admin-border) !important;
+}
+
+.admin-modal-light .modal-header,
+.admin-modal-light .modal-footer {
+    background-color: var(--admin-surface) !important;
+    border-color: var(--admin-border) !important;
 }

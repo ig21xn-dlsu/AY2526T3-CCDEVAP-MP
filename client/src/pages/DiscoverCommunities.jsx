@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tabs from '../components/discover/Tabs';
 import CoLivingFilters, { DEFAULT_COLIVING_FILTERS } from '../components/discover/CoLivingFilters';
 import SharedFilters, { DEFAULT_SHARED_FILTERS } from '../components/discover/SharedFilters';
@@ -7,7 +7,7 @@ import SharedSpaceCard from '../components/sharedSpaces/SharedSpaceCard.jsx';
 import EmptyState from '../components/discover/EmptyState';
 import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
-import { fetchCoLivingGroups, fetchSharedSpaces, fetchCampuses } from '../api/padpalApi';
+import { fetchCoLivingGroups } from '../api/padpalApi';
 
 import '../stylesheets/padpal.css'
 import { NavLink } from "react-router-dom";
@@ -52,28 +52,112 @@ async function fetchDiscoverSharedSpaces(filters) {
   return response.json();
 }
 
+function readSessionCache(cacheKey) {
+  try {
+    const raw = sessionStorage.getItem(cacheKey);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeSessionCache(cacheKey, value) {
+  try {
+    sessionStorage.setItem(cacheKey, JSON.stringify(value));
+  } catch {
+    // ignore storage failures and fall back to in-memory fetch results
+  }
+}
+
+function readSessionState(stateKey, fallbackValue) {
+  try {
+    const raw = sessionStorage.getItem(stateKey);
+    return raw ? JSON.parse(raw) : fallbackValue;
+  } catch {
+    return fallbackValue;
+  }
+}
+
+function useSessionState(stateKey, fallbackValue) {
+  const [value, setValue] = useState(() => readSessionState(stateKey, fallbackValue));
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(stateKey, JSON.stringify(value));
+    } catch {
+      // ignore storage failures and keep the in-memory state working
+    }
+  }, [stateKey, value]);
+
+  return [value, setValue];
+}
+
+function useCachedQuery(asyncFn, cacheKey, deps = []) {
+  const [state, setState] = useState(() => {
+    const cached = readSessionCache(cacheKey);
+    return {
+      data: cached ?? undefined,
+      loading: !cached,
+      error: null,
+    };
+  });
+
+  useEffect(() => {
+    let active = true;
+    const cached = readSessionCache(cacheKey);
+
+    if (cached) {
+      setState({ data: cached, loading: false, error: null });
+    } else {
+      setState((current) => ({ ...current, loading: true, error: null }));
+    }
+
+    asyncFn()
+      .then((data) => {
+        if (!active) return;
+        setState({ data, loading: false, error: null });
+        writeSessionCache(cacheKey, data);
+      })
+      .catch((error) => {
+        if (!active) return;
+        setState({ data: cached ?? undefined, loading: false, error });
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [cacheKey, ...deps]);
+
+  return state;
+}
+
 export default function DiscoverCommunities() {
-  const [activeTab, setActiveTab] = useState('coliving');
-  const [coLivingFilters, setCoLivingFilters] = useState(DEFAULT_COLIVING_FILTERS);
-  const [sharedFilters, setSharedFilters] = useState(DEFAULT_SHARED_FILTERS);
+  const [activeTab, setActiveTab] = useSessionState('discover:activeTab', 'coliving');
+  const [coLivingFilters, setCoLivingFilters] = useSessionState('discover:colivingFilters', DEFAULT_COLIVING_FILTERS);
+  const [sharedDraftFilters, setSharedDraftFilters] = useSessionState('discover:sharedDraftFilters', DEFAULT_SHARED_FILTERS);
+  const [sharedAppliedFilters, setSharedAppliedFilters] = useSessionState('discover:sharedAppliedFilters', DEFAULT_SHARED_FILTERS);
 
   // debounce so typing in search boxes doesn't fire a request per keystroke.
   const debouncedCoLivingFilters = useDebouncedValue(coLivingFilters, 300);
-  const debouncedSharedFilters = useDebouncedValue(sharedFilters, 300);
+  const debouncedSharedFilters = useDebouncedValue(sharedAppliedFilters, 300);
 
-  const { data: campuses = [] } = useAsync(fetchDiscoverCampuses, []);
+  const campusCacheKey = 'discover:campuses';
+  const { data: campuses = [] } = useCachedQuery(fetchDiscoverCampuses, campusCacheKey, []);
+
+  const coLivingCacheKey = `discover:coliving:${JSON.stringify(debouncedCoLivingFilters)}`;
+  const sharedCacheKey = `discover:shared:${JSON.stringify(debouncedSharedFilters)}`;
 
   const {
     data: groups,
     loading: groupsLoading,
     error: groupsError,
-  } = useAsync(() => fetchCoLivingGroups(debouncedCoLivingFilters), [JSON.stringify(debouncedCoLivingFilters)]);
+  } = useCachedQuery(() => fetchCoLivingGroups(debouncedCoLivingFilters), coLivingCacheKey, [JSON.stringify(debouncedCoLivingFilters)]);
 
   const {
     data: sharedSpaces,
     loading: sharedLoading,
     error: sharedError,
-  } = useAsync(() => fetchDiscoverSharedSpaces(debouncedSharedFilters), [JSON.stringify(debouncedSharedFilters)]);
+  } = useCachedQuery(() => fetchDiscoverSharedSpaces(debouncedSharedFilters), sharedCacheKey, [JSON.stringify(debouncedSharedFilters)]);
 
   const isColiving = activeTab === 'coliving';
   const items = isColiving ? groups : sharedSpaces;
@@ -92,9 +176,13 @@ export default function DiscoverCommunities() {
           <CoLivingFilters filters={coLivingFilters} onChange={setCoLivingFilters} campuses={campuses || []} />
         ) : (
           <SharedFilters
-            filters={sharedFilters}
-            onChange={setSharedFilters}
-            onReset={() => setSharedFilters(DEFAULT_SHARED_FILTERS)}
+            filters={sharedDraftFilters}
+            onChange={setSharedDraftFilters}
+            onApply={() => setSharedAppliedFilters(sharedDraftFilters)}
+            onReset={() => {
+              setSharedDraftFilters(DEFAULT_SHARED_FILTERS);
+              setSharedAppliedFilters(DEFAULT_SHARED_FILTERS);
+            }}
           />
         )}
       </div>

@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL ?? '';
+
 function SharedSpaceCard({ listing }) {
   const id = listing.id || listing._id;
   const title = listing.roomTitle || listing.name;
@@ -7,6 +9,9 @@ function SharedSpaceCard({ listing }) {
   const imageUrl = Array.isArray(listing.imageUrl)
     ? listing.imageUrl[0]
     : (listing.imageUrl || listing.image);
+  const imageSrc = imageUrl
+    ? `${API_URL}${imageUrl}`
+    : 'http://localhost:6767/uploads/dorm_2.jpg';
 
   return (
     <article className="shared-space-card card shadow d-flex flex-col gap-2">
@@ -17,7 +22,7 @@ function SharedSpaceCard({ listing }) {
             maximumFractionDigits: 2,
           })}/m
         </div>
-        <img src={imageUrl || 'http://localhost:6767/uploads/dorm_2.jpg'} alt={title} />
+        <img src={imageSrc} alt={title} />
       </div>
 
       <div className="bottomContainer shared-space-card__body d-flex flex-column align-items-start justify-content-start gap-2 p-4">

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import ViewListing from '../components/ViewListing.jsx';
@@ -8,6 +8,7 @@ const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:6767';
 
 export default function SharedSpaceDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [listing, setListing] = useState(null);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function SharedSpaceDetail() {
   return (
     <div className="container-fluid w-100 p-0">
       <div className="px-4 pt-4">
-        <Link to="/student-shared-spaces" className="btn btn-outline-secondary btn-sm">
+        <Link to="#" onClick={(e) => { e.preventDefault(); navigate(-1); }} className="btn btn-outline-secondary btn-sm">
           Back to shared spaces
         </Link>
       </div>

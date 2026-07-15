@@ -1,0 +1,137 @@
+.report-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 20px;
+}
+
+.report-modal {
+  width: min(520px, 100%);
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  padding: 20px;
+}
+
+.report-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.report-modal__eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ef4444;
+  letter-spacing: 0.06em;
+}
+
+.report-modal__title {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #111827;
+}
+
+.report-modal__close {
+  border: none;
+  background: #f3f4f6;
+  color: #374151;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.report-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.report-modal__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.report-modal__select,
+.report-modal__textarea {
+  width: 100%;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #111827;
+  background: #fff;
+}
+
+.report-modal__textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.report-modal__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.report-modal__counter {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.report-modal__error {
+  margin: 0;
+  color: #dc2626;
+  font-size: 0.85rem;
+  align-self: flex-start;
+}
+
+.report-modal__submit {
+  border: none;
+  border-radius: 999px;
+  padding: 11px 18px;
+  background: #dc2626;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.report-modal__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.report-modal__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 18px 8px 6px;
+}
+
+.report-modal__success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}

@@ -425,6 +425,18 @@ main {
   box-shadow: var(--shadow-sm);
 }
 
+.shared-option-group--amenities {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 18px;
+  align-items: start;
+}
+
+.shared-option-group--amenities .shared-group-label {
+  grid-column: 1 / -1;
+}
+
 .shared-range-field label,
 .shared-group-label {
   font-size: 0.8rem;

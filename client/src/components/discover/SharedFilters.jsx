@@ -8,12 +8,17 @@ const OCCUPANCY_OPTIONS = [
 ];
 
 const AMENITY_OPTIONS = [
-  { value: 'laundry', label: 'Laundry' },
-  { value: 'furnished', label: 'Furnished' },
-  { value: 'semi-furnished', label: 'Semi-Furnished' },
-  { value: 'wifi', label: 'Wi-Fi' },
-  { value: 'gym', label: 'Gym' },
-  { value: 'parking', label: 'Parking' },
+  { value: 'Free WiFi', label: 'Free WiFi' },
+  { value: 'Parking', label: 'Parking' },
+  { value: 'In-Unit Laundry', label: 'In-Unit Laundry' },
+  { value: 'Swimming Pool', label: 'Swimming Pool' },
+  { value: '24/7 Security', label: '24/7 Security' },
+  { value: 'Gym Access', label: 'Gym Access' },
+  { value: 'Air Conditioning', label: 'Air Conditioning' },
+  { value: 'Tap Card System', label: 'Tap Card System' },
+  { value: 'Utilities Included', label: 'Utilities Included' },
+  { value: 'Pet Friendly', label: 'Pet Friendly' },
+  { value: 'Study Lounge', label: 'Study Lounge' },
 ];
 
 export const DEFAULT_SHARED_FILTERS = {
@@ -120,7 +125,7 @@ export default function SharedFilters({ filters, onChange, onReset, onApply }) {
           ))}
         </div>
 
-        <div className="shared-option-group">
+        <div className="shared-option-group shared-option-group--amenities">
           <span className="shared-group-label">Must Have Amenities</span>
           {AMENITY_OPTIONS.map((o) => (
             <label className="shared-option" key={o.value}>

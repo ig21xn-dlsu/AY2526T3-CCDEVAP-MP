@@ -50,8 +50,8 @@ function ManagerDashboard() {
         </div>
         <div className="PadPalStats d-flex flex-row gap-5 justify-content-center align-items-center">
           <SquareStatistics title="Average Group Size" data={avg_grp_size} icon={groupSizeIcon} message="Roomies usually group up in:" />
-          <SquareStatistics title="Largest User Base" data={top1.University} icon={topUniIcon} message="Most of the users come from this university" />
-          <SquareStatistics title="Average Budget" data={avg_budget} icon={budgetIcon} message="Roomies to pay this. Per person. Per month" />
+          <SquareStatistics title="Average Minimum Budget" data={avg_budget} icon={budgetIcon} message="Lowest Amount that Roomies want to pay" />
+          <SquareStatistics title="Average Average Maximum Budget" data={avg_budget} icon={budgetIcon} message="Higest Amount that roomies want to pay" />
         </div>
         <div className="leaderboard-container d-flex justify-content-center align-items-center">
           <ChartUniversityDist />

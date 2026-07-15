@@ -3,6 +3,7 @@ import Tabs from '../components/discover/Tabs';
 import CoLivingFilters, { DEFAULT_COLIVING_FILTERS } from '../components/discover/CoLivingFilters';
 import SharedFilters, { DEFAULT_SHARED_FILTERS } from '../components/discover/SharedFilters';
 import GroupCard from '../components/discover/GroupCard';
+import SharedSpaceCard from '../components/sharedSpaces/SharedSpaceCard.jsx';
 import EmptyState from '../components/discover/EmptyState';
 import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
@@ -69,7 +70,9 @@ export default function DiscoverCommunities() {
         items && items.length ? (
           <div className="cards-grid">
             {items.map((item) => (
-              <GroupCard key={item.id} item={item} />
+              isColiving
+                ? <GroupCard key={item.id} item={item} />
+                : <SharedSpaceCard key={item.id} listing={item} />
             ))}
           </div>
         ) : (

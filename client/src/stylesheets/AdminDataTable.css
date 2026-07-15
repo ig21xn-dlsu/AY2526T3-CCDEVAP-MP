@@ -1,0 +1,308 @@
+/* ===== DataTable wrapper ===== */
+.datatable-wrapper {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ===== Toolbar ===== */
+.datatable-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+}
+
+.datatable-search {
+    flex: 1 1 240px;
+    min-width: 200px;
+    padding: 9px 14px;
+    font-size: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.datatable-search:focus {
+    border-color: #2563eb;
+    background: #ffffff;
+}
+
+.datatable-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.datatable-toolbar-right select,
+.datatable-toolbar-right input[type="number"] {
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    color: #334155;
+    background: #f8fafc;
+    outline: none;
+}
+
+.datatable-toolbar-right input[type="number"] {
+    width: 90px;
+}
+
+.datatable-toolbar-right select:focus,
+.datatable-toolbar-right input[type="number"]:focus {
+    border-color: #2563eb;
+    background: #ffffff;
+}
+
+.datatable-export-btn {
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+}
+
+.datatable-export-btn:hover {
+    background: #e2e8f0;
+}
+
+.create-new-btn {
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    background: #f59e0b;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+}
+
+.create-new-btn:hover {
+    background: #d97706;
+}
+
+/* ===== Table ===== */
+.table-container {
+    overflow-x: auto;
+}
+
+.datatable-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.datatable-wrapper thead {
+    background: #f8fafc;
+}
+
+.datatable-wrapper th {
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.datatable-wrapper th.sortable-th {
+    cursor: pointer;
+}
+
+.datatable-wrapper th.sortable-th:hover {
+    color: #1e293b;
+}
+
+.datatable-wrapper td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.datatable-wrapper tbody tr:hover {
+    background: #f8fafc;
+}
+
+.datatable-wrapper tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.datatable-empty {
+    text-align: center !important;
+    padding: 40px 20px !important;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* ===== Property cell (used inside AdminListings columns) ===== */
+.property-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.property-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #e2e8f0;
+}
+
+.property-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.property-title {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.property-ref {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.location-text {
+    color: #475569;
+}
+
+/* ===== Status badges ===== */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+    text-transform: capitalize;
+}
+
+.status-badge.active {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.status-badge.inactive {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+/* ===== Row actions ===== */
+.actions-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.action-edit-btn {
+    color: #2563eb;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.action-edit-btn:hover {
+    text-decoration: underline;
+}
+
+.action-delete-btn {
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.action-delete-btn:hover {
+    text-decoration: underline;
+}
+
+.action-divider {
+    color: #cbd5e1;
+}
+
+/* ===== Footer / pagination ===== */
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.footer-status {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination li a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border-radius: 6px;
+    color: #334155;
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid #e2e8f0;
+    transition: background 0.15s ease;
+}
+
+.pagination li a:hover {
+    background: #f1f5f9;
+}
+
+/* ===== Table-level error state (used in AdminListings.jsx) ===== */
+.table-error {
+    padding: 12px 20px;
+    margin-bottom: 12px;
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.table-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+}

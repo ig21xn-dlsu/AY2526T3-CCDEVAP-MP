@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { useSignup } from '../hook/useSignUp';
-import { useAdminTheme } from '../context/AdminThemeContext';
-import '../stylesheets/AdminUserDetailsModal.css'; 
+import '../stylesheets/AdminCreateUserModal.css'; 
 
 const initialFormState = {
     firstName: '',
@@ -17,8 +15,8 @@ function AdminCreateUserModal({ show, onClose, onUserCreated }) {
     const [formData, setFormData] = useState(initialFormState);
     const [successMessage, setSuccessMessage] = useState('');
     const { signup, isLoading, error } = useSignup();
-    
-    const { isDark } = useAdminTheme();
+
+    if (!show) return null; // Native way to hide the modal
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,9 +38,8 @@ function AdminCreateUserModal({ show, onClose, onUserCreated }) {
 
         if (success) {
             setSuccessMessage('User created successfully!');
-            setFormData(initialFormState); 
-
-            onUserCreated(); 
+            setFormData(initialFormState);
+            onUserCreated();
 
             setTimeout(() => {
                 setSuccessMessage('');
@@ -52,107 +49,122 @@ function AdminCreateUserModal({ show, onClose, onUserCreated }) {
     };
 
     const handleClose = () => {
-        setFormData(initialFormState); 
+        setFormData(initialFormState);
         setSuccessMessage('');
         onClose();
     };
 
     return (
-        <Modal 
-            show={show} 
-            onHide={handleClose} 
-            centered
-            data-bs-theme={isDark ? 'dark' : 'light'}
-            contentClassName={isDark ? 'admin-modal-dark' : 'admin-modal-light'}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title>Add New User</Modal.Title>
-            </Modal.Header>
+        <div className="admin-create-overlay">
+            <div className="admin-create-modal">
+                
+                <div className="admin-create-header">
+                    <h3>Add New User</h3>
+                    <button className="admin-create-close" onClick={handleClose}>
+                        &times;
+                    </button>
+                </div>
 
-            <Form onSubmit={handleSubmit}>
-                <Modal.Body>
-                    {successMessage && <Alert variant="success">{successMessage}</Alert>}
-                    {error && <Alert variant="danger">{error}</Alert>}
+                <form onSubmit={handleSubmit}>
+                    <div className="admin-create-body">
+                        {successMessage && <div className="admin-alert admin-alert-success">{successMessage}</div>}
+                        {error && <div className="admin-alert admin-alert-danger">{error}</div>}
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
+                        <div className="admin-create-group">
+                            <label>First Name</label>
+                            <input
+                                className="admin-create-input"
+                                type="text"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
+                        <div className="admin-create-group">
+                            <label>Last Name</label>
+                            <input
+                                className="admin-create-input"
+                                type="text"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
+                        <div className="admin-create-group">
+                            <label>Email</label>
+                            <input
+                                className="admin-create-input"
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Role</Form.Label>
-                        <Form.Select name="role" value={formData.role} onChange={handleChange}>
-                            <option value="student">Student</option>
-                            <option value="manager">Property Owner</option>
-                        </Form.Select>
-                    </Form.Group>
+                        <div className="admin-create-group">
+                            <label>Role</label>
+                            <select 
+                                className="admin-create-select" 
+                                name="role" 
+                                value={formData.role} 
+                                onChange={handleChange}
+                            >
+                                <option value="student">Student</option>
+                                <option value="manager">Property Owner</option>
+                            </select>
+                        </div>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
+                        <div className="admin-create-group">
+                            <label>Password</label>
+                            <input
+                                className="admin-create-input"
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
-                </Modal.Body>
+                        <div className="admin-create-group">
+                            <label>Confirm Password</label>
+                            <input
+                                className="admin-create-input"
+                                type="password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    </div>
 
-                <Modal.Footer>
-                    {/* 4. Fix the cancel button so it isn't a black box in dark mode */}
-                    <Button 
-                        variant={isDark ? "outline-light" : "secondary"} 
-                        onClick={handleClose} 
-                        disabled={isLoading}
-                    >
-                        Cancel
-                    </Button>
-                    <Button variant="primary" type="submit" disabled={isLoading}>
-                        {isLoading ? 'Creating...' : 'Create User'}
-                    </Button>
-                </Modal.Footer>
-            </Form>
-        </Modal>
+                    <div className="admin-create-footer">
+                        <button 
+                            type="button" 
+                            className="admin-btn admin-btn-cancel" 
+                            onClick={handleClose} 
+                            disabled={isLoading}
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            type="submit" 
+                            className="admin-btn admin-btn-submit" 
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Creating...' : 'Create User'}
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     );
 }
 

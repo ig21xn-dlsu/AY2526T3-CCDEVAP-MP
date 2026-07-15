@@ -1,0 +1,155 @@
+.admin-create-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--admin-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+}
+
+/* The actual modal box */
+.admin-create-modal {
+    background-color: var(--admin-surface);
+    color: var(--admin-text);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    border: 1px solid var(--admin-border);
+    box-shadow: 0 10px 25px var(--admin-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+.admin-create-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--admin-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-create-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--admin-text-strong);
+}
+
+.admin-create-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--admin-text-muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.admin-create-close:hover {
+    color: var(--admin-danger-text);
+}
+
+/* Body & Scroll handling */
+.admin-create-body {
+    padding: 24px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+/* Form Inputs */
+.admin-create-group {
+    margin-bottom: 16px;
+}
+
+.admin-create-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--admin-text-soft);
+}
+
+.admin-create-input, 
+.admin-create-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--admin-border-strong);
+    border-radius: 6px;
+    background-color: var(--admin-bg);
+    color: var(--admin-text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.admin-create-input:focus, 
+.admin-create-select:focus {
+    border-color: var(--admin-accent);
+}
+
+/* Alerts */
+.admin-alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.admin-alert-success {
+    background-color: var(--admin-green-bg);
+    color: var(--admin-green-text);
+}
+.admin-alert-danger {
+    background-color: var(--admin-danger-bg);
+    color: var(--admin-danger-text);
+}
+
+/* Footer */
+.admin-create-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--admin-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background-color: var(--admin-surface-alt);
+}
+
+/* Buttons */
+.admin-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.admin-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.admin-btn-cancel {
+    background-color: var(--admin-hover);
+    border-color: var(--admin-border-strong);
+    color: var(--admin-text);
+}
+
+.admin-btn-cancel:hover:not(:disabled) {
+    background-color: var(--admin-border);
+}
+
+.admin-btn-submit {
+    background-color: var(--admin-accent);
+    color: #ffffff;
+}
+
+.admin-btn-submit:hover:not(:disabled) {
+    opacity: 0.9;
+}

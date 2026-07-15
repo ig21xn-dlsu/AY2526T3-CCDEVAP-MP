@@ -11,27 +11,6 @@ import { useCreateGroupForm } from '../hook/useCreateGroupForm.js';
 
 import '../stylesheets/create-group.css';
 
-const NO_PREFERENCE_OPTION = { value: '', label: 'No preference' };
-
-export default function CreateGroup({ onSuccess }) {
-  const { config, status: configStatus, error: configError, isLoading } = useGroupFormConfig();
-
-  const {
-    fields,
-    lifestyleTags,
-    budgetSlider,
-    fieldErrors,
-    submitStatus,
-    submitError,
-    submit,
-  } = useCreateGroupForm(config, onSuccess);
-
-  const genderOptions = [NO_PREFERENCE_OPTION, ...config.genderPreferences];
-
-  async function handleLaunch() {
-    await submit();
-  }
-
   if (isLoading) {
     return (
       <div className="page-wrapper">
@@ -55,6 +34,28 @@ export default function CreateGroup({ onSuccess }) {
       </div>
     );
   }
+
+const NO_PREFERENCE_OPTION = { value: '', label: 'No preference' };
+
+export default function CreateGroup({ onSuccess }) {
+  const { config, status: configStatus, error: configError, isLoading } = useGroupFormConfig();
+
+  const {
+    fields,
+    lifestyleTags,
+    budgetSlider,
+    fieldErrors,
+    submitStatus,
+    submitError,
+    submit,
+  } = useCreateGroupForm(config, onSuccess);
+
+  const genderOptions = [NO_PREFERENCE_OPTION, ...config.genderPreferences];
+
+  async function handleLaunch() {
+    await submit();
+  }
+
 
   return (
     <div className="page-wrapper">

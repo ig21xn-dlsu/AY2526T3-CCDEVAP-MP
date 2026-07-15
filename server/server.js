@@ -16,6 +16,7 @@ const adminUsersRoutes = require('./routes/adminUsersRoutes');
 const adminListingsRoutes = require('./routes/adminListingRoutes');
 
 const statsRoutes = require('./routes/statRoutes.js');
+const personalStatRoutes = require('./routes/personalStatsRoutes.js');
 
 const path = require("path");
 connectDB();
@@ -48,7 +49,7 @@ app.use('/api/admin/users', adminUsersRoutes);
 
 
 app.use('/api/stats', statsRoutes);
-
+app.use('/api/stats', personalStatRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

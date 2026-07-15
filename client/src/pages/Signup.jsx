@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../stylesheets/Signup.css';
 import { useState, useEffect } from 'react';
 import { useSignup } from '../hook/useSignUp';
 
 function SignUp() {
+    const navigate = useNavigate();
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,8 +16,15 @@ function SignUp() {
     const { signup, error, isLoading} = useSignup()
 
     const handleSignUp = async () => {
-        await signup(lastName, firstName, email, password, confirmPassword, role);
-    } 
+        const success = await signup(lastName, firstName, email, password, confirmPassword, role);
+
+        if (success) {
+            setShowSuccess(true);
+            setTimeout(() => {
+                navigate('/');
+            }, 3000); // I think 3 seconds is good enough
+        }
+    }
 
 
     const [showPassword, setShowPassword] = useState(false);
@@ -177,8 +186,11 @@ function SignUp() {
                     </section>
                 </section>
 
-                <div id="sign-up-button" onClick={handleSignUp} disabled={isLoading}>Sign Up</div>
+                        <div id="sign-up-button" onClick={handleSignUp} disabled={isLoading}>
+                            {isLoading ? 'Signing Up...' : 'Sign Up'}
+                        </div>
                         {error && <div className='error'>{error}</div>}
+                        {showSuccess && <div className="success">Account created! Redirecting to login...</div>}
             </section>
 
             <section id="back-to-login">Already have an account? <Link className='blue' to="/">Sign In</Link>

@@ -357,6 +357,16 @@ body, main {
     margin-bottom: 1rem;
 }
 
+.success {
+    color: #16a34a;
+    background: #dcfce7;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
 #back-to-login {
     color: #424656;
     text-align: center;

@@ -1,4 +1,4 @@
-import { LifestyleTag } from '../models/LifestyleTag.js';
+const { LifestyleTag } = require('../models/LifestyleTag.js');
 
 // this seeds into mongoDB
 const DEFAULT_TAGS = [
@@ -12,7 +12,7 @@ const DEFAULT_TAGS = [
   { _id: 'quiet', label: 'Prefers Quiet', icon: '🤫' },
 ];
 
-export async function seedLifestyleTags() {
+async function seedLifestyleTags() {
   const ops = DEFAULT_TAGS.map((tag) => ({
     updateOne: {
       filter: { _id: tag._id },
@@ -44,7 +44,7 @@ const SPOTS = {
   default: 2,
 };
 
-export async function getFormConfig() {
+async function getFormConfig() {
   const tags = await LifestyleTag.find().sort({ _id: 1 }).lean();
 
   return {
@@ -55,11 +55,20 @@ export async function getFormConfig() {
   };
 }
 
-export async function getValidTagIds() {
+async function getValidTagIds() {
   const ids = await LifestyleTag.distinct('_id');
   return new Set(ids);
 }
 
-export const VALID_GENDER_VALUES = new Set(['', ...GENDER_PREFERENCES.map((g) => g.value)]);
-export const BUDGET_BOUNDS = BUDGET;
-export const SPOTS_BOUNDS = SPOTS;
+const VALID_GENDER_VALUES = new Set(['', ...GENDER_PREFERENCES.map((g) => g.value)]);
+const BUDGET_BOUNDS = BUDGET;
+const SPOTS_BOUNDS = SPOTS;
+
+module.exports = {
+  seedLifestyleTags,
+  getFormConfig,
+  getValidTagIds,
+  VALID_GENDER_VALUES,
+  BUDGET_BOUNDS,
+  SPOTS_BOUNDS,
+};

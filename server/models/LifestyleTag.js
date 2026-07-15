@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
@@ -19,4 +19,6 @@ lifestyleTagSchema.set('toJSON', {
   },
 });
 
-export const LifestyleTag = mongoose.model('LifestyleTag', lifestyleTagSchema);
+const LifestyleTag = mongoose.model('LifestyleTag', lifestyleTagSchema);
+
+module.exports = { LifestyleTag };

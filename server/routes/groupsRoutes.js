@@ -1,16 +1,16 @@
-import { Router } from 'express';
-import mongoose from 'mongoose';
-import { Group } from '../models/Group.js';
-import {
+const { Router } = require('express');
+const mongoose = require('mongoose');
+const Group = require('../models/Group.js');
+const {
   getFormConfig,
   getValidTagIds,
   VALID_GENDER_VALUES,
   BUDGET_BOUNDS,
   SPOTS_BOUNDS,
-} from '../config/formConfig.js';
-import { asyncHandler } from '../utils/asyncHandler.js';
+} = require('../config/formConfigs.js');
+const { asyncHandler } = require('../utils/asyncHandler.js');
 
-export const groupsRouter = Router();
+const groupsRouter = Router();
 
 const CURRENCY_SYMBOL = '\u20b1'; // this is just a peso symbol
 
@@ -214,3 +214,5 @@ groupsRouter.get(
     res.json(toProfileShape(group));
   })
 );
+
+module.exports = groupsRouter;

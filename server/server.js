@@ -17,6 +17,7 @@ const adminUsersRoutes = require('./routes/adminUsersRoutes');
 const adminListingsRoutes = require('./routes/adminListingRoutes');
 
 const statsRoutes = require('./routes/statRoutes.js');
+const personalStatRoutes = require('./routes/personalStatsRoutes.js');
 
 const groupsRoutes = require('./routes/groupsRoutes.js');
 
@@ -52,6 +53,7 @@ app.use('/api/admin/users', adminUsersRoutes);
 
 
 app.use('/api/stats', statsRoutes);
+app.use('/api/stats', personalStatRoutes);
 
 app.use('/api/groups', groupsRoutes);
 

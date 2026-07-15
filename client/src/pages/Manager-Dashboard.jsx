@@ -4,23 +4,34 @@ import SquareStatistics from '../components/ManagerDashComponents/square-statist
 import ChartUniversityDist from '../components/ChartJS/UniLeaderboards.jsx'
 //sizeIcons 
 import groupSizeIcon from '../assets/avgGrpSize.svg'
+import topUniIcon from '../assets/topUni.svg'
 import budgetIcon from '../assets/budgetIcon.svg'
 import yourSpaces from '../assets/u_spaces.svg'
 import inquiries from '../assets/inquiries.svg'
 import occupiedSpace from '../assets/occupiedSpace.svg'
-
+//---- hooks for real data -----
 import useGroupStats from '../hook/useGroupStats.js';
+import useManagerStats from '../hook/usePersonalStatsController.js';
 
+// simple PHP-peso formatter to match the "P 15,000" look of the old dummy string
 const formatBudget = (value) => {
   if (value === undefined || value === null) return 'P 0';
   return `P ${Math.round(value).toLocaleString()}`;
 };
 
 function ManagerDashboard() {
-  let user_space = 3;
-  let active_inquiries = 5;
-  let occupied = 1;
+  //---- Real data for "Your Stats" section -----
+  const {
+    stats: managerStats,
+    loading: managerLoading,
+    error: managerError,
+  } = useManagerStats();
 
+  const user_space = managerLoading ? '...' : managerStats?.totalListings;
+  const occupied = managerLoading ? '...' : managerStats?.occupiedListings;
+  const active_inquiries = managerLoading ? '...' : managerStats?.activeInquiries;
+
+  //---- Real data for "PadPal's Stats" section -----
   const { stats, loading, error } = useGroupStats();
 
   const avgGroupSize = stats ? stats.averageGroupSize : null;
@@ -36,6 +47,9 @@ function ManagerDashboard() {
           <h3 className="pb-2 border-bottom w-100 text-end">Your Stats </h3>
           <p>Your Listings performance.</p>
         </div>
+
+        {managerError && <p className="text-danger">Couldn't load your stats: {managerError}</p>}
+
         <div className="userStats d-flex flex-row gap-5">
           <SquareStatistics title="Your Spaces" data={user_space} icon={yourSpaces} message="Tally of all the listings that you have up" />
           <SquareStatistics title="Active Inquiries" data={active_inquiries} icon={inquiries} message="These people are reaching out to you! check your inboxes" />

@@ -391,6 +391,88 @@
           letter-spacing: 0.14px;
         }
 
+        /* ══════════════════════════════════════════════
+   ADMIN DARK MODE — only active while an admin
+   page has set data-admin-theme on <html>.
+   ══════════════════════════════════════════════ */
+
+[data-admin-theme='dark'] #settings-modal {
+    background: var(--admin-surface);
+    border-color: var(--admin-border-strong);
+}
+
+[data-admin-theme='dark'] #modal-header {
+    background: var(--admin-surface);
+    border-bottom-color: var(--admin-border-strong);
+    color: var(--admin-text-strong);
+}
+
+[data-admin-theme='dark'] #modal-header svg path {
+    fill: var(--admin-text-muted);
+}
+
+[data-admin-theme='dark'] #personal-info-header,
+[data-admin-theme='dark'] #security-header {
+    color: var(--admin-text-strong);
+}
+
+[data-admin-theme='dark'] #personal-info-header svg path,
+[data-admin-theme='dark'] #security-header svg path {
+    fill: var(--admin-accent);
+}
+
+[data-admin-theme='dark'] .personal-info-input,
+[data-admin-theme='dark'] .password-contanier {
+    color: var(--admin-text-soft);
+}
+
+[data-admin-theme='dark'] .info-container,
+[data-admin-theme='dark'] .password-container-legit {
+    background: var(--admin-surface-alt);
+    border-color: var(--admin-border-strong);
+    color: var(--admin-text-strong);
+}
+
+[data-admin-theme='dark'] .info-container input,
+[data-admin-theme='dark'] .password-container-legit input {
+    color: var(--admin-text-strong);
+}
+
+[data-admin-theme='dark'] .info-container input::placeholder,
+[data-admin-theme='dark'] .password-container-legit input::placeholder {
+    color: var(--admin-text-muted);
+}
+
+[data-admin-theme='dark'] .reveal-password path {
+    fill: var(--admin-text-muted);
+}
+
+[data-admin-theme='dark'] #separator {
+    border-top-color: var(--admin-border-strong);
+}
+
+[data-admin-theme='dark'] #modal-footer {
+    background: var(--admin-surface-alt);
+    border-top-color: var(--admin-border-strong);
+}
+
+[data-admin-theme='dark'] .footer-message.success {
+    color: var(--admin-success);
+}
+
+[data-admin-theme='dark'] .footer-message.error {
+    color: var(--admin-danger-text);
+}
+
+[data-admin-theme='dark'] #cancel-button {
+    color: var(--admin-text-muted);
+}
+
+[data-admin-theme='dark'] #cancel-button:hover {
+    color: var(--admin-text-strong);
+}
+
+
         @media (max-width: 768px) {
           #settings-modal {
             width: calc(100vw - 1rem);

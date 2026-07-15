@@ -18,6 +18,8 @@ export const authReducer = (state, action) => {
       return { user: { ...action.payload, _id: decoded._id } }
     case 'LOGOUT':
       return { user: null }
+    case 'UPDATE_USER':
+      return { user: { ...state.user, ...action.payload } }
     default:
       return state
   }

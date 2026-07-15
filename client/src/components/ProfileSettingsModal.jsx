@@ -45,7 +45,7 @@ function ProfileSettingsModal({ onClose }) {
 
                 const updatedUser = await updateProfile(user._id, updates, user.token);
 
-                // NOTE: adjust this action type/payload shape to match your AuthContext reducer
+                
                 dispatch({ type: 'UPDATE_USER', payload: updatedUser });
             }
 

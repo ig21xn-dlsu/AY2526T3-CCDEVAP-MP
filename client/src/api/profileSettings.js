@@ -1,7 +1,7 @@
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
 export const updateProfile = async (userId, updates, token) => {
-    const res = await fetch(`${API_BASE}/api/user/${userId}`, {
+    const res = await fetch(`${API_BASE}/api/auth/${userId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export const updateProfile = async (userId, updates, token) => {
 };
 
 export const updatePassword = async (userId, passwords, token) => {
-    const res = await fetch(`${API_BASE}/api/user/${userId}/password`, {
+    const res = await fetch(`${API_BASE}/api/auth/${userId}/password`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

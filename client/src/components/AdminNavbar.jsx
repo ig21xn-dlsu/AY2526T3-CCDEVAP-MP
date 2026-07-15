@@ -11,9 +11,6 @@ function AdminNavbar({ onOpenSettings }) {
     const [arrowUp, setArrowUp] = useState(true);
     const { isDark, toggleTheme } = useAdminTheme();
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [arrowUp, setArrowUp] = useState(true);
-
     const location = useLocation();
     const { user } = useAuthContext();
 

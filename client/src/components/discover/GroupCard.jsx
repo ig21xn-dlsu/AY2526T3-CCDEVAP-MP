@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AvatarStack from './AvatarStack';
 import { SchoolIcon, CheckIcon, PinIcon } from './icons';
 
@@ -44,9 +45,9 @@ export default function GroupCard({ item }) {
         ))}
       </div>
 
-      <a className="btn-view" href={viewHref}>
+      <Link className="btn-view" to={viewHref}>
         {isShared ? 'View Listing' : 'View Group Profile'}
-      </a>
+      </Link>
     </div>
   );
 }

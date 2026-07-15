@@ -8,6 +8,7 @@ import EmptyState from '../components/discover/EmptyState';
 import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
 import useTheme from '../hook/useTheme.js';
+import { useLogOut } from '../hook/useLogOut.js';
 
 import '../stylesheets/padpal.css'
 import { NavLink } from "react-router-dom";
@@ -153,6 +154,7 @@ function useCachedQuery(asyncFn, cacheKey, deps = []) {
 
 export default function DiscoverCommunities() {
   const { theme, toggleTheme } = useTheme();
+  const { logout } = useLogOut();
   const [activeTab, setActiveTab] = useSessionState('discover:activeTab', 'coliving');
   const [coLivingFilters, setCoLivingFilters] = useSessionState('discover:colivingFilters', DEFAULT_COLIVING_FILTERS);
   const [sharedDraftFilters, setSharedDraftFilters] = useSessionState('discover:sharedDraftFilters', DEFAULT_SHARED_FILTERS);
@@ -187,11 +189,14 @@ export default function DiscoverCommunities() {
 
   return (
     <main>
-      <div className="d-flex justify-content-end mb-2">
-        <button type="button" className="btn btn-outline-secondary btn-sm" onClick={toggleTheme}>
-          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-        </button>
-      </div>
+      <div className="d-flex justify-content-end mb-2 gap-2">
+  <button type="button" className="btn btn-outline-secondary btn-sm" onClick={toggleTheme}>
+    {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+  </button>
+  <button type="button" className="btn btn-outline-secondary btn-sm" onClick={logout}>
+    Log Out
+  </button>
+</div>
       <h1 className="page-title">Discover Communities</h1>
       <p className="page-sub">Find the perfect group or space that matches your vibe.</p>
 

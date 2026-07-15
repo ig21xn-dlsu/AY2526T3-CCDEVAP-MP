@@ -188,8 +188,8 @@ User: admin@dlsu.edu.ph
 Pass: Admin1234!
 
 ### Student account
-student@dlsu.edu.ph
-Student1234!
+User: student@dlsu.edu.ph
+Pass: Student1234!
 
 ### Manager account
 User: manager@padpal.com

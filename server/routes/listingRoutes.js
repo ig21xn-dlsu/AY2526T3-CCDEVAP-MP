@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const requireAuth = require("../middleware/requireAuth");
 const Listing = require("../models/Listing");
 console.log("LISTING MODEL: ", Listing);
-
+const listController = require("../controllers/listingController.js");
 const router = express.Router();
 
 const VALID_GENDERS = new Set([
@@ -26,14 +26,15 @@ const VALID_CAMPUSES = new Set([
   "UPD"
 ]);
 
-router.get("/manager", requireAuth, async (req, res) => {
-  try {
-    const listings = await Listing.find({ owner: req.user._id }).sort({ createdAt: -1 });
-    res.status(200).json(listings);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+
+/* ========== Migrated  Logic listingController.js  =================== 
+  * Hi, if anyone needs to check changes, everything is moved to /controller/listingController
+  * -Philip
+  */
+
+router.get("/manager", requireAuth, listController.getListingOwner);
+
+
 
 router.get(
   "/",

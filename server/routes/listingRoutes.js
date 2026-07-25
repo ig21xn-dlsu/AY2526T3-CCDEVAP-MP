@@ -104,32 +104,7 @@ router.get(
   })
 );
 
-router.get(
-  "/:id",
-  asyncHandler(async (req, res) => {
-
-    const { id } = req.params;
-
-    if (
-      !mongoose.Types.ObjectId.isValid(id)
-    ) {
-      return res.status(400).json({
-        message: "Invalid listing id."
-      });
-    }
-
-    const listing =
-      await Listing.findById(id);
-
-    if (!listing) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
-    res.json(listing);
-  })
-);
+router.get("/:id", asyncHandler(listController.getListingById));
 
 router.post("/", requireAuth, asyncHandler(listController.createListing));
 

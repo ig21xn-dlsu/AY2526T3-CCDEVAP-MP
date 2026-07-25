@@ -160,5 +160,30 @@ exports.createListing = async (req, res) => {
 }
 
 
+/*
+  * GET /api/listing/:id
+  *
+  * This function queries to find a specific listing by its ID
+  *
+  * @param id the value assigned id upon a specific listing is created 
+  * 
+*/
+exports.getListingById(async (req, res) => {
+  const { id } = req.params;
 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+      message: "Invalid Listing id"
+    });
+  }
 
+  const listing = await Listing.findById(id);
+
+  if (!listing) {
+    return res.status(404).json({
+      message: "Listing not found."
+    });
+  }
+  res.json(listing);
+}
+);

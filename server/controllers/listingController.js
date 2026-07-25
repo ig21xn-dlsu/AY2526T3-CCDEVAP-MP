@@ -187,3 +187,47 @@ exports.getListingById(async (req, res) => {
   res.json(listing);
 }
 );
+
+
+
+
+/* PATCH /api/lisiting/:id
+ * 
+ * This function updates the current state of rthe listing from a form in req.body
+ * 
+*/
+
+exports.updateListing(async (req, res) => {
+
+
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid listingd id" });
+  }
+
+  const listing = await Listing.findById(id);
+
+  if (!listing) {
+    return res.status(403).json({ message: "Listing could not be found" });
+  }
+  const updated =
+    await Listing.findByIdAndUpdate(
+      id,
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+
+  if (updated) {
+    return res.status(200).json({ message: "Listing updated", listing: updated });
+  } else {
+    return res.status(400).json({ message: "Unexpected listing update error" });
+  }
+}
+);
+
+

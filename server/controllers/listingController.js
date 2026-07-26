@@ -31,9 +31,6 @@ exports.getListingOwner = async (req, res) => {
   * @res = contains errors messsages, will integrate with frontend soon
   *
 */
-
-
-
 exports.createListing = async (req, res) => {
   const {
     roomTitle,
@@ -168,7 +165,7 @@ exports.createListing = async (req, res) => {
   * @param id the value assigned id upon a specific listing is created 
   * 
 */
-exports.getListingById(async (req, res) => {
+exports.returnListing = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -186,7 +183,7 @@ exports.getListingById(async (req, res) => {
   }
   res.json(listing);
 }
-);
+
 
 
 
@@ -196,10 +193,7 @@ exports.getListingById(async (req, res) => {
  * This function updates the current state of rthe listing from a form in req.body
  * 
 */
-
-exports.updateListing(async (req, res) => {
-
-
+exports.updateListing = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -228,6 +222,39 @@ exports.updateListing(async (req, res) => {
     return res.status(400).json({ message: "Unexpected listing update error" });
   }
 }
-);
+
+/* DELETE /api/listing/:id
+ *  
+ * Delete a listing with the id with ownership verification
+ *
+*/
+exports.deleteListing = async (req, res) => {
+
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid listing id" });
+  }
+
+  const listing = await Listing.findById(id);
+
+  //Listing check
+  if (!listing) {
+    return res.status(404).json({ message: "Listing not found" });
+  }
+
+  //Ownership check 
+  if (listing.owner.toString() !== req.user._id.toString()) {
+    return res.status(403).json({ message: "You do not own this listing" });
+  }
+
+  const deletedListing = await Listing.findByIdAndDelete(id);
+
+  if (!deletedListing) {
+    return res.status(500).json({ message: "Unexepected server error" });
+  } else {
+    return res.status(200).json({ message: "Listing is deleted" });
+  }
+}
 
 

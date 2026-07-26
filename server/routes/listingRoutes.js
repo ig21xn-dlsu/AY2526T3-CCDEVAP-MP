@@ -35,7 +35,11 @@ const VALID_CAMPUSES = new Set([
 router.get("/manager", requireAuth, asyncHandler(listController.getListingOwner));
 
 
-
+/*
+  * Will be deprecated as it is not used and doesnt match the current model listing
+  *
+  *
+*/
 router.get(
   "/",
   requireAuth,
@@ -104,7 +108,7 @@ router.get(
   })
 );
 
-router.get("/:id", asyncHandler(listController.getListingById));
+router.get("/:id", asyncHandler(listController.returnListing));
 
 router.post("/", requireAuth, asyncHandler(listController.createListing));
 
@@ -153,39 +157,5 @@ router.patch(
 
 router.patch("/:id", requireAuth, asyncHandler(listController.updateListing));
 
-router.delete(
-  "/:id",
-  requireAuth,
-  asyncHandler(async (req, res) => {
-
-    const { id } = req.params;
-
-    if (
-      !mongoose.Types.ObjectId.isValid(id)
-    ) {
-      return res.status(400).json({
-        message: "Invalid listing id."
-      });
-    }
-
-    const listing = await Listing.findById(id);
-
-    if (!listing) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
-    if (listing.owner.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        message: "You don't own this listing."
-      });
-    }
-
-    await Listing.findByIdAndDelete(id);
-
-    res.status(204).send();
-  })
-);
-
+router.delete("/:id", requireAuth, listController.deleteListing);
 module.exports = router;

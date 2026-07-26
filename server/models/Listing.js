@@ -26,6 +26,12 @@ const listingSchema = new mongoose.Schema({
     required: true,
   },
 
+  occupiedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Group",
+    default: null,
+  },
+
   roomTitle: String,
   price: Number,
 
@@ -58,8 +64,8 @@ const listingSchema = new mongoose.Schema({
     default: Date.now
   },
 
-  isDeleted: {type: Boolean, default: false},
-  deletedAt: {type: Date, default: null},
+  isDeleted: { type: Boolean, default: false },
+  deletedAt: { type: Date, default: null },
 
 });
 

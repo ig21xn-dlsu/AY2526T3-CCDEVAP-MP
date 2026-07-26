@@ -210,7 +210,7 @@ exports.updateListing = async (req, res) => {
       id,
       req.body,
       {
-        new: true,
+        returnDocument: "after",
         runValidators: true
       }
     );
@@ -257,4 +257,43 @@ exports.deleteListing = async (req, res) => {
   }
 }
 
+/* PATCH /api/listing/:id/status
+ * 
+ * Update the occupancy status 
+ *
+*/
+exports.updateOccupancy = async (req, res) => {
 
+  const { id } = req.params;
+  const { isOccupied } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid listing id" });
+  }
+
+  const listing = await Listing.findById(id);
+
+  //Listing check
+  if (!listing) {
+    return res.status(404).json({ message: "Listing not found" });
+  }
+
+  //Ownership check 
+  if (listing.owner.toString() !== req.user._id.toString()) {
+    return res.status(403).json({ message: "You do not own this listing" });
+  }
+
+  const updated = await Listing.findByIdAndUpdate(
+    id,
+    { isOccupied },
+    {
+      returnDocument: "after"
+    }
+  );
+
+  if (!updated) {
+    return res.status(500).json({ message: "Unexpected udpate error" });
+  } else {
+    return res.status(200).json({ message: "Occupied status changed" });
+  }
+}

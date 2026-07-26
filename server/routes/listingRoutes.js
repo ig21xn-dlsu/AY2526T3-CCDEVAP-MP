@@ -109,53 +109,8 @@ router.get(
 );
 
 router.get("/:id", asyncHandler(listController.returnListing));
-
 router.post("/", requireAuth, asyncHandler(listController.createListing));
-
-router.patch(
-  "/:id/status",
-  requireAuth,
-  asyncHandler(async (req, res) => {
-
-    const { id } = req.params;
-    const { isOccupied } = req.body;
-
-    if (
-      !mongoose.Types.ObjectId.isValid(id)
-    ) {
-      return res.status(400).json({
-        message: "Invalid listing id."
-      });
-    }
-
-    const listing = await Listing.findById(id);
-
-    if (!listing) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
-    if (listing.owner.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        message: "You don't own this listing."
-      });
-    }
-
-    const updated =
-      await Listing.findByIdAndUpdate(
-        id,
-        { isOccupied },
-        {
-          new: true
-        }
-      );
-
-    res.json(updated);
-  })
-);
-
+router.patch("/:id/status", requireAuth, asyncHandler(listController.updateOccupancy));
 router.patch("/:id", requireAuth, asyncHandler(listController.updateListing));
-
-router.delete("/:id", requireAuth, listController.deleteListing);
+router.delete("/:id", requireAuth, asyncHandler(listController.deleteListing));
 module.exports = router;

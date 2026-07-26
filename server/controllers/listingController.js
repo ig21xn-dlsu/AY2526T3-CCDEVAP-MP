@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Listing = require('../models/Listing');
-
+const Group = require('../models/Group');
 
 
 
@@ -295,5 +295,65 @@ exports.updateOccupancy = async (req, res) => {
     return res.status(500).json({ message: "Unexpected udpate error" });
   } else {
     return res.status(200).json({ message: "Occupied status changed" });
+  }
+}
+
+
+
+
+/* PATCH /api/listing/:id/assign-group
+ * 
+ * This function assigns a listing to be occupied by a group.
+ *
+ * @param {string} req.body.groupId = groupId of the one being assigned
+ * @param {string} req.params = will only contain the listing id 
+*/
+exports.updateListingAssignment = async (req, res) => {
+
+  const doClear = req.body.doClear; //if this is true this controller just sets it back to null
+  const groupId = req.body.groupId; //groupId to be assigne 
+  const { id } = req.params; //listing to be updated   
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid listing id" });
+  }
+
+  const listing = await Listing.findById(id);
+
+  //Listing check
+  if (!listing) {
+    return res.status(404).json({ message: "Listing not found" });
+  }
+
+  //Ownership check 
+  if (listing.owner.toString() !== req.user._id.toString()) {
+    return res.status(403).json({ message: "You do not own this listing" });
+  }
+
+  let occupancyUpdate;
+  if (doClear === true) {
+    occupancyUpdate = null;
+  } else {
+    if (!mongoose.Types.ObjectId.isValid(groupId)) {
+      return res.status(400).json({ message: "Invalid group id" });
+    }
+    occupancyUpdate = groupId;
+  }
+
+
+  const updated = await Listing.findByIdAndUpdate(
+    id,
+    {
+      occupiedBy: occupancyUpdate
+    },
+    {
+      returnDocument: "after"
+    }
+  )
+
+  if (!updated) {
+    return res.status(500).json({ message: "Unexpected update error" });
+  } else {
+    return res.status(200).json({ message: "occupiedBy successful." });
   }
 }

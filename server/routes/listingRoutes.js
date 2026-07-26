@@ -113,4 +113,7 @@ router.post("/", requireAuth, asyncHandler(listController.createListing));
 router.patch("/:id/status", requireAuth, asyncHandler(listController.updateOccupancy));
 router.patch("/:id", requireAuth, asyncHandler(listController.updateListing));
 router.delete("/:id", requireAuth, asyncHandler(listController.deleteListing));
+router.patch("/:id/assign-group", requireAuth, asyncHandler(listController.updateListingAssignment));
+
+
 module.exports = router;

@@ -40,10 +40,13 @@ const listingSchema = new mongoose.Schema({
     enum: ["male", "female", "co-ed"]
   },
 
+
+  //will remove this -- soon -- as this can be derived from `occupiedBy`
   isOccupied: Boolean,
   maximumCapacity: {
     type: Number,
     required: true,
+    default: false,
   },
   description: String,
   tags: [String],

@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const requireAuth = require("../middleware/requireAuth");
 const Listing = require("../models/Listing");
 console.log("LISTING MODEL: ", Listing);
-
+const listController = require("../controllers/listingController.js");
 const router = express.Router();
 
 const VALID_GENDERS = new Set([
@@ -26,15 +26,20 @@ const VALID_CAMPUSES = new Set([
   "UPD"
 ]);
 
-router.get("/manager", requireAuth, async (req, res) => {
-  try {
-    const listings = await Listing.find({ owner: req.user._id }).sort({ createdAt: -1 });
-    res.status(200).json(listings);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
+/* ========== Migrated  Logic listingController.js  =================== 
+  * Hi, if anyone needs to check changes, everything is moved to /controller/listingController
+  * -Philip
+  */
+
+router.get("/manager", requireAuth, asyncHandler(listController.getListingOwner));
+
+
+/*
+  * Will be deprecated as it is not used and doesnt match the current model listing
+  *
+  *
+*/
 router.get(
   "/",
   requireAuth,
@@ -103,300 +108,9 @@ router.get(
   })
 );
 
-router.get(
-  "/:id",
-  asyncHandler(async (req, res) => {
-
-    const { id } = req.params;
-
-    if (
-      !mongoose.Types.ObjectId.isValid(id)
-    ) {
-      return res.status(400).json({
-        message: "Invalid listing id."
-      });
-    }
-
-    const listing =
-      await Listing.findById(id);
-
-    if (!listing) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
-    res.json(listing);
-  })
-);
-
-router.post(
-  "/",
-  requireAuth,
-  asyncHandler(async (req, res) => {
-    console.log("RAW req.body", req.body);
-    const {
-      roomTitle,
-      price,
-      maximumCapacity,
-      gender,
-      isOccupied,
-      description,
-      tags,
-      amenities,
-      buildingName,
-      latitude,
-      longitude,
-      nearestCampus,
-      contacts,
-      imageUrl
-    } = req.body;
-
-    const errors = {};
-
-    if (!roomTitle?.trim()) {
-      errors.roomTitle =
-        "Room title is required.";
-    }
-
-    else if (roomTitle.length > 120) {
-      errors.roomTitle =
-        "Room title must be under 120 characters.";
-    }
-
-    const parsedPrice =
-      Number(price);
-
-    if (
-      !Number.isFinite(parsedPrice)
-    ) {
-      errors.price =
-        "Price must be a valid number.";
-    }
-
-    else if (
-      parsedPrice < 0
-    ) {
-      errors.price =
-        "Price cannot be negative.";
-    }
-
-    if (
-      description &&
-      description.length > 3000
-    ) {
-      errors.description =
-        "Description must be 3000 characters or fewer.";
-    }
-
-    const parsedCapacity =
-      Number(maximumCapacity);
-
-    if (
-      !Number.isFinite(parsedCapacity)
-    ) {
-      errors.maximumCapacity =
-        "Maximum capacity must be a valid number.";
-    }
-
-    else if (
-      parsedCapacity < 1
-    ) {
-      errors.maximumCapacity =
-        "Maximum capacity must be at least 1.";
-    }
-
-    if (
-      !VALID_GENDERS.has(gender)
-    ) {
-      errors.gender =
-        "Invalid gender option.";
-    }
-
-    if (
-      !VALID_CAMPUSES.has(
-        nearestCampus
-      )
-    ) {
-      errors.nearestCampus =
-        "Invalid campus option.";
-    }
-
-    if (
-      Object.keys(errors).length > 0
-    ) {
-      return res.status(422).json({
-        message:
-          "Some fields need attention.",
-        errors
-      });
-    }
-    console.log("PAYLOAD TO CREATE:", { maximumCapacity: parsedCapacity });
-    const created =
-      await Listing.create({
-        roomTitle:
-          roomTitle.trim(),
-
-        price:
-          parsedPrice,
-
-        maximumCapacity:
-          parsedCapacity,
-
-        gender,
-
-        isOccupied,
-
-        description:
-          description || "",
-
-        tags:
-          tags || [],
-
-        amenities:
-          amenities || [],
-
-        buildingName,
-
-        latitude,
-
-        longitude,
-
-        nearestCampus,
-
-        contacts:
-          contacts || [],
-
-        imageUrl:
-          imageUrl || [],
-        owner: req.user._id,
-      });
-    console.log("FULL PAYLOAD:", listingData);
-    res
-      .status(201)
-      .json(created);
-  })
-);
-
-router.patch(
-  "/:id/status",
-  requireAuth,
-  asyncHandler(async (req, res) => {
-
-    const { id } = req.params;
-    const { isOccupied } = req.body;
-
-    if (
-      !mongoose.Types.ObjectId.isValid(id)
-    ) {
-      return res.status(400).json({
-        message: "Invalid listing id."
-      });
-    }
-
-    const listing = await Listing.findById(id);
-
-    if (!listing) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
-    if (listing.owner.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        message: "You don't own this listing."
-      });
-    }
-
-    const updated =
-      await Listing.findByIdAndUpdate(
-        id,
-        { isOccupied },
-        {
-          new: true
-        }
-      );
-
-    res.json(updated);
-  })
-);
-
-router.patch(
-  "/:id",
-  requireAuth,
-  asyncHandler(async (req, res) => {
-
-    const { id } = req.params;
-
-    if (
-      !mongoose.Types.ObjectId.isValid(id)
-    ) {
-      return res.status(400).json({
-        message: "Invalid listing id."
-      });
-    }
-
-    const listing = await Listing.findById(id);
-
-    if (!listing) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
-    if (listing.owner.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        message: "You don't own this listing."
-      });
-    }
-
-    const updated =
-      await Listing.findByIdAndUpdate(
-        id,
-        req.body,
-        {
-          new: true,
-          runValidators: true
-        }
-      );
-
-    res.json(updated);
-  })
-);
-
-router.delete(
-  "/:id",
-  requireAuth,
-  asyncHandler(async (req, res) => {
-
-    const { id } = req.params;
-
-    if (
-      !mongoose.Types.ObjectId.isValid(id)
-    ) {
-      return res.status(400).json({
-        message: "Invalid listing id."
-      });
-    }
-
-    const listing = await Listing.findById(id);
-
-    if (!listing) {
-      return res.status(404).json({
-        message: "Listing not found."
-      });
-    }
-
-    if (listing.owner.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        message: "You don't own this listing."
-      });
-    }
-
-    await Listing.findByIdAndDelete(id);
-
-    res.status(204).send();
-  })
-);
-
+router.get("/:id", asyncHandler(listController.returnListing));
+router.post("/", requireAuth, asyncHandler(listController.createListing));
+router.patch("/:id/status", requireAuth, asyncHandler(listController.updateOccupancy));
+router.patch("/:id", requireAuth, asyncHandler(listController.updateListing));
+router.delete("/:id", requireAuth, asyncHandler(listController.deleteListing));
 module.exports = router;

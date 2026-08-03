@@ -2,11 +2,14 @@ import '../../stylesheets/listing-card.css'
 import { useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext.jsx'
+import AssignGroupModal from './Assign-Group-Modal.jsx'
 
 function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacity, isOccupied, imgUrl, owner, onDeleted }) {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [deleting, setDeleting] = useState(false);
+
+  const [showAssignModal, setShowAssignModal] = useState(false);
 
   const isOwner = user?.role === 'manager' && owner === user?._id;
 
@@ -44,6 +47,11 @@ function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacit
       setDeleting(false);
     }
   };
+
+  const handleAssignModal = (e) => {
+    e.stopPropagation();
+    setShowAssignModal(true);
+  }
 
   return (
     <div
@@ -89,9 +97,12 @@ function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacit
             >
               {deleting ? "Deleting..." : "Delete"}
             </button>
+
+            <button className="btn btn-outline-secondary btn-sm" type="button" onClick={handleAssignModal}>Groups</button>
           </div>
         )}
       </div>
+      <AssignGroupModal listingId={_id} isOpen={showAssignModal} onClose={() => setShowAssignModal(false)} />
     </div>
   )
 }

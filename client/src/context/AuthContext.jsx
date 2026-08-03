@@ -3,6 +3,9 @@
  * I also need this since i need to attach a user when i create the listing 
  * 
  * -Philip
+ * 
+ * OKKKK 
+ * - ian :)
  */
 
 
@@ -42,6 +45,34 @@ export const AuthContextProvider = ({ children }) => {
       dispatch({ type: "AUTH_READY" });
     }
   }, []);
+
+  // Periodically re-validate the session against the server. Catches
+  // suspensions (and deletions/expired tokens) even if the user is just
+  // idling on a page and not triggering any other protected requests.
+  useEffect(() => {
+    if (!state.user) return;
+
+    const checkStillValid = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+          headers: { 'Authorization': `Bearer ${state.user.token}` }
+        });
+
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem("user");
+          sessionStorage.removeItem("user");
+          dispatch({ type: "LOGOUT" });
+        }
+      } catch (err) {
+        console.error('Session check failed:', err.message);
+      }
+    };
+
+    checkStillValid();
+    const interval = setInterval(checkStillValid, 30000); // every 30s
+
+    return () => clearInterval(interval);
+  }, [state.user]);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

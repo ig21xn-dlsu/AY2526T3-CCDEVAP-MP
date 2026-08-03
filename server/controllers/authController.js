@@ -231,4 +231,12 @@ const getUserById = async (req, res) => {
   }
 };
 
-module.exports = { getUserById, loginUser, registerUser, loginAdmin, adminCreateUser };
+const getMe = async (req, res) => {
+  res.status(200).json({
+    _id: req.user._id,
+    role: req.user.role,
+    status: req.user.status,
+  });
+};
+
+module.exports = { getUserById, loginUser, registerUser, loginAdmin, adminCreateUser, getMe };

@@ -5,7 +5,7 @@ import CreateGroup from './pages/CreateGroup';
 
 
 import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+import SignUp from './pages/Signup';
 import LogInAdmin from './pages/Login-Admin';
 
 import { AdminThemeProvider } from './context/AdminThemeContext';
@@ -78,7 +78,7 @@ function AppRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/mern">
       <AppRoutes />
     </BrowserRouter>
   );

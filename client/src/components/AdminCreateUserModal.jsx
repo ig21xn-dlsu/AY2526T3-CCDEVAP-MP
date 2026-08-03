@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSignup } from '../hook/useSignUp';
+import { useAdminCreateUser } from '../hook/useAdminCreateUser';
 import '../stylesheets/AdminCreateUserModal.css'; 
 
 const initialFormState = {
@@ -14,7 +14,7 @@ const initialFormState = {
 function AdminCreateUserModal({ show, onClose, onUserCreated }) {
     const [formData, setFormData] = useState(initialFormState);
     const [successMessage, setSuccessMessage] = useState('');
-    const { signup, isLoading, error } = useSignup();
+    const { createUser, isLoading, error } = useAdminCreateUser();
 
     if (!show) return null; // Native way to hide the modal
 
@@ -27,7 +27,7 @@ function AdminCreateUserModal({ show, onClose, onUserCreated }) {
         e.preventDefault();
         setSuccessMessage('');
 
-        const success = await signup(
+        const success = await createUser(
             formData.lastName,
             formData.firstName,
             formData.email,
@@ -116,6 +116,7 @@ function AdminCreateUserModal({ show, onClose, onUserCreated }) {
                             >
                                 <option value="student">Student</option>
                                 <option value="manager">Property Owner</option>
+                                <option value="admin">Admin</option>
                             </select>
                         </div>
 

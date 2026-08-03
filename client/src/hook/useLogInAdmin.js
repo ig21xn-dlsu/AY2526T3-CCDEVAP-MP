@@ -6,14 +6,14 @@ export const useLogInAdmin = () => {
     const [isLoading, setIsLoading] = useState(null)
     const { dispatch } = useAuthContext()
 
-    const logInAdmin = async (email, password) => {
+    const logInAdmin = async (email, password, rememberMe) => {
         setIsLoading(true)
         setError(null)
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/adminlogin`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({ email, password })
         })
 
         const json = await response.json()
@@ -24,19 +24,17 @@ export const useLogInAdmin = () => {
         }
 
         if (response.ok) {
-            // save the user to local storage
-            localStorage.setItem('user', JSON.stringify(json))
-
-            // update AuthContext
-            dispatch({ type: 'LOGIN', payload: json })
             
-            setIsLoading(false)
-             
-             return json;
-        }
+            const storage = rememberMe ? localStorage : sessionStorage
+            storage.setItem('user', JSON.stringify(json))
 
+            dispatch({ type: 'LOGIN', payload: json })
+
+            setIsLoading(false)
+
+            return json;
+        }
     }
 
     return { logInAdmin, isLoading, error }
-    
 }

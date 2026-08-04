@@ -60,17 +60,15 @@ const getInquiries = async (req, res) => {
 const markAsRead = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const inquiry = await Inquiry.findByIdAndUpdate(
-      id,
-      { isRead: true },
-      { new: true }
-    );
-
+    const inquiry = await Inquiry.findById(id);
     if (!inquiry) {
       return res.status(404).json({ message: "Inquiry not found." });
     }
-
+    if (inquiry.receiver.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "You do not have access to this inquiry." });
+    }
+    inquiry.isRead = true;
+    await inquiry.save();
     return res.status(200).json({ message: "Marked as read.", inquiry });
   } catch (err) {
     return res.status(400).json({ message: err.message });

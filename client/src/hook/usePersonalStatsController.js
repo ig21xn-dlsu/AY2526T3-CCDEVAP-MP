@@ -1,37 +1,25 @@
-import { useState, useEffect, useCallback } from 'react';
-
-const getToken = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  return storedUser?.token;
-};
+import { useState, useEffect, useCallback, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 const MANAGER_STATS_ENDPOINT = `${import.meta.env.VITE_API_URL}/api/stats/manager`;
 
-/**
- * useManagerStats
- *
- * Fetches the logged-in manager's own listing stats:
- *  - totalListings
- *  - occupiedListings
- *  - activeInquiries (unread, past 7 days)
- *
- * Usage:
- *   const { stats, loading, error, refetch } = useManagerStats();
- */
 function useManagerStats() {
+  const { user } = useContext(AuthContext);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchStats = useCallback(async () => {
+    if (!user?.token) {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
-      const token = getToken();
-
       const res = await fetch(MANAGER_STATS_ENDPOINT, {
         headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          Authorization: `Bearer ${user.token}`,
         },
       });
       if (!res.ok) {
@@ -45,7 +33,7 @@ function useManagerStats() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [user?.token]);
 
   useEffect(() => {
     fetchStats();

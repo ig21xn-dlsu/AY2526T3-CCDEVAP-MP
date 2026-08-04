@@ -36,15 +36,15 @@ function SignUp() {
     const [role, setRole] = useState('student');
 
     const images = [
-  "/images/sign-up-1.jpg",
-  "/images/sign-up-2.jpg",
-  "/images/sign-up-3.jpg",
-  "/images/sign-up-4.jpg",
-  "/images/sign-up-5.jpg",
-  "/images/sign-up-6.jpg",
-  "/images/sign-up-7.jpg",
-  "/images/sign-up-8.jpg",
-  "/images/sign-up-9.jpg",
+  "/mern/images/sign-up-1.jpg",
+  "/mern/images/sign-up-2.jpg",
+  "/mern/images/sign-up-3.jpg",
+  "/mern/images/sign-up-4.jpg",
+  "/mern/images/sign-up-5.jpg",
+  "/mern/images/sign-up-6.jpg",
+  "/mern/images/sign-up-7.jpg",
+  "/mern/images/sign-up-8.jpg",
+  "/mern/images/sign-up-9.jpg",
     ];
 
     const [imageIndex, setImageIndex] = useState(0);

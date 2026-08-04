@@ -1,0 +1,92 @@
+.admin-add-listing-modal {
+    max-width: 640px;
+}
+
+.admin-add-listing-modal .admin-create-body {
+    max-height: 70vh;
+}
+
+.admin-form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.admin-form-row .admin-create-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-checkbox-row label {
+    margin: 0;
+    font-weight: 500;
+    color: var(--admin-text);
+}
+
+.admin-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.admin-pill-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-tag-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--admin-border-strong);
+    background-color: var(--admin-surface);
+    color: var(--admin-text-soft);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.admin-tag-pill:hover {
+    background-color: var(--admin-hover);
+}
+
+.admin-tag-pill-active {
+    background-color: var(--admin-accent);
+    border-color: var(--admin-accent);
+    color: #ffffff;
+}
+
+.admin-location-results {
+    margin-top: 6px;
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.admin-location-result-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border: none;
+    border-bottom: 1px solid var(--admin-border);
+    background-color: var(--admin-surface);
+    color: var(--admin-text);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.admin-location-result-item:last-child {
+    border-bottom: none;
+}
+
+.admin-location-result-item:hover {
+    background-color: var(--admin-hover);
+}

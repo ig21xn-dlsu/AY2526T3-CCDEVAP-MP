@@ -6,9 +6,11 @@ exports.getUsers = async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const search = req.query.search || '';
+        const role = req.query.role || '';
 
+        const ALLOWED_ROLES = ['student', 'manager'];
         const filter = {
-            role: { $in: ['student', 'manager'] }, 
+            role: role && ALLOWED_ROLES.includes(role) ? role : { $in: ALLOWED_ROLES },
         };
 
         if (search) {

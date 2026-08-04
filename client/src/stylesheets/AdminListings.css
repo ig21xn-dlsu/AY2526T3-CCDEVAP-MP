@@ -18,6 +18,19 @@
 
 .header { margin-bottom: 32px; }
 
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.table-bottom-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
 .property-header h2 {
     font-size: 28px;
     font-weight: 700;

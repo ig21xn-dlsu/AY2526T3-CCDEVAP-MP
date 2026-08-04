@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import TopNav from '../components/create/TopNav.jsx';
 import PageHeader from '../components/create/PageHeader.jsx';
 import GroupIdentityCard from '../components/create/GroupIdentityCard.jsx';
@@ -6,6 +7,7 @@ import TargetHousingCard from '../components/create/TargetHousingCard.jsx';
 import DesiredRoommatesCard from '../components/create/DesiredRoommatesCard.jsx';
 import LaunchButton from '../components/create/LaunchButton.jsx';
 
+import { fetchAvailableListings } from '../api/groupService.js';
 import { useGroupFormConfig } from '../hook/useGroupFormConfig.js';
 import { useCreateGroupForm } from '../hook/useCreateGroupForm.js';
 
@@ -15,6 +17,7 @@ const NO_PREFERENCE_OPTION = { value: '', label: 'No preference' };
 
 export default function CreateGroup({ onSuccess }) {
   const { config, status: configStatus, error: configError, isLoading } = useGroupFormConfig();
+  const [listingOptions, setListingOptions] = useState([]);
 
   // Called unconditionally (before any early return) to satisfy the Rules of Hooks.
   // If useCreateGroupForm reads into `config` immediately (e.g. config.budget) on
@@ -29,6 +32,28 @@ export default function CreateGroup({ onSuccess }) {
     submitError,
     submit,
   } = useCreateGroupForm(config, onSuccess);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadListings() {
+      try {
+        const data = await fetchAvailableListings();
+        if (!cancelled) {
+          setListingOptions(Array.isArray(data) ? data : []);
+        }
+      } catch {
+        if (!cancelled) {
+          setListingOptions([]);
+        }
+      }
+    }
+
+    loadListings();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (isLoading) {
     return (
@@ -98,6 +123,9 @@ export default function CreateGroup({ onSuccess }) {
             budgetSlider={budgetSlider}
             moveInDate={fields.moveInDate}
             onMoveInDateChange={fields.setMoveInDate}
+            listingOptions={listingOptions}
+            selectedListingId={fields.selectedListingId}
+            onListingChange={fields.setSelectedListingId}
           />
 
           <DesiredRoommatesCard

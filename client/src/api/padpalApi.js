@@ -110,7 +110,7 @@ export function fetchMyGroup() {
  * Used by the Group Profile page. A 404 should be treated as "not found" by the caller.
  */
 export function fetchGroupById(id) {
-  return request(`/api/groups/${id}`);
+  return request(`/groups/${id}`);
 }
 
 /**

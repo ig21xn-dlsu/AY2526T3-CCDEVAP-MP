@@ -1,4 +1,4 @@
-import { ClockIcon, CalendarIcon } from './icons.jsx';
+import { ClockIcon, CalendarIcon, ChevronDownIcon } from './icons.jsx';
 import BudgetRangerSlider from './BudgetRangerSlider.jsx';
 
 export default function TargetHousingCard({
@@ -6,6 +6,9 @@ export default function TargetHousingCard({
   budgetSlider,
   moveInDate,
   onMoveInDateChange,
+  listingOptions = [],
+  selectedListingId,
+  onListingChange,
 }) {
   return (
     <section className="card" id="card-housing">
@@ -37,6 +40,34 @@ export default function TargetHousingCard({
             value={moveInDate}
             onChange={(e) => onMoveInDateChange(e.target.value)}
           />
+        </div>
+      </div>
+
+      <div className="form-field">
+        <label className="form-label" htmlFor="eyeing-listing">
+          Listing They&apos;re Eyeing
+        </label>
+        <p className="form-hint">Link a listing your group is currently considering.</p>
+        <div className="select-wrap">
+          <select
+            className="form-select"
+            id="eyeing-listing"
+            value={selectedListingId ?? ''}
+            onChange={(e) => onListingChange(e.target.value)}
+          >
+            <option value="">No listing selected</option>
+            {(listingOptions ?? []).map((listing) => {
+              const optionValue = listing.id ?? listing._id;
+              const optionLabel = listing.name || listing.roomTitle || 'Untitled listing';
+              return (
+                <option key={optionValue} value={optionValue}>
+                  {optionLabel}
+                  {listing.nearestCampus ? ` • ${listing.nearestCampus}` : ''}
+                </option>
+              );
+            })}
+          </select>
+          <ChevronDownIcon className="select-chevron" />
         </div>
       </div>
     </section>

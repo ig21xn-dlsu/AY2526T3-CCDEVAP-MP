@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import GroupNav from '../components/group/GroupNav';
 import Hero from '../components/group/Hero';
-import BelowHero from '../components/group/BelowHero';
 import VibeCard from '../components/group/VibeCard';
 import ListingCard from '../components/group/ListingCard';
 import PreferencesCard from '../components/group/PreferencesCard';
@@ -46,7 +45,6 @@ export default function GroupProfile() {
     <>
       <GroupNav />
       <Hero group={group} />
-      <BelowHero members={group.members} onApplyClick={() => setModalOpen(true)} />
 
       <div className="page-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>

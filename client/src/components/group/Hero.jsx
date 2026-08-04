@@ -10,9 +10,11 @@ function LocationIcon() {
 }
 
 export default function Hero({ group }) {
+  const heroImage = group.heroImg || group.listingImg || group.listing?.img || group.listingImage || '';
+
   return (
     <div className="hero">
-      <img src={group.heroImg} alt={group.name} />
+      <img src={heroImage} alt={group.name} />
       <div className="hero-overlay" />
       <div className="hero-content">
         {group.badge && <div className="hero-badge">{group.badge}</div>}

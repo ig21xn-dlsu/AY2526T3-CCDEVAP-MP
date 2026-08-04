@@ -9,29 +9,32 @@ export function useCreateGroupForm(config, onSuccess) {
   const [university, setUniversity] = useState('');
   const [major, setMajor] = useState('');
   const [moveInDate, setMoveInDate] = useState('');
-  const [spots, setSpots] = useState(config.spots.default);
+  const [spots, setSpots] = useState(config?.spots?.default ?? 1);
   const [genderPreference, setGenderPreference] = useState('');
+  const [selectedListingId, setSelectedListingId] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
   const [submitError, setSubmitError] = useState(null);
 
   const { selectedIds: lifestyleTagIds, toggleTag, isSelected } = useLifestyleTags();
+  const budgetConfig = config?.budget ?? {};
+  const spotsConfig = config?.spots ?? {};
 
   const budgetSlider = useBudgetRangeSlider({
-    min: config.budget.min,
-    max: config.budget.max,
-    step: config.budget.step,
-    initialMin: config.budget.defaultMin,
-    initialMax: config.budget.defaultMax,
+    min: budgetConfig.min ?? 0,
+    max: budgetConfig.max ?? 0,
+    step: budgetConfig.step ?? 500,
+    initialMin: budgetConfig.defaultMin ?? 0,
+    initialMax: budgetConfig.defaultMax ?? 0,
   });
 
   const incrementSpots = useCallback(() => {
-    setSpots((prev) => Math.min(prev + 1, config.spots.max));
-  }, [config.spots.max]);
+    setSpots((prev) => Math.min(prev + 1, spotsConfig.max ?? 6));
+  }, [spotsConfig.max]);
 
   const decrementSpots = useCallback(() => {
-    setSpots((prev) => Math.max(prev - 1, config.spots.min));
-  }, [config.spots.min]);
+    setSpots((prev) => Math.max(prev - 1, spotsConfig.min ?? 1));
+  }, [spotsConfig.min]);
 
   const validate = useCallback(() => {
     const errors = {};
@@ -59,6 +62,7 @@ export function useCreateGroupForm(config, onSuccess) {
       moveInDate: moveInDate || null,
       spotsNeeded: spots,
       genderPreference: genderPreference || null,
+      listingId: selectedListingId || null,
     }),
     [
       groupName,
@@ -71,6 +75,7 @@ export function useCreateGroupForm(config, onSuccess) {
       moveInDate,
       spots,
       genderPreference,
+      selectedListingId,
     ]
   );
 
@@ -113,6 +118,8 @@ export function useCreateGroupForm(config, onSuccess) {
       decrementSpots,
       genderPreference,
       setGenderPreference,
+      selectedListingId,
+      setSelectedListingId,
     },
     lifestyleTags: { selectedIds: lifestyleTagIds, toggleTag, isSelected },
     budgetSlider,

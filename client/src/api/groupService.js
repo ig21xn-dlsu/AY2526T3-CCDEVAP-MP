@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
+const API_BASE = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
 
 class ApiError extends Error {
   constructor(message, status, payload) {
@@ -58,6 +58,13 @@ export function createGroup(payload, signal) {
   return request('/api/groups', {
     method: 'POST',
     body: JSON.stringify(payload),
+    signal,
+  });
+}
+
+export function fetchAvailableListings(signal) {
+  return request('/api/shared-spaces', {
+    method: 'GET',
     signal,
   });
 }

@@ -318,6 +318,8 @@ exports.updateListingAssignment = async (req, res) => {
     return res.status(400).json({ message: "Invalid listing id" });
   }
 
+
+
   const listing = await Listing.findById(id);
 
   //Listing check
@@ -337,6 +339,20 @@ exports.updateListingAssignment = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(groupId)) {
       return res.status(400).json({ message: "Invalid group id" });
     }
+
+    const existingAssignment = await Listing.findOne({
+      occupiedBy: groupId,
+      _id: { $ne: id },
+    });
+
+    if (existingAssignment) {
+      return res.status(409).json({
+        message: "This group is already assigned to another listing"
+      })
+    }
+
+
+
     occupancyUpdate = groupId;
   }
 

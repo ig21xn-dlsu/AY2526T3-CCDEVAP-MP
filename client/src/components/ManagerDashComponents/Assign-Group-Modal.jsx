@@ -3,12 +3,14 @@ import { createPortal } from "react-dom";
 import { useCheckGroup } from "../../hook/useCheckGroup.js";
 import { useAssignGroup } from "../../hook/useAssignGroup";
 
-function AssignGroupModal({ listingId, isOpen, onClose, onAssigned }) {
+function AssignGroupModal({ listingId, currentGroupId, isOpen, onClose, onAssigned, onCleared }) {
   const [groupIdInput, setGroupIdInput] = useState("");
   const { checkGroup, checking, group, error: checkError, reset } = useCheckGroup();
-  const { assignGroup, loading: assigning, error: assignError } = useAssignGroup();
+  const { assignGroup, clearGroup, loading: assigning, error: assignError } = useAssignGroup();
 
   if (!isOpen) return null;
+
+  const hasCurrentGroup = !!currentGroupId;
 
   const handleInputChange = (e) => {
     setGroupIdInput(e.target.value);
@@ -30,6 +32,16 @@ function AssignGroupModal({ listingId, isOpen, onClose, onAssigned }) {
     } catch { }
   };
 
+  const handleClear = async () => {
+    const confirmed = window.confirm("Remove the group assigned to this listing?");
+    if (!confirmed) return;
+    try {
+      await clearGroup(listingId);
+      onCleared?.();
+      handleClose();
+    } catch { }
+  };
+
   const handleClose = () => {
     setGroupIdInput("");
     reset();
@@ -39,7 +51,6 @@ function AssignGroupModal({ listingId, isOpen, onClose, onAssigned }) {
   return createPortal(
     <div onClick={(e) => e.stopPropagation()}>
       <div className="modal-backdrop show"></div>
-
       <div className="modal d-block" tabIndex="-1">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -48,6 +59,18 @@ function AssignGroupModal({ listingId, isOpen, onClose, onAssigned }) {
               <button type="button" className="btn-close" onClick={handleClose}></button>
             </div>
             <div className="modal-body">
+              {hasCurrentGroup && (
+                <div className="alert alert-secondary d-flex justify-content-between align-items-center">
+                  <span>This listing already has a group assigned.</span>
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={handleClear}
+                    disabled={assigning}
+                  >
+                    {assigning ? "Clearing..." : "Clear Group"}
+                  </button>
+                </div>
+              )}
               <div className="mb-3">
                 <input
                   type="text"
@@ -89,5 +112,4 @@ function AssignGroupModal({ listingId, isOpen, onClose, onAssigned }) {
     document.body
   );
 }
-
 export default AssignGroupModal;

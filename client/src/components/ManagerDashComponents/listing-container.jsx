@@ -4,7 +4,7 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext.jsx'
 import AssignGroupModal from './Assign-Group-Modal.jsx'
 
-function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacity, occupiedBy, imgUrl, owner, onDeleted }) {
+function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacity, occupiedBy, imgUrl, owner, onDeleted, onGroupChanged }) {
   const isOccupied = !!occupiedBy;
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -103,7 +103,20 @@ function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacit
           </div>
         )}
       </div>
-      <AssignGroupModal listingId={_id} isOpen={showAssignModal} onClose={() => setShowAssignModal(false)} />
+      <AssignGroupModal
+        listingId={_id}
+        currentGroupId={occupiedBy}
+        isOpen={showAssignModal}
+        onClose={() => setShowAssignModal(false)}
+        onAssigned={(group) => {
+          onGroupChanged?.();
+          console.log("Assigned group:", group);
+        }}
+        onCleared={() => {
+          onGroupChanged?.();
+          console.log("Group cleared");
+        }}
+      />
     </div>
   )
 }

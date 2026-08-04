@@ -4,7 +4,8 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext.jsx'
 import AssignGroupModal from './Assign-Group-Modal.jsx'
 
-function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacity, isOccupied, imgUrl, owner, onDeleted }) {
+function ListingContainer({ _id, roomTitle, nearestCampus, price, maximumCapacity, occupiedBy, imgUrl, owner, onDeleted }) {
+  const isOccupied = !!occupiedBy;
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [deleting, setDeleting] = useState(false);

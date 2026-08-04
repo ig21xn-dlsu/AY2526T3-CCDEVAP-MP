@@ -24,7 +24,7 @@ function AssignGroupModal({ listingId, isOpen, onClose, onAssigned }) {
 
   const handleSubmit = async () => {
     try {
-      await assignGroup(listingId, group._id);
+      await assignGroup(listingId, group.id);
       onAssigned?.(group);
       handleClose();
     } catch { }

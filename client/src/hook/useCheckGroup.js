@@ -11,10 +11,10 @@ export function useCheckGroup() {
     setError(null);
     setGroup(null);
     try {
-      const res = await axios.get(`/api/groups/${groupId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}`);
+      console.log(res);
 
-      // Defensive check: even a 200 response should look like a real group.
-      if (!res.data || !res.data._id) {
+      if (!res.data || !res.data.id) {
         const message = res.data?.message || "No group found with that ID";
         setError(message);
         throw new Error(message);

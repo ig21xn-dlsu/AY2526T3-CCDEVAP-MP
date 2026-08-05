@@ -11,8 +11,10 @@ export function useCheckGroup() {
     setError(null);
     setGroup(null);
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}`);
-      console.log(res);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/groups/${groupId}`,
+        { headers: { Authorization: `Bearer ${user?.token}` } }
+      ); console.log(res);
 
       if (!res.data || !res.data.id) {
         const message = res.data?.message || "No group found with that ID";

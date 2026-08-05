@@ -32,8 +32,7 @@ server/
 │   └── Group.js
 ├── tests/
 │   ├── listingController.test.js   <- this test file
-│   ├── results/
-│   │   └── test-output.txt          <- saved output from a passing run
+│   │  
 │   └── README.md                    <- this file
 └── package.json
 ```

@@ -12,13 +12,18 @@ function ListingFullView({ listing }) {
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   console.log("From ViewListing.jsx: ", { showInquiryModal });
 
+  const occupiedBy = listing.occupiedBy ?? null;
+  const isOccupied = Boolean(occupiedBy);
+  const occupancyLabel = isOccupied
+    ? (occupiedBy?.groupName || occupiedBy?.name || 'Occupied')
+    : 'Vacant';
+
 
   const {
     roomTitle,
     price,
     maximumCapacity,
     gender,
-    isOccupied,
     description,
     tags,
     amenities,
@@ -39,7 +44,7 @@ function ListingFullView({ listing }) {
 
         <div className="card shadow headInformation d-flex flex-row">
           <span className={`occuFull occupancyBadge ${isOccupied ? 'occupied' : 'avail'} fs-6`}>
-            {isOccupied ? 'Occupied' : 'Vacant'}
+            {occupancyLabel}
           </span>
           <div className="thumbnail thumbnailFull shadow ">
             <div className="badge campusBadge">Best for {nearestCampus} students</div>

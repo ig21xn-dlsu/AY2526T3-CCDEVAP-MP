@@ -13,14 +13,15 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom'
-
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '../context/AuthContext.jsx'
 
 
 function ManagerCreate({ mode = "create", existingListing }) {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const PROPERTY_TAGS = [
     "Corner Unit",
     "Newly Renovated",
@@ -88,7 +89,7 @@ function ManagerCreate({ mode = "create", existingListing }) {
     }
   };
 
-  const { register, handleSubmit, watch, setValue, reset } = useForm({
+  const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm({
     defaultValues: {
       tags: [],
       contacts: [],
@@ -107,6 +108,11 @@ function ManagerCreate({ mode = "create", existingListing }) {
   const buildingName = watch("buildingName");
   useEffect(() => { setSelectedLocation(false), [buildingName] })
   const [selectedLocation, setSelectedLocation] = useState(false);
+
+  // Submission state: server-side errors surfaced after a failed submit
+  const [serverError, setServerError] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (mode === "edit" && existingListing) {
@@ -175,6 +181,9 @@ function ManagerCreate({ mode = "create", existingListing }) {
   };
 
   const onSubmit = async (data) => {
+    setServerError(null);
+    setFieldErrors({});
+    setSubmitting(true);
     try {
       let imageUrl = existingListing?.imageUrl;
 
@@ -193,6 +202,11 @@ function ManagerCreate({ mode = "create", existingListing }) {
               body: imageFormData
             }
           );
+
+        if (!uploadResponse.ok) {
+          const uploadErr = await uploadResponse.json().catch(() => null);
+          throw new Error(uploadErr?.message || "Failed to upload image.");
+        }
 
         const uploadResult = await uploadResponse.json();
         console.log("CONSOLE LOG:", uploadResult);
@@ -226,11 +240,23 @@ function ManagerCreate({ mode = "create", existingListing }) {
 
       const result = await listingResponse.json();
 
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
+      if (!listingResponse.ok) {
+        if (listingResponse.status === 422 && result.errors) {
+          setFieldErrors(result.errors);
+        }
+        setServerError(result.message || "Failed to save listing.");
+        return;
+      }
 
+      console.log(result);
+      // Success — return to the same place the back button goes to
+      navigate('/manager-listings');
+    } catch (err) {
+      console.error(err);
+      setServerError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const selectLocation = (location) => {
@@ -264,6 +290,12 @@ function ManagerCreate({ mode = "create", existingListing }) {
           <p>Fill in the details below to publish your room to roomies</p>
         </div>
 
+        {serverError && (
+          <div className="alert alert-danger" role="alert">
+            {serverError}
+          </div>
+        )}
+
         <div className="card shadow container p-5">
           <div className="blockHeader d-flex flex-row border-bottom pb-2 gap-2 align-items-center">
             <img src={roomDetIcon} alt="" />
@@ -271,17 +303,46 @@ function ManagerCreate({ mode = "create", existingListing }) {
           </div>
           <div className="roomTitleInputcontainer">
             <p>Room Title</p>
-            <input {...register("roomTitle")} type="text" className="border p-2" placeholder=' e.g 2-Torre Lorenzo | One bedroom 4 beds' />
+            <input
+              {...register("roomTitle", {
+                required: "Room title is required.",
+                maxLength: { value: 120, message: "Room title must be under 120 characters." },
+              })}
+              type="text"
+              className="border p-2"
+              placeholder=' e.g 2-Torre Lorenzo | One bedroom 4 beds'
+            />
+            {errors.roomTitle && <p className="text-danger small mt-1">{errors.roomTitle.message}</p>}
+            {fieldErrors.roomTitle && <p className="text-danger small mt-1">{fieldErrors.roomTitle}</p>}
           </div>
 
           <div className="priceAndMoveContainer gap-3 d-flex flex-row justify-content-between">
             <div className="priceInputContainer d-flex flex-column container">
               <p>Rate per Month</p>
-              <input {...register("price")} type="number" className='border p-2' />
+              <input
+                {...register("price", {
+                  required: "Price is required.",
+                  min: { value: 0, message: "Price cannot be negative." },
+                })}
+                type="number"
+                className='border p-2'
+              />
+              {errors.price && <p className="text-danger small mt-1">{errors.price.message}</p>}
+              {fieldErrors.price && <p className="text-danger small mt-1">{fieldErrors.price}</p>}
             </div>
             <div className="capacityInputContainer d-flex flex-column container">
               <p>Maximum Capacity</p>
-              <input {...register("maximumCapacity")} type="number" min="1" className='border p-2' />
+              <input
+                {...register("maximumCapacity", {
+                  required: "Maximum capacity is required.",
+                  min: { value: 1, message: "Maximum capacity must be at least 1." },
+                })}
+                type="number"
+                min="1"
+                className='border p-2'
+              />
+              {errors.maximumCapacity && <p className="text-danger small mt-1">{errors.maximumCapacity.message}</p>}
+              {fieldErrors.maximumCapacity && <p className="text-danger small mt-1">{fieldErrors.maximumCapacity}</p>}
             </div>
             <div className="genderPreference d-flex flex-column container" >
               <p>Gender Restrictions</p>
@@ -310,7 +371,16 @@ function ManagerCreate({ mode = "create", existingListing }) {
           </div>
           <div className="roomTitleInputcontainer">
             <p>Description</p>
-            <textarea {...register("description")} className='border p-4' rows={4} placeholder='Tell roomies what makes this room and the house special'></textarea>
+            <textarea
+              {...register("description", {
+                maxLength: { value: 3000, message: "Description must be 3000 characters or fewer." },
+              })}
+              className='border p-4'
+              rows={4}
+              placeholder='Tell roomies what makes this room and the house special'
+            ></textarea>
+            {errors.description && <p className="text-danger small mt-1">{errors.description.message}</p>}
+            {fieldErrors.description && <p className="text-danger small mt-1">{fieldErrors.description}</p>}
           </div>
 
           <div className="tagInputContainer d-flex flex-column">
@@ -379,8 +449,9 @@ function ManagerCreate({ mode = "create", existingListing }) {
               type="text"
               className="form-control border p-3"
               placeholder="Search building..."
-              {...register("buildingName")}
+              {...register("buildingName", { required: "Building name or address is required." })}
             />
+            {errors.buildingName && <p className="text-danger small mt-1">{errors.buildingName.message}</p>}
             {searchResults.length > 0 && (
               <div className="list-group">
                 {searchResults.map((location) => (
@@ -399,7 +470,7 @@ function ManagerCreate({ mode = "create", existingListing }) {
 
           <div className="nearestCampus">
             <p>What campus do you want to advertise to?</p>
-            <select {...register("nearestCampus")} className='form-select border p-3'>
+            <select {...register("nearestCampus", { required: "Please select a campus." })} className='form-select border p-3'>
               <option value="">Select a campus</option>
               <option value="DLSU">DLSU-Manila</option>
               <option value="ADMU">ADMU</option>
@@ -408,6 +479,7 @@ function ManagerCreate({ mode = "create", existingListing }) {
               <option value="UPD">UP-Diliman</option>
 
             </select>
+            {errors.nearestCampus && <p className="text-danger small mt-1">{errors.nearestCampus.message}</p>}
             <p className='p-2 '>This info will affect searches and create a map with the campus pinned </p>
           </div>
           {selectedCampus && (
@@ -468,7 +540,9 @@ function ManagerCreate({ mode = "create", existingListing }) {
 
 
 
-        <button type="submit" className='btn btn-primary'>{mode === "edit" ? "Save Changes" : "submit"}</button>
+        <button type="submit" className='btn btn-primary' disabled={submitting}>
+          {submitting ? "Saving..." : mode === "edit" ? "Save Changes" : "submit"}
+        </button>
       </form >
     </div >
   )

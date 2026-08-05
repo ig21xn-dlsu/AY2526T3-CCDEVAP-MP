@@ -1,4 +1,5 @@
 import '../stylesheets/AdminListings.css';
+import AdminAddListingModal from '../components/AdminAddListingModal';
 import AdminNavbar from '../components/AdminNavbar';
 import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import ConfirmModal from '../components/ConfirmModal';
@@ -41,6 +42,8 @@ function AdminListings() {
     const debouncedMaxPrice = useDebouncedValue(maxPrice, 400);
 
     const [selectedListing, setSelectedListing] = useState(null);
+    const [isAddOpen, setIsAddOpen] = useState(false);
+    const [editingListing, setEditingListing] = useState(null);
 
     const [confirmTarget, setConfirmTarget] = useState(null); // { listing, nextIsDeleted }
     const [confirmLoading, setConfirmLoading] = useState(false);
@@ -122,7 +125,12 @@ function AdminListings() {
                     : '/images/dorm_1.jpg';
 
                 return (
-                    <div className="property-cell">
+                    <div
+                        className="property-cell"
+                        onClick={() => setSelectedListing(listing)}
+                        style={{ cursor: 'pointer' }}
+                    >
+
                         <img
                             src={imgSrc}
                             alt={listing.roomTitle}
@@ -177,7 +185,7 @@ function AdminListings() {
                         <a 
                             href="#" 
                             className="action-edit-btn" 
-                            onClick={(e) => { e.preventDefault(); setSelectedListing(listing); }}
+                            onClick={(e) => { e.preventDefault(); setEditingListing(listing); }}
                         >
                             EDIT
                         </a>
@@ -222,6 +230,14 @@ function AdminListings() {
             <AdminNavbar onOpenSettings={() => setIsSettingsOpen(true)} />
             {isSettingsOpen && <ProfileSettingsModal onClose={() => setIsSettingsOpen(false)} />}
 
+            <AdminAddListingModal
+                show={isAddOpen || !!editingListing}
+                mode={editingListing ? 'edit' : 'create'}
+                existingListing={editingListing}
+                onClose={() => { setIsAddOpen(false); setEditingListing(null); }}
+                onListingCreated={load}
+            />
+
             <div className="main-content">
                 <div className="header header-row">
                     <div>
@@ -249,6 +265,11 @@ function AdminListings() {
                         toolbarExtra={filterToolbar}
                     />
                 )}
+                <div className="table-bottom-actions">
+                    <button className="btn admin-btn-submit" onClick={() => setIsAddOpen(true)}>
+                        + Add Listing
+                    </button>
+                </div>
             </div>
 
             {/* VIEW DETAILS MODAL */}
@@ -301,7 +322,13 @@ function AdminListings() {
                         <div className="modal-footer">
                             <button className="btn btn-dismiss" onClick={() => setSelectedListing(null)}>Close</button>
                             <button
-                                className="btn btn-danger"
+                                className="btn admin-btn-submit"
+                                onClick={() => { setEditingListing(selectedListing); setSelectedListing(null); }}
+                            >
+                                Edit Listing
+                            </button>
+                            <button
+                                className="btn btn-danger"  
                                 onClick={() => setConfirmTarget({ listing: selectedListing, nextIsDeleted: !selectedListing.isDeleted })}
                             >
                                 {selectedListing.isDeleted ? 'Restore Listing' : 'Delete Listing'}

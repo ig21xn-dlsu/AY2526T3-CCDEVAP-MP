@@ -23,6 +23,13 @@ export async function createAdminListing(payload) {
   return data;
 }
 
+export async function updateAdminListing(id, payload) {
+  const { data } = await axios.put(`${API_BASE}/api/admin/listing/${id}`, payload, {
+    headers: authHeaders(),
+  });
+  return data;
+}
+
 export async function setListingSoftDeleted(id, isDeleted) {
   const { data } = await axios.patch(
     `${API_BASE}/api/admin/listing/${id}`,

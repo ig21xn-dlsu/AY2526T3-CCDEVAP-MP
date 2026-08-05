@@ -23,7 +23,7 @@ function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const images = ["/images/dorm_1.jpg", "/images/dorm_2.jpg", "/images/dorm_3.jpg"];
+  const images = ["/mern/images/dorm_1.jpg", "/mern/images/dorm_2.jpg", "/mern/images/dorm_3.jpg"];
   const [imageIndex, setImageIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
 

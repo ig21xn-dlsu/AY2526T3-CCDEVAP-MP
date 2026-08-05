@@ -27,7 +27,7 @@ function ManagerListing() {
           <div className="row justify-content-lg-start g-4">
             {listings.map((listing) => (
               <div className="col-12 col-lg-3 justify-content-center" key={listing._id}>
-                <ListingContainer {...listing} imgUrl={listing.imageUrl?.[0]} onDeleted={refetch} />
+                <ListingContainer {...listing} imgUrl={listing.imageUrl?.[0]} onDeleted={refetch} onGroupChanged={refetch} />
               </div>
             ))}
           </div>

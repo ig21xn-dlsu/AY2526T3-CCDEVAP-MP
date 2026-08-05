@@ -20,6 +20,10 @@ router.post('/adminlogin', authLimiter, loginAdmin);
 router.get('/me', requireAuth, getMe);
 router.get('/:id', requireAuth, getUserById);
 
+router.get('/me', requireAuth, getMe);
+router.get('/:id', requireAuth, getUserById);
+
+
 router.post('/admin/create-user', requireAuth, requireAdmin, adminCreateUser);
 
 router.patch('/:id', requireAuth, updateUserProfile);

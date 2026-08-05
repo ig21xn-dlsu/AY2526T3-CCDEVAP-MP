@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../context/AuthContext.jsx';
-import { createAdminListing } from '../api/adminListings';
+import { createAdminListing, updateAdminListing } from '../api/adminListings';
 import { fetchManagers } from '../api/adminUsers';
 import CAMPUSES from '../assets/util/CAMPUSES.js';
 import FileUpload from './ManagerDashComponents/FileUpload.jsx';
@@ -38,9 +38,12 @@ const initialFormState = {
     longitude: null,
     nearestCampus: '',
     owner: '',
+    occupiedBy: '',
 };
 
-function AdminAddListingModal({ show, onClose, onListingCreated }) {
+function AdminAddListingModal({ show, onClose, onListingCreated, mode = 'create', existingListing = null }) {
+    const isEdit = mode === 'edit' && !!existingListing;
+
     const { user } = useContext(AuthContext);
     const { register, handleSubmit, watch, setValue, reset } = useForm({
         defaultValues: initialFormState,
@@ -55,6 +58,7 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
 
     const selectedTags = watch('tags');
     const buildingName = watch('buildingName');
+    const currentOccupiedBy = watch('occupiedBy');
     const [searchResults, setSearchResults] = useState([]);
     const [locationLocked, setLocationLocked] = useState(false);
 
@@ -64,6 +68,22 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
             .then(setManagers)
             .catch(() => setManagersError('Could not load property owners list.'));
     }, [show]);
+
+    useEffect(() => {
+        if (!show) return;
+        if (isEdit) {
+            reset({
+                ...existingListing,
+                owner: existingListing.owner?._id || existingListing.owner || '',
+                occupiedBy: existingListing.occupiedBy?._id || existingListing.occupiedBy || '',
+            });
+            setLocationLocked(true);
+        } else {
+            reset(initialFormState);
+            setLocationLocked(false);
+        }
+        setUploadFile(null);
+    }, [show, isEdit, existingListing, reset]);
 
     useEffect(() => {
         if (locationLocked) return;
@@ -110,6 +130,11 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
         setSearchResults([]);
     };
 
+    const clearOccupancy = () => {
+        setValue('occupiedBy', '');
+        setValue('isOccupied', false);
+    };
+
     const handleClose = () => {
         reset(initialFormState);
         setUploadFile(null);
@@ -125,7 +150,7 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
         setSuccessMessage('');
 
         try {
-            let imageUrl;
+            let imageUrl = existingListing?.imageUrl;
             if (uploadFile) {
                 const imageFormData = new FormData();
                 imageFormData.append('listingImage', uploadFile.file);
@@ -141,21 +166,30 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
                 imageUrl = uploadResult.imageUrl;
             }
 
-            await createAdminListing({
+            const payload = {
                 ...formData,
                 price: Number(formData.price),
                 maximumCapacity: Number(formData.maximumCapacity),
-                imageUrl: imageUrl ? [imageUrl] : [],
-            });
+                imageUrl: imageUrl
+                    ? (Array.isArray(imageUrl) ? imageUrl : [imageUrl])
+                    : [],
+            };
 
-            setSuccessMessage('Listing created successfully!');
+            if (isEdit) {
+                await updateAdminListing(existingListing._id, payload);
+                setSuccessMessage('Listing updated successfully!');
+            } else {
+                await createAdminListing(payload);
+                setSuccessMessage('Listing created successfully!');
+            }
+
             onListingCreated();
 
             setTimeout(() => {
                 handleClose();
             }, 1200);
         } catch (err) {
-            setError(err?.response?.data?.message || 'Failed to create listing.');
+            setError(err?.response?.data?.message || `Failed to ${isEdit ? 'update' : 'create'} listing.`);
         } finally {
             setIsLoading(false);
         }
@@ -165,7 +199,7 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
         <div className="admin-create-overlay">
             <div className="admin-create-modal admin-add-listing-modal">
                 <div className="admin-create-header">
-                    <h3>Add Listing</h3>
+                    <h3>{isEdit ? 'Edit Listing' : 'Add Listing'}</h3>
                     <button className="admin-create-close" onClick={handleClose}>&times;</button>
                 </div>
 
@@ -219,6 +253,34 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
                         <div className="admin-create-group admin-checkbox-row">
                             <input type="checkbox" id="isOccupied" {...register('isOccupied')} />
                             <label htmlFor="isOccupied">Mark as occupied</label>
+
+                            <input type="hidden" {...register('occupiedBy')} />
+
+                        {isEdit && (
+                            <div className="admin-create-group">
+                                <label>Occupancy</label>
+                                {currentOccupiedBy ? (
+                                    <div className="admin-occupancy-row">
+                                        <span>
+                                            Occupied by group:{' '}
+                                            <strong>
+                                                {existingListing?.occupiedBy?.groupName || currentOccupiedBy}
+                                            </strong>
+                                        </span>
+                                        <button type="button" className="admin-btn admin-btn-cancel" onClick={clearOccupancy}>
+                                            Clear Occupancy
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <span className="admin-occupancy-vacant">
+                                        Vacant -- no group currently assigned.
+                                    </span>
+                                )}
+                                <p className="admin-field-hint">
+                                    Use this if a manager forgot to remove a group after they moved out.
+                                </p>
+                            </div>
+                        )}
                         </div>
 
                         <div className="admin-create-group">
@@ -304,6 +366,15 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
                         <div className="admin-create-group">
                             <label>Listing Photo</label>
                             <FileUpload file={uploadFile} onFileChange={setUploadFile} />
+                            {isEdit && existingListing?.imageUrl?.[0] && !uploadFile && (
+                                <div className="admin-current-image">
+                                    <p>Current image:</p>
+                                    <img
+                                        src={`${import.meta.env.VITE_API_URL}${existingListing.imageUrl[0]}`}
+                                        alt="Current listing"
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -312,7 +383,9 @@ function AdminAddListingModal({ show, onClose, onListingCreated }) {
                             Cancel
                         </button>
                         <button type="submit" className="admin-btn admin-btn-submit" disabled={isLoading}>
-                            {isLoading ? 'Creating...' : 'Create Listing'}
+                            {isLoading
+                                ? (isEdit ? 'Saving...' : 'Creating...')
+                                : (isEdit ? 'Save Changes' : 'Create Listing')}
                         </button>
                     </div>
                 </form>

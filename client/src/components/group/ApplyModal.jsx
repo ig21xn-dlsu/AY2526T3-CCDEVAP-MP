@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { submitGroupApplication } from '../../api/padpalApi'; // api placeholder
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const EMPTY_FORM = { name: '', age: '', gender: '', email: '', notes: '' };
 
@@ -38,6 +38,7 @@ function SubmitArrowIcon() {
 }
 
 export default function ApplyModal({ open, groupId, groupName, onClose }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState(EMPTY_FORM);
   const [fieldErrors, setFieldErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
@@ -88,7 +89,10 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
     try {
       await submitGroupApplication(groupId, form);
       setStatus('success');
-      setTimeout(onClose, 2200);
+      setTimeout(() => {
+        onClose();
+        navigate('/student-discover-communities');
+      }, 1400);
     } catch (err) {
       setStatus('error');
       setSubmitError(err);

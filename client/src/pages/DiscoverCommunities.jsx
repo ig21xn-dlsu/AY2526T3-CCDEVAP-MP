@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Tabs from '../components/discover/Tabs';
 import CoLivingFilters, { DEFAULT_COLIVING_FILTERS } from '../components/discover/CoLivingFilters';
 import SharedFilters, { DEFAULT_SHARED_FILTERS } from '../components/discover/SharedFilters';
@@ -12,7 +13,6 @@ import { useLogOut } from '../hook/useLogOut.js';
 import { fetchMyGroup } from '../api/padpalApi';
 
 import '../stylesheets/padpal.css'
-import { NavLink } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_URL ?? '';
 
@@ -156,6 +156,8 @@ function useCachedQuery(asyncFn, cacheKey, deps = []) {
 export default function DiscoverCommunities() {
   const { theme, toggleTheme } = useTheme();
   const { logout } = useLogOut();
+  const navigate = useNavigate();
+  const [ownGroupMessage, setOwnGroupMessage] = useState('');
   const [activeTab, setActiveTab] = useSessionState('discover:activeTab', 'coliving');
   const [coLivingFilters, setCoLivingFilters] = useSessionState('discover:colivingFilters', DEFAULT_COLIVING_FILTERS);
   const [sharedDraftFilters, setSharedDraftFilters] = useSessionState('discover:sharedDraftFilters', DEFAULT_SHARED_FILTERS);
@@ -185,6 +187,14 @@ export default function DiscoverCommunities() {
     error: sharedError,
   } = useCachedQuery(() => fetchDiscoverSharedSpaces(debouncedSharedFilters), sharedCacheKey, [JSON.stringify(debouncedSharedFilters)]);
 
+  function handleViewOwnGroup() {
+    if (myGroup?.id) {
+      navigate(`/student-group-profile/${myGroup.id}`);
+      return;
+    }
+    setOwnGroupMessage('You do not have a group yet. Apply to join one or create your own.');
+  }
+
   const isColiving = activeTab === 'coliving';
   const items = isColiving ? groups : sharedSpaces;
   const loading = isColiving ? groupsLoading : sharedLoading;
@@ -204,13 +214,18 @@ export default function DiscoverCommunities() {
       <p className="page-sub">Find the perfect group or space that matches your vibe.</p>
 
       <div className="tab-actions d-flex flex-wrap gap-2 align-items-center justify-content-end">
-        {myGroup?.id && (
-          <NavLink to={`/student-group-profile/${myGroup.id}`} className="button button-secondary">
-            Your Group
-          </NavLink>
-        )}
+        <button
+          type="button"
+          className="button button-secondary"
+          onClick={handleViewOwnGroup}
+        >
+          Your Group
+        </button>
         <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
       </div>
+      {ownGroupMessage ? (
+        <p style={{ marginTop: 10, color: '#6b7280', fontSize: '0.95rem' }}>{ownGroupMessage}</p>
+      ) : null}
 
       <Tabs activeTab={activeTab} onChange={setActiveTab} />
 

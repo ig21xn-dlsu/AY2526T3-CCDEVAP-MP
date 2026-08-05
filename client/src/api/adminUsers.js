@@ -9,6 +9,13 @@ export const fetchUsers = async (page = 1, limit = 10, search = '') => {
     return data;
 };
 
+export const fetchManagers = async () => {
+    const { data } = await axios.get(
+        `${API_BASE}/api/admin/users?role=manager&limit=500`
+    );
+    return data.users ?? [];
+};
+
 export const updateUserStatus = async (userId, status) => {
     const { data } = await axios.patch(`${API_BASE}/api/admin/users/${userId}/status`, { status });
     return data;

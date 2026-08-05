@@ -1,4 +1,5 @@
 import '../stylesheets/AdminListings.css';
+import AdminAddListingModal from '../components/AdminAddListingModal';
 import AdminNavbar from '../components/AdminNavbar';
 import ProfileSettingsModal from '../components/ProfileSettingsModal';
 import ConfirmModal from '../components/ConfirmModal';
@@ -41,6 +42,7 @@ function AdminListings() {
     const debouncedMaxPrice = useDebouncedValue(maxPrice, 400);
 
     const [selectedListing, setSelectedListing] = useState(null);
+    const [isAddOpen, setIsAddOpen] = useState(false);
 
     const [confirmTarget, setConfirmTarget] = useState(null); // { listing, nextIsDeleted }
     const [confirmLoading, setConfirmLoading] = useState(false);
@@ -222,6 +224,12 @@ function AdminListings() {
             <AdminNavbar onOpenSettings={() => setIsSettingsOpen(true)} />
             {isSettingsOpen && <ProfileSettingsModal onClose={() => setIsSettingsOpen(false)} />}
 
+            <AdminAddListingModal
+                show={isAddOpen}
+                onClose={() => setIsAddOpen(false)}
+                onListingCreated={load}
+            />
+
             <div className="main-content">
                 <div className="header header-row">
                     <div>
@@ -249,6 +257,11 @@ function AdminListings() {
                         toolbarExtra={filterToolbar}
                     />
                 )}
+                <div className="table-bottom-actions">
+                    <button className="btn admin-btn-submit" onClick={() => setIsAddOpen(true)}>
+                        + Add Listing
+                    </button>
+                </div>
             </div>
 
             {/* VIEW DETAILS MODAL */}

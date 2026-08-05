@@ -241,6 +241,7 @@ export default function DiscoverCommunities() {
       <p className="page-sub">Find the perfect group or space that matches your vibe.</p>
 
       <div className="tab-actions d-flex flex-wrap gap-2 align-items-center justify-content-end">
+        <button type="button" className="btn-your-group" onClick={handleViewOwnGroup}>View My Group</button>
         <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
       </div>
       {ownGroupMessage ? (

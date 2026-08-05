@@ -138,6 +138,78 @@ nav {
 .btn-apply:hover  { background: var(--gold-dark); }
 .btn-apply:active { transform: scale(0.97); }
 
+.group-actions-row {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.group-id-note {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.group-id-note code {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #EEF2FF;
+  color: #4338CA;
+  font-size: 0.84rem;
+}
+
+.group-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.group-action-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.group-action-btn:hover {
+  transform: translateY(-1px);
+}
+
+.group-action-btn--secondary {
+  background: #E0E7FF;
+  color: #3730A3;
+}
+
+.group-action-btn--secondary:hover {
+  background: #C7D2FE;
+}
+
+.group-action-btn--danger {
+  background: #FEE2E2;
+  color: #B91C1C;
+}
+
+.group-action-btn--danger:hover {
+  background: #FECACA;
+}
+
+.group-action-error {
+  max-width: 860px;
+  margin: 0 auto 16px;
+  padding: 0 24px;
+  color: #B91C1C;
+  font-size: 0.92rem;
+}
+
 /* ── MAIN GRID ── */
 .page-grid {
   max-width: 860px;

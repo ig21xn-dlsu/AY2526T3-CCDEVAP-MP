@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import GroupNav from '../components/group/GroupNav';
 import Hero from '../components/group/Hero';
 import BelowHero from '../components/group/BelowHero';
@@ -8,23 +8,44 @@ import ListingCard from '../components/group/ListingCard';
 import PreferencesCard from '../components/group/PreferencesCard';
 import StatsCard from '../components/group/StatsCard';
 import ApplyModal from '../components/group/ApplyModal';
+import ConfirmModal from '../components/ConfirmModal';
 import { useAsync } from '../hook/useAsync';
 import { useAuthContext } from '../hook/useAuthContext';
-import { fetchGroupById, fetchMyGroup } from '../api/padpalApi';
+import { deleteGroup, fetchGroupById, fetchMyGroup } from '../api/padpalApi';
 import '../stylesheets/padpal-group.css';
 
 export default function GroupProfile() {
   const { id: groupId } = useParams();
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   const { data: group, loading, error } = useAsync(() => fetchGroupById(groupId), [groupId]);
   const { data: myGroup } = useAsync(fetchMyGroup, []);
   const { user } = useAuthContext();
+  const currentUserId = user?._id ?? user?.id;
+  const isOwner = group?.viewerRole === 'owner' || Boolean(currentUserId && group?.ownerId && String(group.ownerId) === String(currentUserId));
+  const isMember = group?.viewerRole === 'member' || isOwner || Boolean(Array.isArray(group?.memberIds) && group.memberIds.some((memberId) => String(memberId) === String(currentUserId)));
   const canApply = !myGroup?.id;
   const applyDisabledMessage = myGroup?.id
-    ? 'You are already part of a group and cannot apply to another one.'
+    ? 'You are already part of a group'
     : null;
-  const isAdmin = user?.role === 'admin';
+
+  async function handleDeleteGroup() {
+    setDeleteLoading(true);
+    setDeleteError('');
+    try {
+      await deleteGroup(group.id);
+      navigate('/student-discover-communities');
+    } catch (err) {
+      setDeleteError(err?.message || 'Failed to delete this group.');
+    } finally {
+      setDeleteLoading(false);
+      setDeleteOpen(false);
+    }
+  }
 
   useEffect(() => {
     document.title = group?.name ? `PadPal – ${group.name}` : 'PadPal – Group Profile';
@@ -60,11 +81,34 @@ export default function GroupProfile() {
         disabled={!canApply}
         disabledMessage={applyDisabledMessage}
       />
-      {isAdmin ? (
-        <p style={{ margin: '18px 0 0', fontSize: '0.95rem', color: '#555' }}>
-          Group ID: <code style={{ fontSize: '0.95rem' }}>{group.id}</code>
-        </p>
+
+      {(group?.showGroupId || isMember || isOwner) ? (
+        <div className="group-actions-row">
+          <div className="group-id-note">
+            Group ID: <code>{group.id}</code>
+          </div>
+          {isOwner ? (
+            <div className="group-actions">
+              <button
+                type="button"
+                className="group-action-btn group-action-btn--secondary"
+                onClick={() => navigate(`/student-edit-group/${group.id}`)}
+              >
+                Edit Group
+              </button>
+              <button
+                type="button"
+                className="group-action-btn group-action-btn--danger"
+                onClick={() => setDeleteOpen(true)}
+              >
+                Delete Group
+              </button>
+            </div>
+          ) : null}
+        </div>
       ) : null}
+
+      {deleteError ? <p className="group-action-error">{deleteError}</p> : null}
 
       <div className="page-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
@@ -82,6 +126,17 @@ export default function GroupProfile() {
         groupId={group.id}
         groupName={group.name}
         onClose={() => setModalOpen(false)}
+      />
+
+      <ConfirmModal
+        open={deleteOpen}
+        title="Delete Group"
+        message={`Are you sure you want to delete "${group.name}"? This cannot be undone.`}
+        confirmLabel="Delete"
+        danger
+        loading={deleteLoading}
+        onConfirm={handleDeleteGroup}
+        onCancel={() => setDeleteOpen(false)}
       />
     </>
   );

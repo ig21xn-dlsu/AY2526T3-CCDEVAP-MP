@@ -66,6 +66,21 @@ export function createGroup(payload, signal) {
   });
 }
 
+export function updateGroup(groupId, payload, signal) {
+  return request(`/api/groups/${groupId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+    signal,
+  });
+}
+
+export function deleteGroup(groupId, signal) {
+  return request(`/api/groups/${groupId}`, {
+    method: 'DELETE',
+    signal,
+  });
+}
+
 export function fetchAvailableListings(signal) {
   return request('/api/shared-spaces', {
     method: 'GET',

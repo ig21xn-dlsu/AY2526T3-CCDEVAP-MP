@@ -1,14 +1,23 @@
 import { ArrowRightIcon } from './icons.jsx';
 
 const LABELS = {
-  idle: 'Launch Group',
-  submitting: 'Creating group…',
-  success: '✓ Group Created! Redirecting…',
-  error: 'Launch Group',
+  create: {
+    idle: 'Launch Group',
+    submitting: 'Creating group…',
+    success: '✓ Group Created! Redirecting…',
+    error: 'Launch Group',
+  },
+  edit: {
+    idle: 'Save Changes',
+    submitting: 'Saving changes…',
+    success: '✓ Group Updated! Redirecting…',
+    error: 'Save Changes',
+  },
 };
 
-export default function LaunchButton({ status, onClick }) {
+export default function LaunchButton({ status, onClick, mode = 'create' }) {
   const isBusy = status === 'submitting' || status === 'success';
+  const labels = LABELS[mode] ?? LABELS.create;
 
   return (
     <button
@@ -19,7 +28,7 @@ export default function LaunchButton({ status, onClick }) {
       disabled={isBusy}
       style={status === 'success' ? { background: '#059669' } : undefined}
     >
-      {LABELS[status] ?? LABELS.idle}
+      {labels[status] ?? labels.idle}
       {status === 'idle' && <ArrowRightIcon />}
     </button>
   );

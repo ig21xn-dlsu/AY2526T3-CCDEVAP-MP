@@ -18,8 +18,9 @@ async function request(path, options = {}) {
   const storageString = localStorage.getItem('user') || sessionStorage.getItem('user');
   const storedUser = storageString ? JSON.parse(storageString) : null;
   const authHeader = storedUser?.token ? { Authorization: `Bearer ${storedUser.token}` } : {};
+  const normalizedPath = path.startsWith('/api/') ? path : `/api${path.startsWith('/') ? path : `/${path}`}`;
 
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await fetch(`${API_BASE}${normalizedPath}`, {
     headers: { 'Content-Type': 'application/json', ...authHeader, ...options.headers },
     ...options,
   });
@@ -113,7 +114,7 @@ export function fetchMyGroup() {
  * Used by the Group Profile page. A 404 should be treated as "not found" by the caller.
  */
 export function fetchGroupById(id) {
-  return request(`/api/groups/${id}`);
+  return request(`/groups/${id}`);
 }
 
 /**
@@ -126,5 +127,18 @@ export function submitGroupApplication(groupId, payload) {
   return request(`/groups/${groupId}/applications`, {
     method: 'POST',
     body: JSON.stringify(payload),
+  });
+}
+
+export function updateGroup(groupId, payload) {
+  return request(`/groups/${groupId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  });
+}
+
+export function deleteGroup(groupId) {
+  return request(`/groups/${groupId}`, {
+    method: 'DELETE',
   });
 }

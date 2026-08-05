@@ -15,9 +15,10 @@ import '../stylesheets/create-group.css';
 
 const NO_PREFERENCE_OPTION = { value: '', label: 'No preference' };
 
-export default function CreateGroup({ onSuccess }) {
+export default function CreateGroup({ onSuccess, mode = 'create', groupId = null, initialValues = {} }) {
   const { config, status: configStatus, error: configError, isLoading } = useGroupFormConfig();
   const [listingOptions, setListingOptions] = useState([]);
+  const isEditMode = mode === 'edit';
 
   // Called unconditionally (before any early return) to satisfy the Rules of Hooks.
   // If useCreateGroupForm reads into `config` immediately (e.g. config.budget) on
@@ -31,7 +32,7 @@ export default function CreateGroup({ onSuccess }) {
     submitStatus,
     submitError,
     submit,
-  } = useCreateGroupForm(config, onSuccess);
+  } = useCreateGroupForm(config, onSuccess, initialValues, mode, groupId);
 
   useEffect(() => {
     let cancelled = false;
@@ -58,9 +59,9 @@ export default function CreateGroup({ onSuccess }) {
   if (isLoading) {
     return (
       <div className="page-wrapper">
-        <TopNav label="SETUP" backLabel="Discover Communities" />
+        <TopNav label={isEditMode ? 'SETTINGS' : 'SETUP'} backLabel={isEditMode ? 'Group Profile' : 'Discover Communities'} backHref={isEditMode && groupId ? `/student-group-profile/${groupId}` : '/student-discover-communities'} />
         <PageHeader
-          title="Create a Group"
+          title={isEditMode ? 'Edit Your Group' : 'Create a Group'}
           subtitle="Loading the form, one moment…"
         />
       </div>
@@ -70,8 +71,8 @@ export default function CreateGroup({ onSuccess }) {
   if (configStatus === 'error') {
     return (
       <div className="page-wrapper">
-        <TopNav label="SETUP" backLabel="Discover Communities" />
-        <PageHeader title="Create a Group" subtitle="We couldn't load this form." />
+        <TopNav label={isEditMode ? 'SETTINGS' : 'SETUP'} backLabel={isEditMode ? 'Group Profile' : 'Discover Communities'} backHref={isEditMode && groupId ? `/student-group-profile/${groupId}` : '/student-discover-communities'} />
+        <PageHeader title={isEditMode ? 'Edit Your Group' : 'Create a Group'} subtitle="We couldn't load this form." />
         <p className="form-hint" style={{ color: '#EF4444' }}>
           {configError?.message ?? 'Something went wrong loading the form. Please refresh and try again.'}
         </p>
@@ -87,11 +88,13 @@ export default function CreateGroup({ onSuccess }) {
 
   return (
     <div className="page-wrapper">
-      <TopNav label="SETUP" backLabel="Discover Communities" />
+      <TopNav label={isEditMode ? 'SETTINGS' : 'SETUP'} backLabel={isEditMode ? 'Group Profile' : 'Discover Communities'} backHref={isEditMode && groupId ? `/student-group-profile/${groupId}` : '/student-discover-communities'} />
 
       <PageHeader
-        title="Create a Group"
-        subtitle="Tell future roommates who you are, what you're looking for, and where you want to live."
+        title={isEditMode ? 'Edit Your Group' : 'Create a Group'}
+        subtitle={isEditMode
+          ? 'Update the details your group shares with prospective roommates.'
+          : "Tell future roommates who you are, what you're looking for, and where you want to live."}
       />
 
       <div className="main-grid">
@@ -140,14 +143,14 @@ export default function CreateGroup({ onSuccess }) {
         </div>
       </div>
 
-      <LaunchButton status={submitStatus} onClick={handleLaunch} />
+      <LaunchButton status={submitStatus} onClick={handleLaunch} mode={isEditMode ? 'edit' : 'create'} />
 
       {submitStatus === 'error' && submitError && (
         <p className="cta-hint" style={{ color: '#EF4444' }}>
           {submitError}
         </p>
       )}
-      {submitStatus === 'idle' && (
+      {!isEditMode && submitStatus === 'idle' && (
         <p className="cta-hint">You can edit these details later from your group settings.</p>
       )}
     </div>

@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
+const API_BASE = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
 
 class ApiError extends Error {
   constructor(message, status, payload) {
@@ -10,8 +10,12 @@ class ApiError extends Error {
 }
 
 async function request(path, options = {}) {
+  const storageString = localStorage.getItem('user') || sessionStorage.getItem('user');
+  const storedUser = storageString ? JSON.parse(storageString) : null;
+  const authHeader = storedUser?.token ? { Authorization: `Bearer ${storedUser.token}` } : {};
+
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers: { 'Content-Type': 'application/json', ...authHeader, ...options.headers },
     ...options,
   });
 
@@ -58,6 +62,13 @@ export function createGroup(payload, signal) {
   return request('/api/groups', {
     method: 'POST',
     body: JSON.stringify(payload),
+    signal,
+  });
+}
+
+export function fetchAvailableListings(signal) {
+  return request('/api/shared-spaces', {
+    method: 'GET',
     signal,
   });
 }

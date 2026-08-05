@@ -6,6 +6,8 @@ function SharedSpaceCard({ listing }) {
   const id = listing.id || listing._id;
   const title = listing.roomTitle || listing.name;
   const campus = listing.nearestCampus || listing.school;
+  const occupiedBy = listing.occupiedBy ?? null;
+  const isOccupied = Boolean(occupiedBy);
   const imageUrl = Array.isArray(listing.imageUrl)
     ? listing.imageUrl[0]
     : (listing.imageUrl || listing.image);
@@ -31,8 +33,8 @@ function SharedSpaceCard({ listing }) {
           <h2 className="shared-space-card__subtitle">{campus}</h2>
           <div className="shared-space-card__meta-row">
             {listing.maximumCapacity && <span className="shared-space-card__meta-pill">Max {listing.maximumCapacity} pax</span>}
-            <span className={`shared-space-card__meta-pill shared-space-card__status ${listing.isOccupied ? 'occupied' : 'avail'}`}>
-              {listing.isOccupied ? 'occupied' : 'vacant'}
+            <span className={`shared-space-card__meta-pill shared-space-card__status ${isOccupied ? 'occupied' : 'avail'}`}>
+              {isOccupied ? 'occupied' : 'vacant'}
             </span>
           </div>
           <div className="shared-space-card__tags">

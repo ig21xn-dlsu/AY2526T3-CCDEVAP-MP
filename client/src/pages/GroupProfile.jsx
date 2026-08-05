@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import GroupNav from '../components/group/GroupNav';
 import Hero from '../components/group/Hero';
@@ -9,7 +9,8 @@ import PreferencesCard from '../components/group/PreferencesCard';
 import StatsCard from '../components/group/StatsCard';
 import ApplyModal from '../components/group/ApplyModal';
 import { useAsync } from '../hook/useAsync';
-import { fetchGroupById } from '../api/padpalApi'; // added for when api is ready
+import { useAuthContext } from '../hook/useAuthContext';
+import { fetchGroupById, fetchMyGroup } from '../api/padpalApi';
 import '../stylesheets/padpal-group.css';
 
 export default function GroupProfile() {
@@ -17,6 +18,13 @@ export default function GroupProfile() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const { data: group, loading, error } = useAsync(() => fetchGroupById(groupId), [groupId]);
+  const { data: myGroup } = useAsync(fetchMyGroup, []);
+  const { user } = useAuthContext();
+  const canApply = !myGroup?.id;
+  const applyDisabledMessage = myGroup?.id
+    ? 'You are already part of a group and cannot apply to another one.'
+    : null;
+  const isAdmin = user?.role === 'admin';
 
   useEffect(() => {
     document.title = group?.name ? `PadPal – ${group.name}` : 'PadPal – Group Profile';
@@ -46,7 +54,17 @@ export default function GroupProfile() {
     <>
       <GroupNav />
       <Hero group={group} />
-      <BelowHero members={group.members} onApplyClick={() => setModalOpen(true)} />
+      <BelowHero
+        members={group.members}
+        onApplyClick={() => setModalOpen(true)}
+        disabled={!canApply}
+        disabledMessage={applyDisabledMessage}
+      />
+      {isAdmin ? (
+        <p style={{ margin: '18px 0 0', fontSize: '0.95rem', color: '#555' }}>
+          Group ID: <code style={{ fontSize: '0.95rem' }}>{group.id}</code>
+        </p>
+      ) : null}
 
       <div className="page-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>

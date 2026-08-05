@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Tabs from '../components/discover/Tabs';
 import CoLivingFilters, { DEFAULT_COLIVING_FILTERS } from '../components/discover/CoLivingFilters';
 import SharedFilters, { DEFAULT_SHARED_FILTERS } from '../components/discover/SharedFilters';
@@ -9,9 +10,10 @@ import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
 import useTheme from '../hook/useTheme.js';
 import { useLogOut } from '../hook/useLogOut.js';
+import { fetchMyGroup } from '../api/padpalApi';
+import { useAuthContext } from '../hook/useAuthContext';
 
 import '../stylesheets/padpal.css'
-import { NavLink } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_URL ?? '';
 
@@ -155,6 +157,8 @@ function useCachedQuery(asyncFn, cacheKey, deps = []) {
 export default function DiscoverCommunities() {
   const { theme, toggleTheme } = useTheme();
   const { logout } = useLogOut();
+  const navigate = useNavigate();
+  const [ownGroupMessage, setOwnGroupMessage] = useState('');
   const [activeTab, setActiveTab] = useSessionState('discover:activeTab', 'coliving');
   const [coLivingFilters, setCoLivingFilters] = useSessionState('discover:colivingFilters', DEFAULT_COLIVING_FILTERS);
   const [sharedDraftFilters, setSharedDraftFilters] = useSessionState('discover:sharedDraftFilters', DEFAULT_SHARED_FILTERS);
@@ -176,11 +180,47 @@ export default function DiscoverCommunities() {
     error: groupsError,
   } = useCachedQuery(() => fetchDiscoverGroups(debouncedCoLivingFilters), coLivingCacheKey, [JSON.stringify(debouncedCoLivingFilters)]);
 
+  const { data: myGroup } = useAsync(fetchMyGroup, []);
+  const { user } = useAuthContext();
+
   const {
     data: sharedSpaces,
     loading: sharedLoading,
     error: sharedError,
   } = useCachedQuery(() => fetchDiscoverSharedSpaces(debouncedSharedFilters), sharedCacheKey, [JSON.stringify(debouncedSharedFilters)]);
+
+  function handleViewOwnGroup() {
+    const groupId = typeof myGroup === 'string' ? myGroup : myGroup?.id;
+    if (groupId) {
+      navigate(`/student-group-profile/${groupId}`);
+      return;
+    }
+
+    // If the cached value is not yet present (e.g. still loading), fetch on demand
+    // to avoid race conditions where the initial request hasn't finished.
+    (async () => {
+      try {
+        const res = await fetchMyGroup();
+        const fetchedId = typeof res === 'string' ? res : res?.id;
+        if (fetchedId) {
+          navigate(`/student-group-profile/${fetchedId}`);
+          return;
+        }
+        // Fallback: if API didn't return a group, try to find a group in the
+        // currently loaded list where the current user is listed as a member.
+        if (user && Array.isArray(groups)) {
+          const found = (groups || []).find((g) => Array.isArray(g.members) && g.members.some((m) => String(m?.id) === String(user.id)));
+          if (found) {
+            navigate(`/student-group-profile/${found.id}`);
+            return;
+          }
+        }
+      } catch (e) {
+        // ignore fetch errors here and show the default message below
+      }
+      setOwnGroupMessage('You do not have a group yet. Apply to join one or create your own.');
+    })();
+  }
 
   const isColiving = activeTab === 'coliving';
   const items = isColiving ? groups : sharedSpaces;
@@ -203,6 +243,9 @@ export default function DiscoverCommunities() {
       <div className="tab-actions d-flex flex-wrap gap-2 align-items-center justify-content-end">
         <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
       </div>
+      {ownGroupMessage ? (
+        <p style={{ marginTop: 10, color: '#6b7280', fontSize: '0.95rem' }}>{ownGroupMessage}</p>
+      ) : null}
 
       <Tabs activeTab={activeTab} onChange={setActiveTab} />
 

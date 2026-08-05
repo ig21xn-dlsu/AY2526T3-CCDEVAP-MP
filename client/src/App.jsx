@@ -63,7 +63,7 @@ function AppRoutes() {
         path="/student-create-group"
         element={
           user && user.role === 'student'
-            ? <CreateGroup onSuccess={() => navigate('/student-discover-communities')} />
+            ? <CreateGroup onSuccess={(created) => navigate(`/student-group-profile/${created.id}`)} />
             : <Navigate to="/" />
         }
       />

@@ -5,9 +5,7 @@ import { SchoolIcon, CheckIcon, PinIcon } from './icons';
 
 export default function GroupCard({ item }) {
   const isShared = item.tab === 'shared';
-
- // determines where they should be redirected when "view" is clicked
-  const viewHref = isShared ? `/listings/${item.id}` : `/groups/${item.id}`;
+  const thumbnail = item.listingImage || item.heroImg || item.image || null;
 
   return (
     <div className="card">
@@ -24,6 +22,12 @@ export default function GroupCard({ item }) {
           {item.match}% Match
         </div>
       </div>
+
+      {thumbnail ? (
+        <div className="group-card__thumbnail">
+          <img src={thumbnail} alt={item.name} />
+        </div>
+      ) : null}
 
       {isShared ? (
         <div>

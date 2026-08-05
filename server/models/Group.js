@@ -16,19 +16,26 @@ const groupSchema = new Schema(
     moveInDate: { type: String, default: null },
     spots: { type: Number, required: true },
     genderPreference: { type: String, default: '' },
+    owner: { type: Schema.Types.ObjectId, ref: 'User', default: null },
 
     badge: { type: String, default: '' },
     heroImgUrl: { type: String, default: '' },
     lease: { type: String, default: '' },
     listing: { type: Schema.Types.ObjectId, ref: 'Listing', default: null },
     members: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+      default: [],
+    },
+    applications: {
       type: [
         {
           _id: false,
-          id: String,
-          initials: String,
-          color: String,
-          imgUrl: String,
+          name: { type: String, required: true },
+          age: { type: Number },
+          gender: { type: String },
+          email: { type: String, required: true },
+          notes: { type: String, default: '' },
+          createdAt: { type: Date, default: Date.now },
         },
       ],
       default: [],

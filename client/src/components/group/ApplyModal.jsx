@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Modal, Form, Button, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { submitGroupApplication } from '../../api/padpalApi'; // api placeholder
-import { NavLink } from 'react-router-dom';
 
 const EMPTY_FORM = { name: '', age: '', gender: '', email: '', notes: '' };
 
@@ -11,66 +12,28 @@ const GENDER_OPTIONS = [
   { value: 'other', label: 'Other' },
 ];
 
-function CloseIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
-function SubmitArrowIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-
 export default function ApplyModal({ open, groupId, groupName, onClose }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState(EMPTY_FORM);
   const [fieldErrors, setFieldErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
   const [submitError, setSubmitError] = useState(null);
 
-  // reset form and lock scroll whenever the modal opens.
+  // reset form whenever the modal opens
   useEffect(() => {
     if (open) {
       setForm(EMPTY_FORM);
       setFieldErrors({});
       setStatus('idle');
       setSubmitError(null);
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [open]);
 
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.key === 'Escape' && open) onClose();
-    }
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [open, onClose]);
-
-  if (!open) return null;
-
-  const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
-  const clearError = (key) => () => setFieldErrors((fe) => (fe[key] ? { ...fe, [key]: false } : fe));
+  const update = (key) => (e) => {
+    const { value } = e.target;
+    setForm((f) => ({ ...f, [key]: value }));
+    setFieldErrors((fe) => (fe[key] ? { ...fe, [key]: false } : fe));
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -88,7 +51,10 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
     try {
       await submitGroupApplication(groupId, form);
       setStatus('success');
-      setTimeout(onClose, 2200);
+      setTimeout(() => {
+        onClose();
+        navigate('/student-discover-communities');
+      }, 1400);
     } catch (err) {
       setStatus('error');
       setSubmitError(err);
@@ -96,55 +62,43 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
   }
 
   return (
-    <div
-      id="modalBackdrop"
-      className="modal-backdrop open"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modalTitle"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
+    <Modal show={open} onHide={onClose} centered backdrop="static" keyboard>
+      <Modal.Header closeButton>
+        <Modal.Title as="h5">Apply to Join {groupName}</Modal.Title>
+      </Modal.Header>
 
-<div className="modal">
-  <div className="modal-header">
-    <h2 id="modalTitle" className="modal-title">
-      Apply to Join {groupName}
-    </h2>
-
-    <NavLink
-      to="/student-discover-communities"
-      className="modal-close"
-      aria-label="Close"
-      
-    >
-      <CloseIcon />
-    </NavLink>
-  </div>
-
-        {status !== 'success' ? (
-          <form id="applyForm" noValidate onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label" htmlFor="fieldName">Full Name</label>
-                <input
-                  id="fieldName"
-                  className="form-input"
+      {status === 'success' ? (
+        <Modal.Body className="text-center py-4">
+          <div
+            className="rounded-circle bg-success-subtle text-success d-inline-flex align-items-center justify-content-center mb-3"
+            style={{ width: 56, height: 56 }}
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h5 className="fw-bold mb-1">Application Sent!</h5>
+          <p className="text-muted mb-0">{groupName} will be in touch soon.</p>
+        </Modal.Body>
+      ) : (
+        <Form noValidate onSubmit={handleSubmit}>
+          <Modal.Body>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="fieldName">
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
                   type="text"
                   placeholder="Alex Johnson"
                   value={form.name}
                   onChange={update('name')}
-                  onInput={clearError('name')}
-                  style={fieldErrors.name ? { borderColor: '#EF4444' } : undefined}
+                  isInvalid={!!fieldErrors.name}
                   required
                 />
-              </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="fieldAge">Age</label>
-                <input
-                  id="fieldAge"
-                  className="form-input"
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="fieldAge">
+                <Form.Label>Age</Form.Label>
+                <Form.Control
                   type="number"
                   placeholder="21"
                   min="18"
@@ -152,81 +106,73 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
                   value={form.age}
                   onChange={update('age')}
                 />
-              </div>
-            </div>
+              </Form.Group>
+            </Row>
 
-            <div className="form-group" style={{ marginBottom: 16 }}>
-              <label className="form-label">Gender</label>
-              <div className="gender-group">
-                {GENDER_OPTIONS.map((g) => (
-                  <React.Fragment key={g.value}>
-                    <input
-                      className="gender-opt"
-                      type="radio"
-                      name="gender"
-                      id={`gender-${g.value}`}
-                      value={g.value}
-                      checked={form.gender === g.value}
-                      onChange={update('gender')}
-                    />
-                    <label className="gender-label" htmlFor={`gender-${g.value}`}>{g.label}</label>
-                  </React.Fragment>
-                ))}
-              </div>
-            </div>
+            <Form.Group className="mb-3">
+              <Form.Label className="d-block">Gender</Form.Label>
+              {GENDER_OPTIONS.map((g) => (
+                <Form.Check
+                  key={g.value}
+                  inline
+                  type="radio"
+                  name="gender"
+                  id={`gender-${g.value}`}
+                  label={g.label}
+                  value={g.value}
+                  checked={form.gender === g.value}
+                  onChange={update('gender')}
+                />
+              ))}
+            </Form.Group>
 
-            <div className="form-group" style={{ marginBottom: 16 }}>
-              <label className="form-label" htmlFor="fieldEmail">University Email</label>
-              <input
-                id="fieldEmail"
-                className="form-input"
+            <Form.Group className="mb-3" controlId="fieldEmail">
+              <Form.Label>University Email</Form.Label>
+              <Form.Control
                 type="email"
                 placeholder="alex.j@university.edu"
                 value={form.email}
                 onChange={update('email')}
-                onInput={clearError('email')}
-                style={fieldErrors.email ? { borderColor: '#EF4444' } : undefined}
+                isInvalid={!!fieldErrors.email}
                 required
               />
-            </div>
+            </Form.Group>
 
-            <div className="form-group">
-              <label className="form-label" htmlFor="fieldNotes">Other Notes / Message</label>
-              <textarea
-                id="fieldNotes"
-                className="form-textarea"
+            <Form.Group controlId="fieldNotes">
+              <Form.Label>Other Notes / Message</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
                 placeholder="Tell us about yourself and why you'd be a great roommate…"
                 value={form.notes}
                 onChange={update('notes')}
               />
-            </div>
+            </Form.Group>
 
             {status === 'error' && (
-              <p style={{ color: '#EF4444', fontSize: '0.82rem', marginTop: 12 }}>
+              <Alert variant="danger" className="mt-3 mb-0 py-2">
                 Couldn't send your application{submitError ? `: ${submitError.message}` : ''}. Please try again.
-              </p>
+              </Alert>
             )}
-          </form>
-        ) : (
-          <div className="modal-success show">
-            <div className="success-icon">
-              <CheckIcon />
-            </div>
-            <div className="success-title">Application Sent!</div>
-            <div className="success-sub">{groupName} will be in touch soon.</div>
-          </div>
-        )}
+          </Modal.Body>
 
-        {status !== 'success' && (
-          <div className="modal-footer">
-            <button className="btn-cancel" type="button" onClick={onClose}>Cancel</button>
-            <button className="btn-submit" type="submit" form="applyForm" disabled={status === 'submitting'}>
-              {status === 'submitting' ? 'Submitting…' : 'Submit Application'}
-              <SubmitArrowIcon />
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
+          <Modal.Footer>
+            <Button variant="outline-secondary" onClick={onClose} disabled={status === 'submitting'}>
+              Cancel
+            </Button>
+            <Button variant="primary" type="submit" disabled={status === 'submitting'}>
+              {status === 'submitting' ? (
+                <>
+                  <Spinner as="span" animation="border" size="sm" className="me-2" />
+                  Submitting…
+                </>
+              ) : (
+                'Submit Application'
+              )}
+            </Button>
+          </Modal.Footer>
+        </Form>
+      )}
+    </Modal>
   );
 }

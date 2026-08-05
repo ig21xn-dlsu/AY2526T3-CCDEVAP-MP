@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthContext } from './hook/useAuthContext';
 import GroupProfile from './pages/GroupProfile';
+import GroupApply from './pages/GroupApply';
 import CreateGroup from './pages/CreateGroup';
 
 
@@ -57,6 +58,7 @@ function AppRoutes() {
       <Route path="/manager-view-listing/:id" element={user && user.role === 'manager' ? <ManagerViewListing /> : <Navigate to="/" />} />
 
       <Route path="/student-group-profile/:id" element={user && user.role === 'student' ? <GroupProfile /> : <Navigate to="/" />} />
+      <Route path="/student-group-apply/:id" element={user && user.role === 'student' ? <GroupApply /> : <Navigate to="/" />} />
 
       {/* single definition — onSuccess wired to redirect back to Discover Communities */}
       <Route

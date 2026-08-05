@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext.jsx";
+
 export function useCheckGroup() {
-  const { user } = useContext(AuthContext);
   const [checking, setChecking] = useState(false);
   const [group, setGroup] = useState(null);   // holds the found group object
   const [error, setError] = useState(null);

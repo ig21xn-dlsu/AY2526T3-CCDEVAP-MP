@@ -11,6 +11,7 @@ import { useDebouncedValue } from '../hook/useDebouncedValue';
 import useTheme from '../hook/useTheme.js';
 import { useLogOut } from '../hook/useLogOut.js';
 import { fetchMyGroup } from '../api/padpalApi';
+import { useAuthContext } from '../hook/useAuthContext';
 
 import '../stylesheets/padpal.css'
 
@@ -180,6 +181,7 @@ export default function DiscoverCommunities() {
   } = useCachedQuery(() => fetchDiscoverGroups(debouncedCoLivingFilters), coLivingCacheKey, [JSON.stringify(debouncedCoLivingFilters)]);
 
   const { data: myGroup } = useAsync(fetchMyGroup, []);
+  const { user } = useAuthContext();
 
   const {
     data: sharedSpaces,
@@ -188,11 +190,36 @@ export default function DiscoverCommunities() {
   } = useCachedQuery(() => fetchDiscoverSharedSpaces(debouncedSharedFilters), sharedCacheKey, [JSON.stringify(debouncedSharedFilters)]);
 
   function handleViewOwnGroup() {
-    if (myGroup?.id) {
-      navigate(`/student-group-profile/${myGroup.id}`);
+    const groupId = typeof myGroup === 'string' ? myGroup : myGroup?.id;
+    if (groupId) {
+      navigate(`/student-group-profile/${groupId}`);
       return;
     }
-    setOwnGroupMessage('You do not have a group yet. Apply to join one or create your own.');
+
+    // If the cached value is not yet present (e.g. still loading), fetch on demand
+    // to avoid race conditions where the initial request hasn't finished.
+    (async () => {
+      try {
+        const res = await fetchMyGroup();
+        const fetchedId = typeof res === 'string' ? res : res?.id;
+        if (fetchedId) {
+          navigate(`/student-group-profile/${fetchedId}`);
+          return;
+        }
+        // Fallback: if API didn't return a group, try to find a group in the
+        // currently loaded list where the current user is listed as a member.
+        if (user && Array.isArray(groups)) {
+          const found = (groups || []).find((g) => Array.isArray(g.members) && g.members.some((m) => String(m?.id) === String(user.id)));
+          if (found) {
+            navigate(`/student-group-profile/${found.id}`);
+            return;
+          }
+        }
+      } catch (e) {
+        // ignore fetch errors here and show the default message below
+      }
+      setOwnGroupMessage('You do not have a group yet. Apply to join one or create your own.');
+    })();
   }
 
   const isColiving = activeTab === 'coliving';
@@ -214,13 +241,6 @@ export default function DiscoverCommunities() {
       <p className="page-sub">Find the perfect group or space that matches your vibe.</p>
 
       <div className="tab-actions d-flex flex-wrap gap-2 align-items-center justify-content-end">
-        <button
-          type="button"
-          className="button button-secondary"
-          onClick={handleViewOwnGroup}
-        >
-          Your Group
-        </button>
         <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
       </div>
       {ownGroupMessage ? (

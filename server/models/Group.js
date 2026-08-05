@@ -23,15 +23,7 @@ const groupSchema = new Schema(
     lease: { type: String, default: '' },
     listing: { type: Schema.Types.ObjectId, ref: 'Listing', default: null },
     members: {
-      type: [
-        {
-          _id: false,
-          id: String,
-          initials: String,
-          color: String,
-          imgUrl: String,
-        },
-      ],
+      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
       default: [],
     },
     applications: {

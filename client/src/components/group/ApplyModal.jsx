@@ -99,7 +99,7 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
     }
   }
 
-  return (
+  const modalContent = (
     <div
       id="modalBackdrop"
       className="modal-backdrop open"
@@ -111,21 +111,20 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
       }}
     >
 
-<div className="modal">
-  <div className="modal-header">
-    <h2 id="modalTitle" className="modal-title">
-      Apply to Join {groupName}
-    </h2>
+      <div className="modal">
+        <div className="modal-header">
+          <h2 id="modalTitle" className="modal-title">
+            Apply to Join {groupName}
+          </h2>
 
-    <NavLink
-      to="/student-discover-communities"
-      className="modal-close"
-      aria-label="Close"
-      
-    >
-      <CloseIcon />
-    </NavLink>
-  </div>
+          <NavLink
+            to="/student-discover-communities"
+            className="modal-close"
+            aria-label="Close"
+          >
+            <CloseIcon />
+          </NavLink>
+        </div>
 
         {status !== 'success' ? (
           <form id="applyForm" noValidate onSubmit={handleSubmit}>
@@ -233,4 +232,6 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
       </div>
     </div>
   );
+
+  return modalContent;
 }

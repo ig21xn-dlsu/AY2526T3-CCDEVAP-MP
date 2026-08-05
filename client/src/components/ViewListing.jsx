@@ -2,7 +2,8 @@ import '../stylesheets/listing-card.css'
 import MapContainer from '../components/TwoPointMap.jsx'
 import CAMPUSES from '../assets/util/CAMPUSES.js'
 import ManagerCard from '../components/ViewListing-ManagerSideCard.jsx'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import InquiryModal from './InquiryModal.jsx'
 
 
@@ -35,6 +36,23 @@ function ListingFullView({ listing }) {
     longitude,
     owner,
   } = listing;
+
+  const [managerCard, setManagerCard] = useState(null);
+  useEffect(() => {
+    if (!owner) return;
+    const API_URL = import.meta.env.VITE_API_URL;
+    let mounted = true;
+    axios.get(`${API_URL}/api/calling-card/${owner}`)
+      .then((res) => { if (mounted) setManagerCard(res.data); })
+      .catch(() => {})
+    return () => { mounted = false };
+  }, [owner]);
+
+  const filteredContacts = (contacts || []).filter((c) => {
+    if (!c) return false;
+    const n = String(c).trim().toLowerCase();
+    return n !== 'email' && n !== 'sms / phone' && n !== 'social platform';
+  });
 
   return (
     <div className="listing-full-view-wrapper d-flex flex-row p-5 gap-4">
@@ -97,10 +115,15 @@ function ListingFullView({ listing }) {
       <div className="listing-sidebar" style={{ flexBasis: '25%', minWidth: '280px' }}>
         <div className="sticky-top d-flex flex-column gap-4" style={{ top: '2rem' }}>
           <ManagerCard ownerId={owner} />
-          <div className="card shadow d-flex flex-column">
+          <div className="card shadow d-flex flex-column p-3">
             <h4>Contact Through: </h4>
             <ul>
-              {contacts?.map((c, i) => <li key={i}>{c}</li>)}
+              {filteredContacts.map((c, i) => <li key={i}>{c}</li>)}
+              {managerCard?.phone && <li>Phone: {managerCard.phone}</li>}
+              {managerCard?.email && <li>Email: {managerCard.email}</li>}
+              {managerCard?.links?.length > 0 && managerCard.links.map((l, i) => (
+                <li key={`link-${i}`}><a href={l.url} target="_blank" rel="noreferrer">{l.label || l.url}</a></li>
+              ))}
             </ul>
           </div>
 

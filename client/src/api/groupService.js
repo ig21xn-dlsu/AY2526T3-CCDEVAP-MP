@@ -10,8 +10,12 @@ class ApiError extends Error {
 }
 
 async function request(path, options = {}) {
+  const storageString = localStorage.getItem('user') || sessionStorage.getItem('user');
+  const storedUser = storageString ? JSON.parse(storageString) : null;
+  const authHeader = storedUser?.token ? { Authorization: `Bearer ${storedUser.token}` } : {};
+
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers: { 'Content-Type': 'application/json', ...authHeader, ...options.headers },
     ...options,
   });
 

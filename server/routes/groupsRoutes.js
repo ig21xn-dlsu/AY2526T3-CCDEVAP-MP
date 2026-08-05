@@ -247,6 +247,14 @@ groupsRouter.post(
       members: [{ id: req.user._id.toString(), initials: `${req.user.firstName?.[0] || ''}${req.user.lastName?.[0] || ''}`.toUpperCase(), color: '#3b82f6', imgUrl: null }],
     });
 
+    // Safety: ensure the creating user is present in `members` (in case the document
+    // was created by a different code path or defaults changed). This guarantees
+    // the creator is auto-assigned as a member of the new group.
+    if (!created.members || created.members.length === 0) {
+      created.members = [{ id: req.user._id.toString(), initials: `${req.user.firstName?.[0] || ''}${req.user.lastName?.[0] || ''}`.toUpperCase(), color: '#3b82f6', imgUrl: null }];
+      await created.save();
+    }
+
     res.status(201).json(created.toJSON());
   })
 );

@@ -26,9 +26,8 @@ function toSharedSpacePayload(listing) {
     tags: listing.tags || [],
     image: imageUrl || null,
     imageUrl: imageUrl || null,
-    // derive occupancy from `occupiedBy` (Group reference). If occupiedBy is null -> vacant
-    vacancy: !listing.occupiedBy,
-    isOccupied: !!listing.occupiedBy,
+    vacancy: !listing.isOccupied,
+    isOccupied: listing.isOccupied,
     roommates: listing.maximumCapacity,
     maximumCapacity: listing.maximumCapacity,
     distanceKm: null,
@@ -43,8 +42,7 @@ function toSharedSpacePayload(listing) {
 
 function buildFilter(query) {
   const { search, campus, minPrice, maxPrice, occupancy, amenities } = query;
-  // exclude listings that are deleted or already occupied (prefer `occupiedBy`)
-  const filter = { isDeleted: { $ne: true }, occupiedBy: null, isOccupied: { $ne: true } };
+  const filter = { isDeleted: { $ne: true } };
 
   if (campus) {
     if (!VALID_CAMPUSES.has(campus)) {

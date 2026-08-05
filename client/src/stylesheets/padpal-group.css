@@ -405,6 +405,8 @@ nav {
   }
 }
 
+/* (modal backdrop rules removed — reverted to previous styling) */
+
 @media (min-width: 641px) and (max-width: 860px) {
   .page-grid {
     grid-template-columns: 1fr;

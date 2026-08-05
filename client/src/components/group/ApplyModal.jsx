@@ -61,41 +61,32 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
     }
   }
 
-  const modalContent = (
-    <div
-      id="modalBackdrop"
-      className="modal-backdrop open"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modalTitle"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
+  return (
+    <Modal show={open} onHide={onClose} centered backdrop="static" keyboard>
+      <Modal.Header closeButton>
+        <Modal.Title as="h5">Apply to Join {groupName}</Modal.Title>
+      </Modal.Header>
 
-      <div className="modal">
-        <div className="modal-header">
-          <h2 id="modalTitle" className="modal-title">
-            Apply to Join {groupName}
-          </h2>
-
-          <NavLink
-            to="/student-discover-communities"
-            className="modal-close"
-            aria-label="Close"
+      {status === 'success' ? (
+        <Modal.Body className="text-center py-4">
+          <div
+            className="rounded-circle bg-success-subtle text-success d-inline-flex align-items-center justify-content-center mb-3"
+            style={{ width: 56, height: 56 }}
           >
-            <CloseIcon />
-          </NavLink>
-        </div>
-
-        {status !== 'success' ? (
-          <form id="applyForm" noValidate onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label" htmlFor="fieldName">Full Name</label>
-                <input
-                  id="fieldName"
-                  className="form-input"
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h5 className="fw-bold mb-1">Application Sent!</h5>
+          <p className="text-muted mb-0">{groupName} will be in touch soon.</p>
+        </Modal.Body>
+      ) : (
+        <Form noValidate onSubmit={handleSubmit}>
+          <Modal.Body>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="fieldName">
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
                   type="text"
                   placeholder="Alex Johnson"
                   value={form.name}
@@ -184,6 +175,4 @@ export default function ApplyModal({ open, groupId, groupName, onClose }) {
       )}
     </Modal>
   );
-
-  return modalContent;
 }

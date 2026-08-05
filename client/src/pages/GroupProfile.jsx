@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import GroupNav from '../components/group/GroupNav';
 import Hero from '../components/group/Hero';
 import BelowHero from '../components/group/BelowHero';
@@ -16,7 +15,7 @@ import '../stylesheets/padpal-group.css';
 
 export default function GroupProfile() {
   const { id: groupId } = useParams();
-  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { data: group, loading, error } = useAsync(() => fetchGroupById(groupId), [groupId]);
   const { data: myGroup } = useAsync(fetchMyGroup, []);
@@ -57,7 +56,7 @@ export default function GroupProfile() {
       <Hero group={group} />
       <BelowHero
         members={group.members}
-        onApplyClick={() => navigate('/student-discover-communities')}
+        onApplyClick={() => setModalOpen(true)}
         disabled={!canApply}
         disabledMessage={applyDisabledMessage}
       />
@@ -69,12 +68,6 @@ export default function GroupProfile() {
 
       <div className="page-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div style={{ maxWidth: 360 }}>
-            <div className="card" style={{ padding: '10px 16px', marginBottom: 6 }}>
-              <strong style={{ fontSize: '0.95rem' }}>Group ID:</strong>
-              <div style={{ marginTop: 6, fontFamily: 'monospace', color: '#374151' }}>{group.id}</div>
-            </div>
-          </div>
           <VibeCard vibe={group.vibe} tags={group.tags} />
           <ListingCard listing={group.listing} />
         </div>
@@ -84,7 +77,12 @@ export default function GroupProfile() {
         </div>
       </div>
 
-      {/* Apply flow now redirects to discovery instead of opening an inline modal */}
+      <ApplyModal
+        open={modalOpen}
+        groupId={group.id}
+        groupName={group.name}
+        onClose={() => setModalOpen(false)}
+      />
     </>
   );
 }

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Listing = require('../models/Listing');
+const Group = require('../models/Group');
 
 const VALID_GENDERS = new Set(['male', 'female', 'co-ed']);
 const VALID_CAMPUSES = new Set(['UPM', 'DLSU', 'ADMU', 'UST', 'UPD']);
@@ -40,11 +41,13 @@ exports.getListings = async (req, res) => {
                 { buildingName: { $regex: search, $options: 'i' } },
             ];
         }
+        
 
         const total = await Listing.countDocuments(filter);
 
         const listings = await Listing.find(filter)
             .populate('owner', 'firstName lastName email')
+            .populate('occupiedBy', 'groupName')
             .sort({ createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(limit);
@@ -162,6 +165,119 @@ exports.setListingDeleted = async (req, res) => {
         res.status(200).json(listing);
     } catch (err) {
         console.error('Error updating listing deletion status:', err);
+        res.status(500).json({ message: 'Failed to update listing' });
+    }
+};
+
+
+exports.updateListing = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid listing id.' });
+        }
+
+        const listing = await Listing.findById(id);
+        if (!listing) {
+            return res.status(404).json({ message: 'Listing not found.' });
+        }
+
+        const {
+            roomTitle,
+            price,
+            maximumCapacity,
+            gender,
+            isOccupied,
+            description,
+            tags,
+            amenities,
+            buildingName,
+            latitude,
+            longitude,
+            nearestCampus,
+            contacts,
+            imageUrl,
+            owner,
+            occupiedBy,
+        } = req.body;
+
+        const errors = {};
+
+        if (!roomTitle?.trim()) {
+            errors.roomTitle = 'Room title is required.';
+        }
+
+        const parsedPrice = Number(price);
+        if (!Number.isFinite(parsedPrice) || parsedPrice < 0) {
+            errors.price = 'Price must be a valid, non-negative number.';
+        }
+
+        const parsedCapacity = Number(maximumCapacity ?? 1);
+        if (!Number.isFinite(parsedCapacity) || parsedCapacity < 1) {
+            errors.maximumCapacity = 'Maximum capacity must be at least 1.';
+        }
+
+        if (gender && !VALID_GENDERS.has(gender)) {
+            errors.gender = 'Invalid gender option.';
+        }
+
+        if (!VALID_CAMPUSES.has(nearestCampus)) {
+            errors.nearestCampus = 'Invalid campus option.';
+        }
+
+        if (!owner || !mongoose.Types.ObjectId.isValid(owner)) {
+            errors.owner = 'A valid owner is required.';
+        }
+
+
+        if (occupiedBy && !mongoose.Types.ObjectId.isValid(occupiedBy)) {
+            errors.occupiedBy = 'Invalid group id.';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return res.status(422).json({ message: 'Some fields need attention.', errors });
+        }
+
+        const previousOccupiedBy = listing.occupiedBy;
+        const nextOccupiedBy = occupiedBy || null;
+
+        listing.roomTitle = roomTitle.trim();
+        listing.price = parsedPrice;
+        listing.maximumCapacity = parsedCapacity;
+        listing.gender = gender;
+        listing.description = description || '';
+        listing.tags = tags || [];
+        listing.amenities = amenities || [];
+        listing.buildingName = buildingName;
+        listing.latitude = latitude;
+        listing.longitude = longitude;
+        listing.nearestCampus = nearestCampus;
+        listing.contacts = contacts || [];
+        listing.owner = owner;
+        listing.occupiedBy = nextOccupiedBy;
+        listing.isOccupied = nextOccupiedBy ? true : !!isOccupied;
+        if (imageUrl) {
+            listing.imageUrl = imageUrl;
+        }
+
+        const updated = await listing.save();
+
+
+        if (String(previousOccupiedBy || '') !== String(nextOccupiedBy || '')) {
+            if (previousOccupiedBy) {
+                await Group.findByIdAndUpdate(previousOccupiedBy, { listing: null });
+            }
+            if (nextOccupiedBy) {
+                await Group.findByIdAndUpdate(nextOccupiedBy, { listing: updated._id });
+            }
+        }
+
+        const populated = await updated.populate('occupiedBy', 'groupName');
+
+        res.status(200).json(populated);
+    } catch (err) {
+        console.error('Error updating listing:', err);
         res.status(500).json({ message: 'Failed to update listing' });
     }
 };

@@ -90,3 +90,50 @@
 .admin-location-result-item:hover {
     background-color: var(--admin-hover);
 }
+
+.admin-current-image {
+    margin-top: 10px;
+}
+
+.admin-current-image p {
+    font-size: 0.8rem;
+    color: var(--admin-text-muted);
+    margin-bottom: 6px;
+}
+
+.admin-current-image img {
+    max-width: 200px;
+    border-radius: 8px;
+    border: 1px solid var(--admin-border);
+}
+
+.admin-occupancy-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    background-color: var(--admin-surface);
+}
+
+.admin-occupancy-row span {
+    font-size: 0.85rem;
+    color: var(--admin-text);
+}
+
+.admin-occupancy-vacant {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--admin-text-soft);
+    padding: 10px 12px;
+    border: 1px dashed var(--admin-border);
+    border-radius: 6px;
+}
+
+.admin-field-hint {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--admin-text-muted);
+}

@@ -2,6 +2,7 @@ const { Router } = require('express');
 const mongoose = require('mongoose');
 const Group = require('../models/Group.js');
 const Listing = require('../models/Listing.js');
+const requireAuth = require('../middleware/requireAuth.js');
 const {
   getFormConfig,
   getValidTagIds,
@@ -154,6 +155,7 @@ groupsRouter.get(
 
 groupsRouter.post(
   '/',
+  requireAuth,
   asyncHandler(async (req, res) => {
     const {
       name: groupName,
@@ -241,6 +243,8 @@ groupsRouter.post(
       spots: spotsNum,
       genderPreference: genderValue,
       listing: linkedListingDoc ? linkedListingDoc._id : null,
+      owner: req.user._id,
+      members: [{ id: req.user._id.toString(), initials: `${req.user.firstName?.[0] || ''}${req.user.lastName?.[0] || ''}`.toUpperCase(), color: '#3b82f6', imgUrl: null }],
     });
 
     res.status(201).json(created.toJSON());
@@ -254,10 +258,60 @@ groupsRouter.get(
       return res.status(400).json({ message: 'Invalid group id.' });
     }
 
-    const group = await Group.findById(req.params.id).populate('listing');
+    const group = await Group.findById(req.params.id).populate('listing').populate('owner', 'firstName lastName');
     if (!group) return res.status(404).json({ message: 'Group not found.' });
 
     res.json(toProfileShape(group));
+  })
+);
+
+groupsRouter.get(
+  '/me/group',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const group = await Group.findOne({ owner: req.user._id }).populate('listing');
+    if (!group) return res.json(null);
+    res.json({ id: group._id.toString() });
+  })
+);
+
+groupsRouter.post(
+  '/:id/applications',
+  asyncHandler(async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid group id.' });
+    }
+
+    const group = await Group.findById(req.params.id);
+    if (!group) return res.status(404).json({ message: 'Group not found.' });
+
+    const { name, age, gender, email, notes = '' } = req.body ?? {};
+    const errors = {};
+
+    if (!name || typeof name !== 'string' || !name.trim()) {
+      errors.name = 'Name is required.';
+    }
+    if (!email || typeof email !== 'string' || !email.trim()) {
+      errors.email = 'Email is required.';
+    }
+    if (age !== undefined && age !== null && (!Number.isInteger(Number(age)) || Number(age) < 18 || Number(age) > 99)) {
+      errors.age = 'Please provide a valid age.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(422).json({ message: 'Invalid application details.', errors });
+    }
+
+    group.applications.push({
+      name: name.trim(),
+      age: age ? Number(age) : undefined,
+      gender: gender || '',
+      email: email.trim(),
+      notes: typeof notes === 'string' ? notes.trim() : '',
+    });
+
+    await group.save();
+    res.status(201).json({ message: 'Application submitted.' });
   })
 );
 

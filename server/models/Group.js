@@ -16,6 +16,7 @@ const groupSchema = new Schema(
     moveInDate: { type: String, default: null },
     spots: { type: Number, required: true },
     genderPreference: { type: String, default: '' },
+    owner: { type: Schema.Types.ObjectId, ref: 'User', default: null },
 
     badge: { type: String, default: '' },
     heroImgUrl: { type: String, default: '' },
@@ -29,6 +30,20 @@ const groupSchema = new Schema(
           initials: String,
           color: String,
           imgUrl: String,
+        },
+      ],
+      default: [],
+    },
+    applications: {
+      type: [
+        {
+          _id: false,
+          name: { type: String, required: true },
+          age: { type: Number },
+          gender: { type: String },
+          email: { type: String, required: true },
+          notes: { type: String, default: '' },
+          createdAt: { type: Date, default: Date.now },
         },
       ],
       default: [],

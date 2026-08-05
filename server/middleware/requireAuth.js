@@ -27,7 +27,7 @@ const requireAuth = async (req, res, next) => {
     const { _id } = jwt.verify(token, process.env.SECRET);
 
     // fetch role + status fresh from the DB every time — never trust
-    req.user = await User.findById(_id).select("_id role status");
+    req.user = await User.findById(_id).select("_id role status firstName lastName");
 
     if (!req.user) {
       return res.status(401).json({ message: "Request is not authorized" });

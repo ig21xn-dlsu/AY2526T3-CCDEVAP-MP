@@ -9,6 +9,7 @@ import { useAsync } from '../hook/useAsync';
 import { useDebouncedValue } from '../hook/useDebouncedValue';
 import useTheme from '../hook/useTheme.js';
 import { useLogOut } from '../hook/useLogOut.js';
+import { fetchMyGroup } from '../api/padpalApi';
 
 import '../stylesheets/padpal.css'
 import { NavLink } from "react-router-dom";
@@ -176,6 +177,8 @@ export default function DiscoverCommunities() {
     error: groupsError,
   } = useCachedQuery(() => fetchDiscoverGroups(debouncedCoLivingFilters), coLivingCacheKey, [JSON.stringify(debouncedCoLivingFilters)]);
 
+  const { data: myGroup } = useAsync(fetchMyGroup, []);
+
   const {
     data: sharedSpaces,
     loading: sharedLoading,
@@ -201,6 +204,11 @@ export default function DiscoverCommunities() {
       <p className="page-sub">Find the perfect group or space that matches your vibe.</p>
 
       <div className="tab-actions d-flex flex-wrap gap-2 align-items-center justify-content-end">
+        {myGroup?.id && (
+          <NavLink to={`/student-group-profile/${myGroup.id}`} className="button button-secondary">
+            Your Group
+          </NavLink>
+        )}
         <NavLink to="/student-create-group" className="button button-primary">+ Create New Group</NavLink>
       </div>
 

@@ -15,9 +15,12 @@ function buildQuery(params = {}) {
 }
 
 async function request(path, options = {}) {
+  const storageString = localStorage.getItem('user') || sessionStorage.getItem('user');
+  const storedUser = storageString ? JSON.parse(storageString) : null;
+  const authHeader = storedUser?.token ? { Authorization: `Bearer ${storedUser.token}` } : {};
+
   const res = await fetch(`${API_BASE}${path}`, {
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeader, ...options.headers },
     ...options,
   });
 
@@ -85,16 +88,16 @@ export function fetchCampuses() {
  * Returns: { id, name, email, avatarUrl }
  */
 export function fetchCurrentUser() {
-  return request('/me');
+  return request('/auth/me');
 }
 
 /**
- * GET /me/group
+ * GET /groups/me/group
  * Returns: { id } | null  — the signed-in user's current co-living group, if any.
  * Used by the "Your Group" nav button.
  */
 export function fetchMyGroup() {
-  return request('/me/group');
+  return request('/groups/me/group');
 }
 
 /**
